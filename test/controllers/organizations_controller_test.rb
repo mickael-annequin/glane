@@ -14,7 +14,8 @@ class OrganizationsControllerTest < ActionDispatch::IntegrationTest
 
   test "a manager edits the structure, and the new address is placed on the map" do
     sign_in users(:marie)
-    patch organization_path, params: { organization: { address: "3 place des Halles, Chartres", usual_availability: "Lun–ven 9h–17h" } }
+    patch organization_path, params: { organization: { address: "3 Place des Halles 28000 Chartres", latitude: "48.4457", longitude: "1.4867",
+                                                       city: "Chartres", usual_availability: "Lun–ven 9h–17h" } }
 
     assert_redirected_to organization_path
     organization = organizations(:secours_chartres).reload
@@ -22,12 +23,13 @@ class OrganizationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Chartres", organization.city
   end
 
-  test "an address that can't be found is refused" do
+  test "an address typed without picking a suggestion is refused" do
     sign_in users(:marie)
-    patch organization_path, params: { organization: { address: "1 rue introuvable" } }
+    patch organization_path, params: { organization: { address: "1 rue des licornes", latitude: "", longitude: "", city: "" } }
 
     assert_response :unprocessable_content
-    assert_select ".alert", /Adresse est introuvable/
+    assert_select ".alert", /Adresse doit être choisie dans la liste des suggestions/
+    assert_select "[data-controller=address-autocomplete]"
   end
 
   test "a member can't edit the structure" do

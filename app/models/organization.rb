@@ -5,10 +5,9 @@ class Organization < ApplicationRecord
   attr_accessor :manager_email
 
   validates :name, :address, presence: true
-  validate :address_found
-
-  # Finds the position of the address on the map (IGN), when it changes or isn't known yet.
-  before_validation :geocode_address, if: -> { address.present? && (address_changed? || latitude.nil?) }
+  # The address is picked in the IGN suggestions (address_autocomplete_controller.js), which also give its
+  # position: an address typed without picking a suggestion has no position, and is refused.
+  validate :address_picked, if: -> { address.present? && (new_record? || address_changed?) }
   validates :manager_email, presence: true, format: { with: Devise.email_regexp, allow_blank: true }, on: :create_with_manager
   validate :manager_email_not_taken, on: :create_with_manager
 
@@ -29,22 +28,10 @@ class Organization < ApplicationRecord
 
   private
 
-  def geocode_address
-    @address_not_found = false
-    result = AddressGeocoder.search(address)
-    if result
-      self.latitude, self.longitude, self.city = result.latitude, result.longitude, result.city
-    else
-      @address_not_found = true
-    end
-  rescue AddressGeocoder::Unavailable => error
-    # The IGN can't be reached: the address is saved anyway, its position will be looked up at the next save.
-    Rails.logger.warn("Geocoding unavailable: #{error.message}")
-    self.latitude = self.longitude = nil
-  end
+  def address_picked
+    return if located? && latitude_changed?
 
-  def address_found
-    errors.add(:address, "est introuvable : vérifiez le numéro, la rue et la ville") if @address_not_found
+    errors.add(:address, "doit être choisie dans la liste des suggestions qui s'affiche pendant la saisie")
   end
 
   def manager_email_not_taken

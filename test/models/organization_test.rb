@@ -21,27 +21,24 @@ class OrganizationTest < ActiveSupport::TestCase
     assert_not organizations(:closed).active?
   end
 
-  test "finds the position and the city of a new address" do
+  test "keeps the position of the picked address suggestion" do
     organization = organizations(:restos_dreux)
-    organization.update!(address: "3 place des Halles, Chartres")
+    organization.update!(address: "3 Place des Halles 28000 Chartres", latitude: 48.4457, longitude: 1.4867, city: "Chartres")
 
-    assert_equal 48.4469, organization.latitude
     assert_equal "Chartres", organization.city
   end
 
-  test "refuses an address that can't be found" do
+  test "refuses a new address typed without picking a suggestion" do
     organization = organizations(:restos_dreux)
 
-    assert_not organization.update(address: "1 rue introuvable")
-    assert_includes organization.errors[:address].first, "introuvable"
+    assert_not organization.update(address: "1 rue des licornes, Chartres")
+    assert_includes organization.errors[:address].first, "liste des suggestions"
+
+    new_organization = Organization.new(name: "Nouvelle", address: "Quelque part")
+    assert_not new_organization.valid?
   end
 
-  test "saves the address anyway when the IGN can't be reached" do
-    with_geocoding_unavailable do
-      organization = organizations(:restos_dreux)
-
-      assert organization.update(address: "3 place des Halles, Chartres")
-      assert_not organization.located?
-    end
+  test "other changes don't need a new address" do
+    assert organizations(:restos_dreux).update(phone: "02 37 00 00 00")
   end
 end

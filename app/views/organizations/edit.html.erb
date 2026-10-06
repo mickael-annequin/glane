@@ -9,11 +9,8 @@
     <%= f.text_field :name, class: "form-control form-control-lg" %>
   </div>
 
-  <div class="mb-3">
-    <%= f.label :address, "Adresse *", class: "form-label" %>
-    <%= f.text_field :address, placeholder: "ex. 12 rue des Écuyers, 28000 Chartres", class: "form-control form-control-lg" %>
-    <div class="form-text">Lieu de récupération proposé par défaut dans vos annonces, et placé sur la carte.</div>
-  </div>
+  <%= render "shared/address_field", f: f, label: "Adresse",
+             help: "Elle sera proposée par défaut comme lieu de récupération de vos dons." %>
 
   <div class="mb-3">
     <%= f.label :phone, "Téléphone de la structure (facultatif)", class: "form-label" %>

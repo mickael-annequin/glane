@@ -53,6 +53,6 @@ class Admin::OrganizationsController < Admin::BaseController
   end
 
   def organization_params
-    params.require(:organization).permit(:name, :address, :phone, :manager_email)
+    params.require(:organization).permit(:name, :address, :latitude, :longitude, :city, :phone, :manager_email)
   end
 end

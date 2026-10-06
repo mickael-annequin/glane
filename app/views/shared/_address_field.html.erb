@@ -1,0 +1,19 @@
+<%# Address field with IGN suggestions: the picked suggestion also fills the hidden position and city. %>
+<% territory = Rails.configuration.x.territory %>
+<div class="mb-3 address-field" data-controller="address-autocomplete"
+     data-address-autocomplete-department-value="<%= territory[:department_code] %>"
+     data-address-autocomplete-latitude-value="<%= territory[:latitude] %>"
+     data-address-autocomplete-longitude-value="<%= territory[:longitude] %>">
+  <%= f.label :address, "#{label} *", class: "form-label" %>
+  <%= f.text_field :address, autocomplete: "off", placeholder: "ex. 12 rue des Écuyers, Chartres",
+                   class: "form-control form-control-lg",
+                   data: { address_autocomplete_target: "input", action: "input->address-autocomplete#search keydown.esc->address-autocomplete#close" } %>
+  <%= f.hidden_field :latitude, data: { address_autocomplete_target: "latitude" } %>
+  <%= f.hidden_field :longitude, data: { address_autocomplete_target: "longitude" } %>
+  <%= f.hidden_field :city, data: { address_autocomplete_target: "city" } %>
+  <div class="address-suggestions" role="listbox" hidden data-address-autocomplete-target="list"></div>
+  <div class="form-text">
+    Tapez le début de l'adresse (avec la ville), puis choisissez-la dans la liste.
+    <% if local_assigns[:help] %><%= help %><% end %>
+  </div>
+</div>

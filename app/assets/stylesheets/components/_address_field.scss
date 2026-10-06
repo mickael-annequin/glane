@@ -1,0 +1,37 @@
+// Address field: the IGN suggestions appear in a list just below the input.
+.address-field {
+  position: relative;
+}
+
+.address-suggestions {
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  border: 1px solid $straw;
+  border-radius: $border-radius;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba($night, 0.15);
+}
+
+.address-suggestion {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-bottom: 1px solid $cream;
+  background: none;
+  color: $night;
+  text-align: left;
+
+  &:hover,
+  &:focus {
+    background: $cream;
+  }
+}
+
+.address-suggestion-message {
+  padding: 0.75rem 1rem;
+  color: rgba($night, 0.7);
+}

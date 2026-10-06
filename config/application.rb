@@ -25,6 +25,10 @@ module Glane
     config.i18n.default_locale = :fr
     # Texts not yet translated into French are shown in English instead of an error.
     config.i18n.fallbacks = [ :en ]
+
+    # Glane starts in Eure-et-Loir: address suggestions favor this department and the area around Chartres.
+    # To open Glane to another territory, change these values (nothing else is tied to Eure-et-Loir).
+    config.x.territory = { department_code: "28", latitude: 48.45, longitude: 1.40 }
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

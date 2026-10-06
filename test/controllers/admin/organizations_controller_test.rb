@@ -21,7 +21,8 @@ class Admin::OrganizationsControllerTest < ActionDispatch::IntegrationTest
   test "creates a structure and invites its first manager" do
     assert_difference "Organization.count", 1 do
       assert_emails 1 do
-        post admin_organizations_path, params: { organization: { name: "Épicerie sociale Anet", address: "2 rue de Diane, 28260 Anet", manager_email: "Lea@Anet.test" } }
+        post admin_organizations_path, params: { organization: { name: "Épicerie sociale Anet", address: "Rue Diane de Poitiers 28260 Anet",
+                                                                 latitude: "48.8566", longitude: "1.4418", city: "Anet", manager_email: "Lea@Anet.test" } }
       end
     end
 
@@ -45,7 +46,7 @@ class Admin::OrganizationsControllerTest < ActionDispatch::IntegrationTest
 
   test "refuses a manager email that already has an account" do
     assert_no_difference "Organization.count" do
-      post admin_organizations_path, params: { organization: { name: "Autre", address: "Dreux", manager_email: "marie@glane.test" } }
+      post admin_organizations_path, params: { organization: { name: "Autre", address: "Dreux", latitude: "48.73", longitude: "1.37", manager_email: "marie@glane.test" } }
     end
 
     assert_select ".alert", /a déjà un compte Glane/
