@@ -1,0 +1,13 @@
+// "Membres" page: one row per person, with small action buttons below.
+.member-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.member-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}

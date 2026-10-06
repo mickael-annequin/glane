@@ -1,0 +1,52 @@
+<% content_for :title, "Membres" %>
+<%= render "shared/page_header", title: "Membres", back_path: organization_path %>
+
+<%= form_with url: members_path, class: "info-card" do |f| %>
+  <%= f.label :email, "Inviter un membre", class: "form-label fw-semibold" %>
+  <div class="input-group">
+    <%= f.email_field :email, placeholder: "email@exemple.fr", required: true, class: "form-control form-control-lg" %>
+    <%= f.submit "Inviter", class: "btn btn-primary" %>
+  </div>
+  <div class="form-text">La personne reçoit un email pour créer son compte et rejoindre <%= @organization.name %>.</div>
+<% end %>
+
+<ul class="list-group">
+  <% @members.each do |member| %>
+    <li class="list-group-item member-row <%= "text-body-secondary" if member.deactivated_at %>">
+      <div class="member-info">
+        <div>
+          <strong><%= member.name.presence || member.email %></strong>
+          <% if member == current_user %><span class="small">(vous)</span><% end %>
+          <% if member.name.present? %><div class="small text-body-secondary"><%= member.email %></div><% end %>
+        </div>
+        <div class="text-end small">
+          <div class="fw-semibold"><%= member.manager? ? "Responsable" : "Membre" %></div>
+          <% if member.deactivated_at %>
+            <div>désactivé(e)</div>
+          <% elsif member.invitation_pending? %>
+            <div>invitation en attente</div>
+          <% end %>
+        </div>
+      </div>
+
+      <% unless member == current_user %>
+        <div class="member-actions">
+          <% if member.invitation_pending? && member.deactivated_at.nil? %>
+            <%= button_to "Renvoyer l'invitation", resend_invitation_member_path(member), class: "btn btn-sm btn-light" %>
+          <% end %>
+          <% if member.deactivated_at.nil? %>
+            <% if member.manager? %>
+              <%= button_to "Retirer le rôle de responsable", demote_member_path(member), method: :patch, class: "btn btn-sm btn-light" %>
+            <% else %>
+              <%= button_to "Nommer responsable", promote_member_path(member), method: :patch, class: "btn btn-sm btn-light" %>
+            <% end %>
+            <%= button_to "Désactiver", deactivate_member_path(member), method: :patch, class: "btn btn-sm btn-light text-danger",
+                          form: { data: { turbo_confirm: "Désactiver #{member.name.presence || member.email} ? Ce compte ne pourra plus se connecter. Ses annonces et réservations restent dans l'historique." } } %>
+          <% else %>
+            <%= button_to "Réactiver", reactivate_member_path(member), method: :patch, class: "btn btn-sm btn-light" %>
+          <% end %>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

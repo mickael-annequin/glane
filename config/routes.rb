@@ -12,6 +12,16 @@ Rails.application.routes.draw do
   resource :organization, only: %i[show edit update]
   resource :account, only: %i[edit update]
   resource :account_password, only: %i[edit update]
+  # "Membres" page of a structure, for its managers.
+  resources :members, only: %i[index create] do
+    member do
+      patch :promote
+      patch :demote
+      patch :deactivate
+      patch :reactivate
+      post :resend_invitation
+    end
+  end
 
   # Admin space (admin account only): structures and categories.
   namespace :admin do

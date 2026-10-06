@@ -13,7 +13,7 @@ class OrganizationTest < ActiveSupport::TestCase
     organization = organizations(:secours_chartres)
     User.invite!({ email: "pending@glane.test", organization: organization }, users(:admin))
 
-    assert_equal [ users(:marie) ], organization.active_members.to_a
+    assert_equal [ users(:marie), users(:sophie) ].sort, organization.active_members.to_a.sort
   end
 
   test "is active until it is deactivated" do

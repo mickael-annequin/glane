@@ -37,8 +37,11 @@
   </section>
 <% end %>
 
+<% if @organization && current_user.manager? %>
+  <%= link_to "👥 Membres (#{@organization.active_members.count}) ›", members_path, class: "list-link mb-2" %>
+<% end %>
 <% if current_user.admin? %>
-  <%= link_to "⚙️ Espace admin ›", admin_root_path, class: "list-link" %>
+  <%= link_to "⚙️ Espace admin ›", admin_root_path, class: "list-link mb-2" %>
 <% end %>
 
 <%= button_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "btn btn-link text-body-secondary mt-3 px-0" %>

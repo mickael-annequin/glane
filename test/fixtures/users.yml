@@ -30,3 +30,10 @@ closed_member:
   email: closed@glane.test
   encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
   name: Julie Petit
+
+sophie:
+  organization: secours_chartres
+  email: sophie@glane.test
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  name: Sophie Leroy
+  role: member
