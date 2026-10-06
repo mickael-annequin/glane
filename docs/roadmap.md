@@ -1,7 +1,18 @@
 # Roadmap — Glane 🌾
 
 On coche chaque étape (`- [x]`) quand elle est terminée et testée.
-Le détail des décisions est dans [brainstorming.md](brainstorming.md).
+Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour relancer le projet sur l'ordi (serveur, comptes de test, tests, mise en ligne) : [README](../README.md).
+
+## 📍 Où on en est (mis à jour le 06/10/2026)
+- **Dernière étape faite** : « Mes dons » et « Mes réservations », avec l'annulation des deux côtés (commit `5077a85`, CI verte, en ligne). Elle est cochée, mais **mon test reste à faire** : en local, `dreux.membre@glane.test` réserve une annonce de Chartres, la retrouve dans 📦 Mes échanges › Réservations, puis l'annule ; ensuite, même chose en annulant côté donateur avec `chartres.responsable@glane.test` (l'historique de Dreux affiche « Annulée par le donateur »).
+- **Prochaine étape** : la **clôture** (Phase 2), en deux morceaux, comme décrit dans [parcours.md](conception/parcours.md) (scénarios D « Récupération et clôture » et E « Le donateur a oublié de clôturer ») :
+  1. Sur une annonce réservée de ma structure, un membre touche **« ✓ Stock récupéré »** : la réservation passe en `picked_up` (`closed_at` rempli), l'annonce aussi, et elle passe dans l'historique des deux structures (onglets Dons et Réservations).
+  2. **3 h après le créneau**, si personne n'a clôturé, l'encadré « À faire » de l'accueil demande à tous les membres de la structure donatrice « … sont-elles parties ? » : **« ✓ Oui, récupérées »** clôture comme ci-dessus ; **« ✗ Non, remettre en ligne »** passe la réservation en `not_picked_up` et l'annonce redevient disponible (si sa date limite n'est pas passée). Les notifications et le rappel 24 h viendront en Phase 4.
+- **Ensuite** : droits d'accès avec Pundit, tests des statuts et test système (dernière étape de la Phase 2), puis le jalon du Proof of Concept.
+- **Petites choses en attente**, sans urgence :
+  - Les propositions de mise à jour de Dependabot sur GitHub (#1 `actions/cache`, #2 `actions/checkout`, #4 `image_processing` 2.x, à vérifier avec soin car c'est une version majeure) : à regarder ensemble avant de les accepter.
+  - Une page d'erreur 500 en français, et une icône d'onglet (favicon) avec le logo.
+  - Catégories, unités et logo : provisoires, à revoir au jalon du Proof of Concept.
 
 ## Phase 0 — Conception ✏️
 > Cette phase se fait **sans code** : on travaille sur papier et dans `docs/`.
