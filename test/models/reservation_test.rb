@@ -51,4 +51,12 @@ class ReservationTest < ActiveSupport::TestCase
     organizations(:restos_dreux).update!(phone: "02 37 00 00 02")
     assert_equal "02 37 00 00 02", Reservation.contact_phone(users(:paul))
   end
+
+  test "picking up closes the reservation and the listing" do
+    reservations(:potatoes_by_dreux).pick_up!
+
+    assert reservations(:potatoes_by_dreux).reload.picked_up?
+    assert_not_nil reservations(:potatoes_by_dreux).closed_at
+    assert listings(:potatoes).reload.picked_up?
+  end
 end

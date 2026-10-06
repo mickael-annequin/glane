@@ -9,6 +9,8 @@ module ListingsHelper
       "Retirée"
     elsif listing.reserved?
       "Réservée"
+    elsif (reservation = listing.picked_up_reservation)
+      "Récupérée le #{l(reservation.closed_at.to_date, format: :short)} par #{reservation.organization.name}"
     else
       "Récupérée"
     end

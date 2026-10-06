@@ -50,6 +50,8 @@
     <p class="fw-semibold mb-1">Réservée par <%= @reservation.organization.name %> (<%= @reservation.user.name %>)</p>
     <p class="mb-3">Passage prévu <strong><%= pickup_label(@reservation.pickup_at) %></strong></p>
     <%= render "listings/contact", person: @reservation.user %>
+    <%= button_to "✓ Stock récupéré", pick_up_reservation_path(@reservation), method: :patch, class: "btn btn-success btn-lg w-100 mt-3",
+                  form: { data: { turbo_confirm: "#{@reservation.organization.name} a bien récupéré « #{@listing.title} » ? L'annonce passera dans l'historique." } } %>
     <%= button_to "Annuler la réservation", cancel_reservation_path(@reservation), method: :patch, class: "btn btn-link text-danger w-100 mt-2",
                   form: { data: { turbo_confirm: "Annuler la réservation de #{@reservation.organization.name} ? L'annonce sera de nouveau proposée aux autres structures. Pensez à les prévenir." } } %>
   </div>

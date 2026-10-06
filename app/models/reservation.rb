@@ -41,6 +41,14 @@ class Reservation < ApplicationRecord
     end
   end
 
+  # The beneficiary came: the donor closes the reservation and the listing (they go to the history).
+  def pick_up!
+    transaction do
+      update!(status: :picked_up, closed_at: Time.current)
+      listing.picked_up!
+    end
+  end
+
   def cancelled_by_donor?
     cancelled? && cancelled_by&.organization_id == listing.organization_id
   end

@@ -2,8 +2,8 @@
 class ReservationsController < ApplicationController
   MAX_DAYS_AHEAD = 14
 
-  before_action :set_listing, except: :cancel
-  before_action :require_reservable, except: :cancel
+  before_action :set_listing, only: %i[new create]
+  before_action :require_reservable, only: %i[new create]
 
   def new
     @reservation = @listing.reservations.new
@@ -27,6 +27,13 @@ class ReservationsController < ApplicationController
                              .find(params[:id])
     reservation.cancel!(by: current_user)
     redirect_to reservation.listing, notice: "Réservation annulée : l'annonce est de nouveau proposée aux autres structures."
+  end
+
+  # Only the donor structure says the stock is gone.
+  def pick_up
+    reservation = Reservation.active.joins(:listing).where(listings: { organization_id: current_user.organization_id }).find(params[:id])
+    reservation.pick_up!
+    redirect_to exchanges_path, notice: "C'est noté : « #{reservation.listing.title} » est récupérée. Merci pour ce don !"
   end
 
   private

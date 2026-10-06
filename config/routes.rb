@@ -15,8 +15,12 @@ Rails.application.routes.draw do
     resources :reservations, only: %i[new create]
   end
   # Cancelling a reservation, by the donor or by the structure that reserved.
+  # Closing it once the stock is picked up, by the donor only.
   resources :reservations, only: [] do
-    patch :cancel, on: :member
+    member do
+      patch :cancel
+      patch :pick_up
+    end
   end
   # "Mes échanges": the listings of my structure ("Dons") and what it reserved ("Réservations", ?tab=reservations).
   get "exchanges", to: "exchanges#index"

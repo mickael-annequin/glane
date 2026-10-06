@@ -17,6 +17,7 @@ class Listing < ApplicationRecord
   has_many_attached :photos
   has_many :reservations, dependent: :restrict_with_error
   has_one :active_reservation, -> { active }, class_name: "Reservation"
+  has_one :picked_up_reservation, -> { picked_up }, class_name: "Reservation"
 
   enum :status, { available: "available", reserved: "reserved", picked_up: "picked_up", withdrawn: "withdrawn" }, validate: true
 
