@@ -4,10 +4,8 @@ On coche chaque étape (`- [x]`) quand elle est terminée et testée.
 Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour relancer le projet sur l'ordi (serveur, comptes de test, tests, mise en ligne) : [README](../README.md).
 
 ## 📍 Où on en est (mis à jour le 06/10/2026)
-- **Dernière étape faite** : « Mes dons » et « Mes réservations », avec l'annulation des deux côtés (commit `5077a85`), testée ✓.
-- **En cours** : la **clôture** (Phase 2), en deux morceaux, comme décrit dans [parcours.md](conception/parcours.md) (scénarios D « Récupération et clôture » et E « Le donateur a oublié de clôturer ») :
-  1. ✅ *Fait, mon test reste à faire* : sur une annonce réservée de ma structure, un membre touche **« ✓ Stock récupéré »** : la réservation passe en `picked_up` (`closed_at` rempli), l'annonce aussi, et elle passe dans l'historique des deux structures (« Récupérée le … par … » côté Dons, « Récupérée le … » côté Réservations). *Test :* `dreux.membre@glane.test` réserve une annonce de Chartres ; `chartres.responsable@glane.test` ouvre l'annonce et touche « ✓ Stock récupéré ».
-  2. **3 h après le créneau**, si personne n'a clôturé, l'encadré « À faire » de l'accueil demande à tous les membres de la structure donatrice « … sont-elles parties ? » : **« ✓ Oui, récupérées »** clôture comme ci-dessus ; **« ✗ Non, remettre en ligne »** passe la réservation en `not_picked_up` et l'annonce redevient disponible (si sa date limite n'est pas passée). Les notifications et le rappel 24 h viendront en Phase 4.
+- **Dernière étape faite** : la **clôture par le donateur** (« ✓ Stock récupéré », commit `83a0e1d`), testée ✓ : la réservation et l'annonce passent en `picked_up` et vont dans l'historique des deux structures.
+- **Prochaine étape** : la **question « Stock récupéré ? »** (Phase 2, scénario E « Le donateur a oublié de clôturer » de [parcours.md](conception/parcours.md)) : **3 h après le créneau**, si personne n'a clôturé, l'encadré « À faire » de l'accueil demande à tous les membres de la structure donatrice « … sont-elles parties ? » : **« ✓ Oui, récupérées »** clôture comme le bouton « Stock récupéré » ; **« ✗ Non, remettre en ligne »** passe la réservation en `not_picked_up` et l'annonce redevient disponible (si sa date limite n'est pas passée). Les notifications et le rappel 24 h viendront en Phase 4.
 - **Ensuite** : droits d'accès avec Pundit, tests des statuts et test système (dernière étape de la Phase 2), puis le jalon du Proof of Concept.
 - **Petites choses en attente**, sans urgence :
   - Les propositions de mise à jour de Dependabot sur GitHub (#1 `actions/cache`, #2 `actions/checkout`, #4 `image_processing` 2.x, à vérifier avec soin car c'est une version majeure) : à regarder ensemble avant de les accepter.
@@ -41,7 +39,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour re
 - [x] **Carte Mapbox du département** avec les annonces (un repère par lieu, 🏠 pour ma structure, résumé en bas au toucher), et bascule Liste ⇄ Carte. *Test :* toucher un repère ouvre l'annonce.
 - [x] **Réserver** en choisissant un créneau, seulement dans les disponibilités du donateur (planning par jour, menus déroulants au quart d'heure). L'annonce est attribuée et disparaît. *Test :* avec 2 comptes sur 2 téléphones, la seconde structure ne peut plus réserver.
 - [x] **« Mes dons » et « Mes réservations »** (onglets de Mes échanges), annulation d'un côté comme de l'autre. *Test :* une annonce annulée redevient disponible.
-- [ ] **Clôture par le donateur** (« Stock récupéré »). *Test :* l'annonce passe dans l'historique des deux structures.
+- [x] **Clôture par le donateur** (« Stock récupéré »). *Test :* l'annonce passe dans l'historique des deux structures.
 - [ ] **Question « Stock récupéré ? »** sur l'accueil après le créneau, avec Oui / Non. *Test :* répondre Non remet l'annonce en ligne.
 - [ ] **Droits d'accès** avec Pundit, tests des changements de statut, et un test système du parcours publier → réserver → clôturer (remettre alors le job `system-test` dans la CI, retiré au départ). *Test :* `bin/rails test` passe, et une structure ne peut pas modifier l'annonce d'une autre. 🎉 **MVP utilisable**
 
