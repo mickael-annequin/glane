@@ -42,7 +42,7 @@ Tous les membres des deux structures voient ces échanges, pas seulement les per
 Le bénéficiaire passe chercher le stock → un membre de la structure donatrice ouvre « Mes échanges › Dons » → l'annonce → « ✓ Stock récupéré » → l'annonce passe dans l'historique des deux structures.
 
 **E. Le donateur a oublié de clôturer**
-3 h après le créneau, un encadré « À faire » apparaît en haut de l'accueil de **tous les membres** de la structure donatrice : « Restos Dreux devait passer hier à 14h. Les pommes de terre sont-elles parties ? » → **« ✓ Oui, récupérées »** : l'annonce est clôturée. **« ✗ Non, remettre en ligne »** : l'annonce redevient disponible pour les autres structures, et la réservation est notée « non récupérée ». Le premier membre qui répond règle la question pour tout le monde.
+3 h après le créneau, un encadré « À faire » apparaît en haut de l'accueil de **tous les membres** de la structure donatrice : « Restos Dreux devait passer hier à 14h chercher « Pommes de terre ». Le stock est-il parti ? » (même encadré en haut de Mes échanges › Dons) → **« ✓ Oui, récupéré »** : l'annonce est clôturée. **« ✗ Non, remettre en ligne »** : l'annonce redevient disponible pour les autres structures, et la réservation est notée « non récupérée » (si la date limite est passée, le bouton dit « ✗ Non, pas récupéré » et l'annonce part dans l'historique). Le premier membre qui répond règle la question pour tout le monde.
 
 **F. Annuler une réservation**
 - Bénéficiaire : « Mes échanges › Réservations » → l'annonce → « Annuler ma réservation » → confirmation.

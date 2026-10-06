@@ -29,6 +29,12 @@ class Organization < ApplicationRecord
     users.where(deactivated_at: nil).merge(User.without_pending_invitation)
   end
 
+  # The reservations of my listings whose slot is past and that nobody closed: "Le stock est-il parti ?"
+  def pickups_to_confirm
+    Reservation.to_confirm.joins(:listing).where(listings: { organization_id: id })
+               .includes(:organization, :listing).order(:pickup_at)
+  end
+
   private
 
   def usual_schedule_valid

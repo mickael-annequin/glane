@@ -11,5 +11,7 @@ class ExchangesController < ApplicationController
     reservations = organization ? organization.reservations.includes(:user, :cancelled_by, listing: %i[category organization user]).order(pickup_at: :desc).to_a : []
     @current_reservations, @past_reservations = reservations.partition(&:active?)
     @current_reservations.sort_by!(&:pickup_at) # the next pickup first
+
+    @pickups_to_confirm = organization ? organization.pickups_to_confirm : []
   end
 end

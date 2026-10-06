@@ -11,6 +11,7 @@ class ListingsController < ApplicationController
     @category = @categories.find_by(id: params[:category])
     @listings = Listing.reservable.includes(:category, :organization).order(:available_until, created_at: :desc)
     @listings = @listings.where(category: @category) if @category
+    @pickups_to_confirm = current_user.organization&.pickups_to_confirm || []
   end
 
   # Anyone can see a listing that can still be reserved; the donor structure can always see its own,

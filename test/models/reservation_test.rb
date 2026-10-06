@@ -59,4 +59,24 @@ class ReservationTest < ActiveSupport::TestCase
     assert_not_nil reservations(:potatoes_by_dreux).closed_at
     assert listings(:potatoes).reload.picked_up?
   end
+
+  test "the donor is asked 3 hours after the slot if nobody closed" do
+    potatoes = reservations(:potatoes_by_dreux)
+    assert_not_includes Reservation.to_confirm, potatoes
+
+    potatoes.update!(pickup_at: 2.hours.ago)
+    assert_not_includes Reservation.to_confirm, potatoes
+
+    potatoes.update!(pickup_at: 4.hours.ago)
+    assert_equal [ potatoes ], organizations(:secours_chartres).pickups_to_confirm.to_a
+    assert_empty organizations(:restos_dreux).pickups_to_confirm
+  end
+
+  test "nobody came: the listing is offered again" do
+    reservations(:potatoes_by_dreux).not_picked_up!
+
+    assert reservations(:potatoes_by_dreux).reload.not_picked_up?
+    assert_not_nil reservations(:potatoes_by_dreux).closed_at
+    assert listings(:potatoes).reload.reservable?
+  end
 end

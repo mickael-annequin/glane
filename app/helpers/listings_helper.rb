@@ -87,6 +87,7 @@ module ListingsHelper
   def pickup_label(time)
     day = if time.to_date == Date.current then "aujourd'hui"
     elsif time.to_date == Date.tomorrow then "demain"
+    elsif time.to_date == Date.yesterday then "hier"
     else l(time.to_date, format: :listing)
     end
     "#{day} à #{time.strftime("%-Hh%M").delete_suffix("00")}"

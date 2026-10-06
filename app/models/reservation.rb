@@ -1,6 +1,8 @@
 # A structure (the beneficiary) reserves a listing and says when it comes to pick it up.
 class Reservation < ApplicationRecord
   ALREADY_TAKEN = "Cette annonce vient d'être réservée par une autre structure.".freeze
+  # Nobody closed the reservation this long after the slot: the donor is asked if the stock is gone.
+  CONFIRM_DELAY = 3.hours
 
   belongs_to :listing
   belongs_to :organization                    # the beneficiary structure
@@ -8,6 +10,8 @@ class Reservation < ApplicationRecord
   belongs_to :cancelled_by, class_name: "User", optional: true
 
   enum :status, { active: "active", picked_up: "picked_up", not_picked_up: "not_picked_up", cancelled: "cancelled" }, validate: true
+
+  scope :to_confirm, -> { active.where(pickup_at: ..CONFIRM_DELAY.ago) }
 
   validates :pickup_at, presence: { message: "doit être choisi : un jour et une heure" }
   validate :pickup_slot_possible, on: :create, if: :pickup_at
@@ -46,6 +50,14 @@ class Reservation < ApplicationRecord
     transaction do
       update!(status: :picked_up, closed_at: Time.current)
       listing.picked_up!
+    end
+  end
+
+  # Nobody came: the listing is offered again (or goes to the history if its deadline is past).
+  def not_picked_up!
+    transaction do
+      update!(status: :not_picked_up, closed_at: Time.current)
+      listing.available!
     end
   end
 

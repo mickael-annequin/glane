@@ -10,6 +10,7 @@
 <% if @tab == "reservations" %>
   <%= render "reservations" %>
 <% else %>
+  <%= render "shared/pickup_questions", reservations: @pickups_to_confirm %>
   <% if @current.empty? && @history.empty? %>
     <p class="text-center text-body-secondary mt-4">Aucun don pour l'instant.</p>
     <%= link_to "+ Publier un surplus", new_listing_path, class: "btn btn-warning btn-lg w-100" %>

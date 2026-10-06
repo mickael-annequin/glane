@@ -29,14 +29,35 @@ class ReservationsController < ApplicationController
     redirect_to reservation.listing, notice: "Réservation annulée : l'annonce est de nouveau proposée aux autres structures."
   end
 
-  # Only the donor structure says the stock is gone.
+  # Only the donor structure says the stock is gone…
   def pick_up
-    reservation = Reservation.active.joins(:listing).where(listings: { organization_id: current_user.organization_id }).find(params[:id])
+    reservation = donor_reservation_to_close or return
     reservation.pick_up!
     redirect_to exchanges_path, notice: "C'est noté : « #{reservation.listing.title} » est récupérée. Merci pour ce don !"
   end
 
+  # …or that nobody came.
+  def not_picked_up
+    reservation = donor_reservation_to_close or return
+    reservation.not_picked_up!
+    notice = if reservation.listing.reservable?
+      "C'est noté : « #{reservation.listing.title} » est de nouveau proposée aux autres structures."
+    else
+      "C'est noté : « #{reservation.listing.title} » n'a pas été récupérée, et sa date limite est passée."
+    end
+    redirect_to exchanges_path, notice: notice
+  end
+
   private
+
+  # A reservation of my structure's listings. If another member already closed it, says so and returns nil.
+  def donor_reservation_to_close
+    reservation = Reservation.joins(:listing).where(listings: { organization_id: current_user.organization_id }).find(params[:id])
+    return reservation if reservation.active?
+
+    redirect_to exchanges_path, notice: "C'est déjà réglé : un autre membre a répondu, ou la réservation a été annulée."
+    nil
+  end
 
   def set_listing
     @listing = Listing.find(params[:listing_id])

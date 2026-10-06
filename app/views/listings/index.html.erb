@@ -5,6 +5,8 @@
   <% if organization %><span class="home-organization"><%= organization.name %></span><% end %>
 </header>
 
+<%= render "shared/pickup_questions", reservations: @pickups_to_confirm %>
+
 <% if current_user.manager? && organization&.usual_opening_hours&.empty? %>
   <div class="todo-box">
     <strong>À FAIRE</strong>

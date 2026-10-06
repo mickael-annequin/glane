@@ -1,0 +1,17 @@
+<%# "À faire" (docs/conception/parcours.md, scenario E): the slot is past and nobody closed the reservation.
+    Shown to every member of the donor structure, on the home page and in "Mes échanges". %>
+<% reservations.each do |reservation| %>
+  <% listing = reservation.listing %>
+  <div class="todo-box">
+    <strong>À FAIRE</strong>
+    <p>
+      <%= reservation.organization.name %> devait passer <%= pickup_label(reservation.pickup_at) %>
+      chercher «&nbsp;<%= link_to listing.title, listing_path(listing) %>&nbsp;». Le stock est-il parti&nbsp;?
+    </p>
+    <div class="d-grid gap-2">
+      <%= button_to "✓ Oui, récupéré", pick_up_reservation_path(reservation), method: :patch, class: "btn btn-success w-100" %>
+      <%= button_to listing.available_until >= Date.current ? "✗ Non, remettre en ligne" : "✗ Non, pas récupéré",
+                    not_picked_up_reservation_path(reservation), method: :patch, class: "btn btn-outline-danger w-100" %>
+    </div>
+  </div>
+<% end %>
