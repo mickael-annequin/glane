@@ -2,8 +2,8 @@
 class ReservationsController < ApplicationController
   MAX_DAYS_AHEAD = 14
 
-  before_action :set_listing
-  before_action :require_reservable
+  before_action :set_listing, except: :cancel
+  before_action :require_reservable, except: :cancel
 
   def new
     @reservation = @listing.reservations.new
@@ -17,6 +17,16 @@ class ReservationsController < ApplicationController
     else
       render :new, status: :unprocessable_content
     end
+  end
+
+  # Only the two structures of the reservation can cancel it.
+  def cancel
+    my_organization_id = current_user.organization_id
+    reservation = Reservation.active.joins(:listing)
+                             .where(organization_id: my_organization_id).or(Reservation.active.joins(:listing).where(listings: { organization_id: my_organization_id }))
+                             .find(params[:id])
+    reservation.cancel!(by: current_user)
+    redirect_to reservation.listing, notice: "Réservation annulée : l'annonce est de nouveau proposée aux autres structures."
   end
 
   private

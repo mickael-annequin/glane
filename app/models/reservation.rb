@@ -33,6 +33,18 @@ class Reservation < ApplicationRecord
     false
   end
 
+  # Cancelled by the donor or by the beneficiary: the listing can be reserved again.
+  def cancel!(by:)
+    transaction do
+      update!(status: :cancelled, cancelled_by: by, closed_at: Time.current)
+      listing.available!
+    end
+  end
+
+  def cancelled_by_donor?
+    cancelled? && cancelled_by&.organization_id == listing.organization_id
+  end
+
   # Who to call on the other side: the person's phone, or else the one of their structure.
   def self.contact_phone(user)
     user.phone.presence || user.organization&.phone.presence

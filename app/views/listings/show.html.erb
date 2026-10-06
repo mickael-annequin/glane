@@ -50,6 +50,8 @@
     <p class="fw-semibold mb-1">Réservée par <%= @reservation.organization.name %> (<%= @reservation.user.name %>)</p>
     <p class="mb-3">Passage prévu <strong><%= pickup_label(@reservation.pickup_at) %></strong></p>
     <%= render "listings/contact", person: @reservation.user %>
+    <%= button_to "Annuler la réservation", cancel_reservation_path(@reservation), method: :patch, class: "btn btn-link text-danger w-100 mt-2",
+                  form: { data: { turbo_confirm: "Annuler la réservation de #{@reservation.organization.name} ? L'annonce sera de nouveau proposée aux autres structures. Pensez à les prévenir." } } %>
   </div>
 <% elsif mine %>
   <div class="info-card">
@@ -69,6 +71,8 @@
     <p class="mb-3">Passage prévu <strong><%= pickup_label(@reservation.pickup_at) %></strong></p>
     <%= render "listings/contact", person: @listing.user %>
     <%= link_to "Itinéraire", directions_url(@listing), target: "_blank", rel: "noopener", class: "btn btn-outline-dark w-100 mt-2" %>
+    <%= button_to "Annuler ma réservation", cancel_reservation_path(@reservation), method: :patch, class: "btn btn-link text-danger w-100 mt-2",
+                  form: { data: { turbo_confirm: "Annuler votre réservation ? L'annonce sera de nouveau proposée aux autres structures. Pensez à prévenir le donateur." } } %>
   </div>
 <% elsif current_user.organization %>
   <%= link_to "Réserver", new_listing_reservation_path(@listing), class: "btn btn-primary btn-lg w-100" %>

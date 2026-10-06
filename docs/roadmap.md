@@ -29,7 +29,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md).
 - [x] **Liste des annonces disponibles** (cartes façon Le Bon Coin, date limite la plus proche en premier, filtre par catégorie, distance à vol d'oiseau) et page détail. *Test :* une annonce expirée ou réservée n'apparaît plus.
 - [x] **Carte Mapbox du département** avec les annonces (un repère par lieu, 🏠 pour ma structure, résumé en bas au toucher), et bascule Liste ⇄ Carte. *Test :* toucher un repère ouvre l'annonce.
 - [x] **Réserver** en choisissant un créneau, seulement dans les disponibilités du donateur (planning par jour, menus déroulants au quart d'heure). L'annonce est attribuée et disparaît. *Test :* avec 2 comptes sur 2 téléphones, la seconde structure ne peut plus réserver.
-- [ ] **« Mes dons » et « Mes réservations »**, annulation d'un côté comme de l'autre. *Test :* une annonce annulée redevient disponible.
+- [x] **« Mes dons » et « Mes réservations »** (onglets de Mes échanges), annulation d'un côté comme de l'autre. *Test :* une annonce annulée redevient disponible.
 - [ ] **Clôture par le donateur** (« Stock récupéré »). *Test :* l'annonce passe dans l'historique des deux structures.
 - [ ] **Question « Stock récupéré ? »** sur l'accueil après le créneau, avec Oui / Non. *Test :* répondre Non remet l'annonce en ligne.
 - [ ] **Droits d'accès** avec Pundit, tests des changements de statut, et un test système du parcours publier → réserver → clôturer (remettre alors le job `system-test` dans la CI, retiré au départ). *Test :* `bin/rails test` passe, et une structure ne peut pas modifier l'annonce d'une autre. 🎉 **MVP utilisable**

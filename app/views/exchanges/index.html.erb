@@ -1,56 +1,60 @@
-<%# "Mes échanges" (docs/conception/wireframes.md, screen 8): for now the "Dons" tab only. %>
+<%# "Mes échanges" (docs/conception/wireframes.md, screen 8): "Dons" and "Réservations" tabs. %>
 <% content_for :title, "Mes échanges" %>
 <h1 class="h3 text-primary">Mes échanges</h1>
 
 <nav class="admin-tabs" aria-label="Mes échanges">
-  <span class="active">Dons (<%= @current.size %>)</span>
-  <span class="text-body-secondary" title="Bientôt">Réservations</span>
+  <%= link_to "Dons (#{@current.size})", exchanges_path, class: ("active" if @tab == "donations") %>
+  <%= link_to "Réservations (#{@current_reservations.size})", exchanges_path(tab: "reservations"), class: ("active" if @tab == "reservations") %>
 </nav>
 
-<% if @current.empty? && @history.empty? %>
-  <p class="text-center text-body-secondary mt-4">Aucun don pour l'instant.</p>
-  <%= link_to "+ Publier un surplus", new_listing_path, class: "btn btn-warning btn-lg w-100" %>
+<% if @tab == "reservations" %>
+  <%= render "reservations" %>
 <% else %>
-  <h2 class="exchange-section">En cours</h2>
-  <% if @current.empty? %>
-    <p class="text-body-secondary">Aucune annonce en ligne. <%= link_to "Publier un surplus", new_listing_path %></p>
+  <% if @current.empty? && @history.empty? %>
+    <p class="text-center text-body-secondary mt-4">Aucun don pour l'instant.</p>
+    <%= link_to "+ Publier un surplus", new_listing_path, class: "btn btn-warning btn-lg w-100" %>
   <% else %>
-    <div class="exchange-list">
-      <% @current.each do |listing| %>
-        <%= link_to listing_path(listing), class: "exchange-row" do %>
-          <span class="exchange-icon"><%= listing.category.icon %></span>
-          <span class="flex-fill">
-            <strong><%= listing.title %></strong><%= " · #{listing.quantity_label}" if listing.quantity_label %>
-            <span class="d-block small">
-              <% if listing.reserved? && listing.active_reservation %>
-                <span class="badge text-bg-warning">Réservée</span>
-                par <%= listing.active_reservation.organization.name %> · passage <%= pickup_label(listing.active_reservation.pickup_at) %>
-              <% else %>
-                <span class="badge text-bg-success">En ligne</span>
-                <span class="<%= "text-danger fw-semibold" if urgent?(listing) %>"><%= listing_deadline(listing) %></span>
-              <% end %>
+    <h2 class="exchange-section">En cours</h2>
+    <% if @current.empty? %>
+      <p class="text-body-secondary">Aucune annonce en ligne. <%= link_to "Publier un surplus", new_listing_path %></p>
+    <% else %>
+      <div class="exchange-list">
+        <% @current.each do |listing| %>
+          <%= link_to listing_path(listing), class: "exchange-row" do %>
+            <span class="exchange-icon"><%= listing.category.icon %></span>
+            <span class="flex-fill">
+              <strong><%= listing.title %></strong><%= " · #{listing.quantity_label}" if listing.quantity_label %>
+              <span class="d-block small">
+                <% if listing.reserved? && listing.active_reservation %>
+                  <span class="badge text-bg-warning">Réservée</span>
+                  par <%= listing.active_reservation.organization.name %> · passage <%= pickup_label(listing.active_reservation.pickup_at) %>
+                <% else %>
+                  <span class="badge text-bg-success">En ligne</span>
+                  <span class="<%= "text-danger fw-semibold" if urgent?(listing) %>"><%= listing_deadline(listing) %></span>
+                <% end %>
+              </span>
+              <span class="d-block small text-body-secondary">publiée par <%= listing.user.name %></span>
             </span>
-            <span class="d-block small text-body-secondary">publiée par <%= listing.user.name %></span>
-          </span>
-          <span aria-hidden="true">›</span>
+            <span aria-hidden="true">›</span>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-  <% end %>
+      </div>
+    <% end %>
 
-  <% if @history.any? %>
-    <h2 class="exchange-section">Historique</h2>
-    <div class="exchange-list exchange-list-past">
-      <% @history.each do |listing| %>
-        <%= link_to listing_path(listing), class: "exchange-row" do %>
-          <span class="exchange-icon"><%= listing.category.icon %></span>
-          <span class="flex-fill">
-            <strong><%= listing.title %></strong><%= " · #{listing.quantity_label}" if listing.quantity_label %>
-            <span class="d-block small"><%= listing_status(listing) %> · publiée par <%= listing.user.name %></span>
-          </span>
-          <span aria-hidden="true">›</span>
+    <% if @history.any? %>
+      <h2 class="exchange-section">Historique</h2>
+      <div class="exchange-list exchange-list-past">
+        <% @history.each do |listing| %>
+          <%= link_to listing_path(listing), class: "exchange-row" do %>
+            <span class="exchange-icon"><%= listing.category.icon %></span>
+            <span class="flex-fill">
+              <strong><%= listing.title %></strong><%= " · #{listing.quantity_label}" if listing.quantity_label %>
+              <span class="d-block small"><%= listing_status(listing) %> · publiée par <%= listing.user.name %></span>
+            </span>
+            <span aria-hidden="true">›</span>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   <% end %>
 <% end %>

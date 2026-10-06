@@ -14,6 +14,18 @@ module ListingsHelper
     end
   end
 
+  # How a past reservation ended: "Annulée par le donateur le 07/10", "Récupérée le 08/10"…
+  def reservation_status(reservation)
+    date = l((reservation.closed_at || reservation.pickup_at).to_date, format: :short)
+    if reservation.cancelled?
+      reservation.cancelled_by_donor? ? "Annulée par le donateur le #{date}" : "Annulée par votre structure le #{date}"
+    elsif reservation.picked_up?
+      "Récupérée le #{date}"
+    else
+      "Non récupérée (#{date})"
+    end
+  end
+
   # "avant demain", "avant jeudi 9 octobre"…
   def listing_deadline(listing)
     date = listing.available_until

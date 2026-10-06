@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     # Reserving: choose the pickup slot, then confirm.
     resources :reservations, only: %i[new create]
   end
-  # "Mes échanges": the listings of my structure (and later its reservations).
+  # Cancelling a reservation, by the donor or by the structure that reserved.
+  resources :reservations, only: [] do
+    patch :cancel, on: :member
+  end
+  # "Mes échanges": the listings of my structure ("Dons") and what it reserved ("Réservations", ?tab=reservations).
   get "exchanges", to: "exchanges#index"
 
   # "Ma structure" page of the signed-in person, "Mon compte" and the password change.
