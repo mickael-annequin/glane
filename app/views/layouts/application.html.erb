@@ -29,6 +29,8 @@
 
   <body>
     <main class="container py-3">
+      <% if notice %><div class="alert alert-success flash"><%= notice %></div><% end %>
+      <% if alert %><div class="alert alert-warning flash"><%= alert %></div><% end %>
       <%= yield %>
     </main>
   </body>

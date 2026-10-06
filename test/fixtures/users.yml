@@ -1,0 +1,32 @@
+admin:
+  email: admin@glane.test
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  name: Admin Glane
+  admin: true
+
+marie:
+  organization: secours_chartres
+  email: marie@glane.test
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  name: Marie Dupont
+  role: manager
+
+paul:
+  organization: restos_dreux
+  email: paul@glane.test
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  name: Paul Martin
+  role: member
+
+former_member:
+  organization: secours_chartres
+  email: former@glane.test
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  name: Luc Bernard
+  deactivated_at: <%= 1.week.ago %>
+
+closed_member:
+  organization: closed
+  email: closed@glane.test
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
+  name: Julie Petit

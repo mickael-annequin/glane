@@ -1,0 +1,15 @@
+# French messages for the Devise features used so far (sign in and sign out).
+fr:
+  devise:
+    failure:
+      already_authenticated: "Vous êtes déjà connecté."
+      deactivated: "Ce compte a été désactivé. Contactez le responsable de votre structure."
+      inactive: "Votre compte n'est pas encore activé."
+      invalid: "Email ou mot de passe incorrect."
+      not_found_in_database: "Email ou mot de passe incorrect."
+      timeout: "Votre session a expiré. Veuillez vous reconnecter."
+      unauthenticated: "Connectez-vous pour continuer."
+    sessions:
+      signed_in: "Connexion réussie."
+      signed_out: "Déconnexion réussie."
+      already_signed_out: "Déconnexion réussie."

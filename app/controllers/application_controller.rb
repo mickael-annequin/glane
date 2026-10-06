@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  # Glane is private: every page needs a signed-in person (except Devise's sign-in page).
+  before_action :authenticate_user!
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 

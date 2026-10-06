@@ -1,0 +1,19 @@
+secours_chartres:
+  name: Secours Populaire Chartres
+  address: 12 rue des Écuyers, 28000 Chartres
+  city: Chartres
+  latitude: 48.4469
+  longitude: 1.4890
+
+restos_dreux:
+  name: Restos du Cœur Dreux
+  address: 5 rue Saint-Martin, 28100 Dreux
+  city: Dreux
+  latitude: 48.7366
+  longitude: 1.3664
+
+closed:
+  name: Structure fermée
+  address: 1 place de la Mairie, 28200 Châteaudun
+  city: Châteaudun
+  deactivated_at: <%= 1.month.ago %>

@@ -1,4 +1,10 @@
+<%# Temporary home page: the list of listings comes in Phase 2, "Se déconnecter" moves to "Ma structure". %>
 <h1 class="text-primary">Glane 🌾</h1>
-<p>Partageons nos surplus pour que rien ne se perde.</p>
-<a href="#" class="btn btn-primary">Réserver</a>
-<a href="#" class="btn btn-warning">+ Publier un surplus</a>
+<p>
+  Bonjour <strong><%= current_user.name %></strong>
+  <% if current_user.organization %>
+    (<%= current_user.organization.name %>)
+  <% end %>
+</p>
+<p>Les annonces arrivent bientôt ici.</p>
+<%= button_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "btn btn-outline-dark" %>
