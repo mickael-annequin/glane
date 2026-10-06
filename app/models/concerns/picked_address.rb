@@ -12,6 +12,17 @@ module PickedAddress
     latitude.present? && longitude.present?
   end
 
+  # Straight-line distance in km to another place with a position (haversine formula), or nil.
+  def distance_to(other)
+    return unless located? && other&.located?
+
+    radians = ->(degrees) { degrees * Math::PI / 180 }
+    d_lat = radians.(other.latitude - latitude)
+    d_lon = radians.(other.longitude - longitude)
+    a = Math.sin(d_lat / 2)**2 + Math.cos(radians.(latitude)) * Math.cos(radians.(other.latitude)) * Math.sin(d_lon / 2)**2
+    6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  end
+
   private
 
   def address_picked

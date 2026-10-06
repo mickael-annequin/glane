@@ -23,6 +23,19 @@ module ListingsHelper
     "avant le #{l(date, format: :listing)}"
   end
 
+  # "3 km", "moins d'1 km", or nil when a position is missing.
+  def distance_label(from, to)
+    distance = from&.distance_to(to)
+    return if distance.nil?
+
+    distance < 1 ? "moins d'1 km" : "#{distance.round} km"
+  end
+
+  # The deadline is close (today or tomorrow): shown in red.
+  def urgent?(listing)
+    listing.available_until <= Date.tomorrow
+  end
+
   # Links to see the pickup place on a map, and to get there (opens Google Maps or Plans on the phone).
   def map_url(record)
     "https://www.openstreetmap.org/?mlat=#{record.latitude}&mlon=#{record.longitude}#map=17/#{record.latitude}/#{record.longitude}"

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   # Listings (surpluses). Withdrawing keeps the listing in the history of the structure.
-  resources :listings, only: %i[new create show edit update] do
+  resources :listings, only: %i[index new create show edit update] do
     patch :withdraw, on: :member
   end
   # "Mes échanges": the listings of my structure (and later its reservations).
@@ -56,5 +56,6 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "pages#home"
+  # Home page: the listings that can be reserved.
+  root "listings#index"
 end

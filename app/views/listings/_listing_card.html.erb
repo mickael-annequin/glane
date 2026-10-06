@@ -1,0 +1,18 @@
+<%# One listing in the list, "Le Bon Coin" style: picture, product, quantity, place and deadline. %>
+<%= link_to listing_path(listing), class: "listing-card" do %>
+  <span class="listing-card-picture" aria-hidden="true"><%= listing.category.icon.presence || "📦" %></span>
+  <span class="listing-card-body">
+    <strong class="listing-card-title"><%= listing.title %></strong>
+    <% details = [ listing.quantity_label, (listing.storage_label if listing.storage.in?(%w[chilled frozen])) ].compact %>
+    <% if details.any? %>
+      <span><%= details.join(" · ") %><%= " ❄️" if listing.storage.in?(%w[chilled frozen]) %></span>
+    <% end %>
+    <span class="text-body-secondary">
+      <%= [ listing.city, distance_label(organization, listing) ].compact.join(" · ") %>
+    </span>
+    <span class="<%= urgent?(listing) ? "text-danger fw-semibold" : "" %>"><%= listing_deadline(listing) %></span>
+    <% if organization && listing.organization_id == organization.id %>
+      <span class="badge listing-card-badge">Votre structure</span>
+    <% end %>
+  </span>
+<% end %>

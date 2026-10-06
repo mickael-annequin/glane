@@ -62,5 +62,24 @@ if Rails.env.development?
       end
     end
   end
-  puts "Test data ready: #{Organization.count} structures, #{User.count} accounts (password: password)"
+
+  # A few listings, only on an empty table (their dates are counted from the day the seeds run).
+  if Listing.none?
+    [
+      [ "chartres", "Produits laitiers, œufs", "Yaourts nature", 1, "40", "piece", "chilled", "Date de péremption : après-demain" ],
+      [ "dreux", "Fruits et légumes", "Carottes", 3, "25", "kg", nil, "Cagettes à rapporter" ],
+      [ "dreux", "Pain, viennoiseries", "Baguettes de la veille", 0, "30", "piece", nil, nil ],
+      [ "chateaudun", "Épicerie sèche", "Pâtes et riz", 10, "12", "box", "ambient", nil ],
+      [ "nogent", "Surgelés", "Légumes surgelés", 5, nil, nil, "frozen", "Prévoir une glacière" ],
+      [ "chartres", "Autres", "Lessive", 30, "8", "piece", nil, "Bidons de 3 litres" ]
+    ].each do |city, category, title, days, quantity, unit, storage, description|
+      user = User.find_by!(email: "#{city}.responsable@glane.test")
+      listing = Listing.new_from(user)
+      listing.availability ||= "Sur rendez-vous"
+      listing.update!(category: Category.find_by!(name: category), title: title, available_until: days.days.from_now.to_date,
+                      quantity: quantity, unit: unit, storage: storage, description: description)
+    end
+  end
+
+  puts "Test data ready: #{Organization.count} structures, #{User.count} accounts (password: password), #{Listing.count} listings"
 end

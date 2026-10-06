@@ -8,7 +8,7 @@
 
 <section class="mb-3">
   <div class="text-body-secondary"><%= @listing.category.icon %> <%= @listing.category.name %></div>
-  <div class="fw-semibold <%= "text-danger" if @listing.available_until <= Date.tomorrow %>">
+  <div class="fw-semibold <%= "text-danger" if urgent?(@listing) %>">
     À récupérer <%= listing_deadline(@listing) %>
   </div>
   <% details = [ @listing.quantity_label, @listing.storage_label ].compact %>

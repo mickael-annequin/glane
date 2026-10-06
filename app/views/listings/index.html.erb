@@ -1,0 +1,36 @@
+<%# Home page (docs/conception/wireframes.md, screen 3): the listings that can be reserved. %>
+<% organization = current_user.organization %>
+<header class="home-header">
+  <span class="home-brand"><%= image_tag "logo.svg", width: 28, height: 28, alt: "" %> Glane</span>
+  <% if organization %><span class="home-organization"><%= organization.name %></span><% end %>
+</header>
+
+<% if current_user.manager? && organization&.usual_availability.blank? %>
+  <div class="todo-box">
+    <strong>À FAIRE</strong>
+    <p>Complétez la fiche de votre structure : indiquez quand les autres structures peuvent venir récupérer vos dons.</p>
+    <%= link_to "Compléter la fiche", edit_organization_path, class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<nav class="category-chips" aria-label="Filtrer par catégorie">
+  <%= link_to "Tout", root_path, class: [ "category-chip", ("active" if @category.nil?) ] %>
+  <% @categories.each do |category| %>
+    <%= link_to "#{category.icon} #{category.name}", root_path(category: category.id),
+                class: [ "category-chip", ("active" if category == @category) ] %>
+  <% end %>
+</nav>
+
+<% if @listings.empty? %>
+  <div class="text-center text-body-secondary my-5">
+    <p class="fs-1 mb-2">🌾</p>
+    <p><%= @category ? "Aucune annonce dans cette catégorie pour l'instant." : "Aucune annonce pour l'instant." %></p>
+    <% if organization %>
+      <%= link_to "+ Publier un surplus", new_listing_path, class: "btn btn-warning" %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="listing-cards">
+    <%= render partial: "listing_card", collection: @listings, as: :listing, locals: { organization: organization } %>
+  </div>
+<% end %>

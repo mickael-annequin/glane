@@ -13,7 +13,7 @@ class SignInTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
     assert cookies[:remember_user_token].present?
     follow_redirect!
-    assert_select "p", /Marie Dupont/
+    assert_select ".home-organization", "Secours Populaire Chartres"
   end
 
   test "refuses a wrong password, in French" do

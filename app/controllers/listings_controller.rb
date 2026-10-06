@@ -1,7 +1,15 @@
 class ListingsController < ApplicationController
-  before_action :require_organization, except: :show
+  before_action :require_organization, except: %i[index show]
   before_action :set_own_listing, only: %i[edit update withdraw]
   before_action :require_available, only: %i[edit update withdraw]
+
+  # Home page: the listings that can still be reserved, the most urgent first, filtered by category if asked.
+  def index
+    @categories = Category.visible.ordered
+    @category = @categories.find_by(id: params[:category])
+    @listings = Listing.reservable.includes(:category, :organization).order(:available_until, created_at: :desc)
+    @listings = @listings.where(category: @category) if @category
+  end
 
   # Anyone can see a listing that can still be reserved; the donor structure can always see its own.
   def show
