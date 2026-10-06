@@ -15,11 +15,11 @@ class OrganizationsControllerTest < ActionDispatch::IntegrationTest
   test "a manager edits the structure, and the new address is placed on the map" do
     sign_in users(:marie)
     patch organization_path, params: { organization: { address: "3 Place des Halles 28000 Chartres", latitude: "48.4457", longitude: "1.4867",
-                                                       city: "Chartres", usual_availability: "Lun–ven 9h–17h" } }
+                                                       city: "Chartres", usual_schedule: schedule_form } }
 
     assert_redirected_to organization_path
     organization = organizations(:secours_chartres).reload
-    assert_equal "Lun–ven 9h–17h", organization.usual_availability
+    assert_equal "Lundi : 9h–12h et 14h–17h", organization.usual_opening_hours.to_s
     assert_equal "Chartres", organization.city
   end
 

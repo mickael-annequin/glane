@@ -1,4 +1,4 @@
-<%# Choosing the pickup slot (docs/conception/wireframes.md, screen 6). %>
+<%# Choosing the pickup slot (docs/conception/wireframes.md, screen 6): only the opening hours of the listing. %>
 <% content_for :title, "Réserver" %>
 <% content_for :hide_tab_bar, true %>
 <%= render "shared/page_header", title: "Quand passez-vous ?", back_path: listing_path(@listing) %>
@@ -14,30 +14,41 @@
 
 <div class="info-card">
   <p class="mb-1 small text-body-secondary">Disponibilités du donateur :</p>
-  <p class="mb-0"><%= simple_format(@listing.availability, {}, wrapper_tag: "span") %></p>
+  <% availability_lines(@listing.opening_hours, @listing.availability_note).each do |line| %>
+    <p class="mb-0"><%= line %></p>
+  <% end %>
 </div>
 
-<%= form_with model: [ @listing, @reservation ] do |f| %>
-  <%= render "shared/form_errors", record: @reservation %>
-  <% chosen_day = params.dig(:reservation, :pickup_day) || Date.current.iso8601 %>
-  <% chosen_hour = params.dig(:reservation, :pickup_hour) %>
+<% times = pickup_times(@listing) %>
+<% if times.empty? %>
+  <p class="text-center text-body-secondary">Aucun créneau possible d'ici la date limite. Contactez le donateur pour vous arranger.</p>
+<% else %>
+  <%= form_with model: [ @listing, @reservation ], data: { controller: "pickup-slot", pickup_slot_times_value: times.to_json } do |f| %>
+    <%= render "shared/form_errors", record: @reservation %>
+    <% chosen_day = params.dig(:reservation, :pickup_day).presence_in(times.keys) || times.keys.first %>
+    <% chosen_hour = params.dig(:reservation, :pickup_hour) %>
 
-  <fieldset class="mb-3">
-    <legend class="form-label fs-6 mb-2">Jour</legend>
-    <div class="choice-chips">
-      <% pickup_days(@listing).each do |label, day| %>
-        <%= radio_button_tag "reservation[pickup_day]", day, day == chosen_day, class: "btn-check", id: "pickup_day_#{day}" %>
-        <%= label_tag "pickup_day_#{day}", label, class: "btn btn-outline-dark btn-sm" %>
-      <% end %>
+    <fieldset class="mb-3">
+      <legend class="form-label fs-6 mb-2">Jour</legend>
+      <div class="choice-chips">
+        <% times.each_key do |day| %>
+          <%= radio_button_tag "reservation[pickup_day]", day, day == chosen_day, class: "btn-check", id: "pickup_day_#{day}",
+                               data: { action: "pickup-slot#showTimes" } %>
+          <%= label_tag "pickup_day_#{day}", pickup_day_label(Date.parse(day)), class: "btn btn-outline-dark btn-sm" %>
+        <% end %>
+      </div>
+    </fieldset>
+
+    <div class="mb-4">
+      <%= label_tag "reservation_pickup_hour", "Heure", class: "form-label" %>
+      <%= select_tag "reservation[pickup_hour]",
+                     options_for_select(times[chosen_day].map { |clock| [ clock.sub(/\A0/, "").sub(":", "h"), clock ] }, chosen_hour),
+                     include_blank: "Choisir une heure", id: "reservation_pickup_hour", class: "form-select form-select-lg",
+                     data: { pickup_slot_target: "hour" } %>
+      <div class="form-text">Seulement les horaires de disponibilité de ce jour-là.</div>
     </div>
-  </fieldset>
 
-  <div class="mb-4">
-    <%= label_tag "reservation_pickup_hour", "Heure", class: "form-label" %>
-    <%= select_tag "reservation[pickup_hour]", options_for_select(ReservationsController::PICKUP_HOURS.map { |hour| [ hour.sub(":", "h"), hour ] }, chosen_hour),
-                   include_blank: "Choisir une heure", id: "reservation_pickup_hour", class: "form-select form-select-lg" %>
-  </div>
-
-  <%= f.submit "Confirmer la réservation", class: "btn btn-primary btn-lg w-100" %>
-  <p class="form-text text-center mt-2">L'annonce est alors réservée pour votre structure et n'est plus proposée aux autres.</p>
+    <%= f.submit "Confirmer la réservation", class: "btn btn-primary btn-lg w-100" %>
+    <p class="form-text text-center mt-2">L'annonce est alors réservée pour votre structure et n'est plus proposée aux autres.</p>
+  <% end %>
 <% end %>

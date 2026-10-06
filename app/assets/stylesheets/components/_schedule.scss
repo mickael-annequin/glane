@@ -1,0 +1,25 @@
+// Weekly planning form: one line per day, its time ranges only show when the day is checked.
+.schedule-day {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid $straw;
+}
+
+.schedule-ranges {
+  display: none;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0.3rem 0 0.2rem 1.75rem;
+}
+
+.schedule-day:has(.form-check-input:checked) .schedule-ranges {
+  display: flex;
+}
+
+.schedule-range {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+
+  .form-select { width: 5.5rem; }
+}

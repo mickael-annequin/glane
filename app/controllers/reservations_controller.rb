@@ -1,6 +1,5 @@
 # Reserving a listing of another structure (docs/conception/wireframes.md, screen 6).
 class ReservationsController < ApplicationController
-  PICKUP_HOURS = (7..20).flat_map { |hour| [ format("%02d:00", hour), format("%02d:30", hour) ] }.freeze
   MAX_DAYS_AHEAD = 14
 
   before_action :set_listing
@@ -40,7 +39,7 @@ class ReservationsController < ApplicationController
   def chosen_pickup_at
     day = params.dig(:reservation, :pickup_day)
     hour = params.dig(:reservation, :pickup_hour)
-    return if day.blank? || !PICKUP_HOURS.include?(hour)
+    return if day.blank? || !Schedule::TIMES.include?(hour)
 
     Time.zone.parse("#{day} #{hour}")
   rescue ArgumentError

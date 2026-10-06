@@ -37,17 +37,18 @@ end
 if Rails.env.development?
   [
     { name: "Épicerie solidaire de Chartres", address: "12 Rue des Ecuyers 28000 Chartres", latitude: 48.446156, longitude: 1.490509,
-      city: "Chartres", phone: "02 37 00 00 01", usual_availability: "Du lundi au vendredi, 9h–12h et 14h–17h",
+      city: "Chartres", phone: "02 37 00 00 01", usual_schedule: (1..5).to_h { |day| [ day.to_s, [ %w[09:00 12:00], %w[14:00 17:00] ] ] },
       people: [ [ "Marie Dupont", "chartres.responsable" ], [ "Paul Martin", "chartres.membre" ] ] },
     { name: "Foyer d'accueil de Dreux", address: "Place Métézeau 28100 Dreux", latitude: 48.73577, longitude: 1.368172,
-      city: "Dreux", phone: "02 37 00 00 02", usual_availability: "Mardi et jeudi, 10h–16h",
+      city: "Dreux", phone: "02 37 00 00 02", usual_schedule: { "2" => [ %w[10:00 16:00] ], "4" => [ %w[10:00 16:00] ] },
+      usual_availability_note: "Sonner à l'entrée du parking",
       people: [ [ "Sophie Leroy", "dreux.responsable" ], [ "Karim Benali", "dreux.membre" ] ] },
     { name: "Association d'entraide de Châteaudun", address: "Place du 18 Octobre 28200 Châteaudun", latitude: 48.070261, longitude: 1.328718,
-      city: "Châteaudun", phone: nil, usual_availability: "Le mercredi après-midi",
+      city: "Châteaudun", phone: nil, usual_schedule: { "3" => [ %w[14:00 17:00] ] },
       people: [ [ "Julie Petit", "chateaudun.responsable" ], [ "Luc Bernard", "chateaudun.membre" ] ] },
-    # No usual availability: its manager sees the "À faire" box on the home page.
+    # No usual opening hours: its manager sees the "À faire" box on the home page.
     { name: "CCAS de Nogent-le-Rotrou", address: "Place du Général Saint Pol 28400 Nogent-le-Rotrou", latitude: 48.322059, longitude: 0.820984,
-      city: "Nogent-le-Rotrou", phone: "02 37 00 00 04", usual_availability: nil,
+      city: "Nogent-le-Rotrou", phone: "02 37 00 00 04", usual_schedule: {},
       people: [ [ "Nadia Moreau", "nogent.responsable" ], [ "Thomas Garnier", "nogent.membre" ] ] }
   ].each do |data|
     organization = Organization.find_or_create_by!(name: data[:name]) do |new_organization|
@@ -75,7 +76,7 @@ if Rails.env.development?
     ].each do |city, category, title, days, quantity, unit, storage, description|
       user = User.find_by!(email: "#{city}.responsable@glane.test")
       listing = Listing.new_from(user)
-      listing.availability ||= "Sur rendez-vous"
+      listing.schedule = { "1" => [ %w[09:00 12:00] ], "5" => [ %w[09:00 12:00] ] } if listing.opening_hours.empty?
       listing.update!(category: Category.find_by!(name: category), title: title, available_until: days.days.from_now.to_date,
                       quantity: quantity, unit: unit, storage: storage, description: description)
     end

@@ -30,6 +30,7 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    params.require(:organization).permit(:name, :address, :latitude, :longitude, :city, :phone, :usual_availability)
+    permitted = params.require(:organization).permit(:name, :address, :latitude, :longitude, :city, :phone, :usual_availability_note)
+    with_schedule(permitted, :usual_schedule, params[:organization])
   end
 end

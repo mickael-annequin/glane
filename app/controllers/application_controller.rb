@@ -16,6 +16,13 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 
+  # Adds the planning sent by app/views/shared/_schedule_fields.html.erb (when the form has one) to the permitted params.
+  def with_schedule(permitted, attribute, form_params)
+    return permitted unless form_params&.key?(attribute)
+
+    permitted.merge(attribute => Schedule.from_form(form_params[attribute]).to_h)
+  end
+
   # When accepting an invitation, the person also gives their name and phone.
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:accept_invitation, keys: %i[name phone])

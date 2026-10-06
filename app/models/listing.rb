@@ -20,7 +20,7 @@ class Listing < ApplicationRecord
 
   enum :status, { available: "available", reserved: "reserved", picked_up: "picked_up", withdrawn: "withdrawn" }, validate: true
 
-  validates :title, :available_until, :address, :availability, presence: true
+  validates :title, :available_until, :address, presence: true
   validates :title, length: { maximum: 80 }
   validates :unit, inclusion: { in: UNITS.keys }, allow_blank: true
   validates :storage, inclusion: { in: STORAGES.keys }, allow_blank: true
@@ -30,6 +30,7 @@ class Listing < ApplicationRecord
   validate :available_until_not_in_the_past, if: -> { available_until.present? && (new_record? || available_until_changed?) }
   validate :category_offered, if: -> { category.present? && (new_record? || category_id_changed?) }
   validate :photos_are_small_images
+  validate :schedule_given
 
   MAX_PHOTOS = 5
   MAX_PHOTO_SIZE = 10.megabytes # the limit of the free Cloudinary plan
@@ -37,12 +38,18 @@ class Listing < ApplicationRecord
   # Listings that other structures can still reserve: available, and not past their date.
   scope :reservable, -> { available.where(available_until: Date.current..) }
 
-  # A new listing from this person: pickup place and availability copied from their structure.
+  # A new listing from this person: pickup place and opening hours copied from their structure.
   def self.new_from(user)
     organization = user.organization
     new(user: user, organization: organization, address: organization.address, city: organization.city,
         latitude: organization.latitude, longitude: organization.longitude,
-        availability: organization.usual_availability, available_until: 7.days.from_now.to_date)
+        schedule: organization.usual_schedule, availability_note: organization.usual_availability_note,
+        available_until: 7.days.from_now.to_date)
+  end
+
+  # When the pickup is possible (days and time ranges). Empty for the listings published before the planning existed.
+  def opening_hours
+    Schedule.new(schedule)
   end
 
   # Accepts "2,5" as well as "2.5" (French keyboards).
@@ -76,6 +83,12 @@ class Listing < ApplicationRecord
 
   def available_until_not_in_the_past
     errors.add(:available_until, "ne peut pas être dans le passé") if available_until < Date.current
+  end
+
+  # A new listing needs at least one day; the older ones (without planning) can keep none.
+  def schedule_given
+    errors.add(:schedule, "doivent comporter au moins un jour") if opening_hours.empty? && (new_record? || schedule_changed?)
+    opening_hours.errors.each { |message| errors.add(:schedule, message) }
   end
 
   def photos_are_small_images

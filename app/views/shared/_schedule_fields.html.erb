@@ -1,0 +1,38 @@
+<%# Weekly planning with drop-down menus: for each checked day, one or two time ranges (app/models/schedule.rb).
+    The time ranges of a day only show when the day is checked (CSS :has, see _schedule.scss). %>
+<% base = "#{f.object_name}[#{attribute}]" %>
+<% base_id = "#{f.object_name}_#{attribute}" %>
+<% times = Schedule::TIMES.map { |clock| [ clock.sub(/\A0/, "").sub(":", "h"), clock ] } %>
+<fieldset class="mb-3 schedule-fields" data-controller="schedule-editor">
+  <legend class="form-label fs-6 mb-1"><%= label %><%= " *" if local_assigns[:required] %></legend>
+  <div class="form-text mb-2"><%= help %></div>
+  <%= hidden_field_tag "#{base}[sent]", "1", id: nil %>
+
+  <% Schedule::DAYS.each do |day, name| %>
+    <% ranges = schedule.days[day.to_s] || [] %>
+    <div class="schedule-day" data-schedule-editor-target="day">
+      <div class="form-check">
+        <%= check_box_tag "#{base}[#{day}][open]", "1", ranges.any?, id: "#{base_id}_#{day}", class: "form-check-input" %>
+        <%= label_tag "#{base_id}_#{day}", name.capitalize, class: "form-check-label" %>
+      </div>
+      <div class="schedule-ranges">
+        <% Schedule::RANGES_PER_DAY.times do |index| %>
+          <%# A newly checked day starts with 9h–17h; the 2nd range is optional (— = none). %>
+          <% from, to = ranges[index] || (index.zero? ? %w[09:00 17:00] : [ nil, nil ]) %>
+          <span class="schedule-range">
+            <%= index.zero? ? "de" : "et de" %>
+            <%= select_tag "#{base}[#{day}][ranges][#{index}][from]", options_for_select(times, from), include_blank: (index.zero? ? false : "—"),
+                           id: nil, class: "form-select form-select-sm", aria: { label: "#{name.capitalize}, plage #{index + 1}, début" } %>
+            à
+            <%= select_tag "#{base}[#{day}][ranges][#{index}][to]", options_for_select(times, to), include_blank: (index.zero? ? false : "—"),
+                           id: nil, class: "form-select form-select-sm", aria: { label: "#{name.capitalize}, plage #{index + 1}, fin" } %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <button type="button" class="btn btn-link btn-sm px-0" data-action="schedule-editor#copy">
+    Copier les horaires du premier jour coché sur les autres jours cochés
+  </button>
+</fieldset>

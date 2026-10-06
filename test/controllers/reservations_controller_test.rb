@@ -7,14 +7,37 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     post listing_reservations_path(listing), params: { reservation: { pickup_day: day.iso8601, pickup_hour: hour } }
   end
 
-  test "offers the days until the deadline, and the donor's availability" do
-    get new_listing_reservation_path(listings(:yogurts)) # deadline: tomorrow
+  test "offers the days until the deadline, and the donor's opening hours" do
+    travel_to Time.current.change(hour: 10) # in the morning, today still has opening times
+    get new_listing_reservation_path(listings(:yogurts)) # deadline: tomorrow, open every day 9h–17h
 
     assert_response :success
     assert_select "input[name='reservation[pickup_day]']", count: 2
     assert_select "label", "Aujourd'hui"
     assert_select "label", "Demain"
-    assert_select ".info-card", /Du lundi au vendredi/
+    assert_select ".info-card", /Du lundi au dimanche : 9h–17h/
+  end
+
+  test "only offers the open days, and their hours" do
+    travel_to Time.current.change(hour: 10)
+    open_day = Date.current + 2
+    listings(:carrots).update_columns(organization_id: organizations(:secours_chartres).id, available_until: Date.current + 6,
+                                      schedule: { open_day.cwday.to_s => [ %w[10:00 11:00] ] })
+    get new_listing_reservation_path(listings(:carrots))
+
+    assert_select "input[name='reservation[pickup_day]']", count: 1
+    assert_select "input[name='reservation[pickup_day]'][value=?]", open_day.iso8601
+    assert_select "select[name='reservation[pickup_hour]'] option[value]:not([value=''])", count: 4 # 10h, 10h15, 10h30, 10h45
+    times = JSON.parse(css_select("form[data-controller=pickup-slot]").first["data-pickup-slot-times-value"])
+    assert_equal({ open_day.iso8601 => %w[10:00 10:15 10:30 10:45] }, times)
+  end
+
+  test "refuses a time outside the opening hours" do
+    listings(:yogurts).update_columns(schedule: (1..7).to_h { |day| [ day.to_s, [ %w[09:00 12:00] ] ] })
+    book(listings(:yogurts), hour: "14:00")
+
+    assert_response :unprocessable_content
+    assert_select ".alert", /Le créneau n'est pas dans les disponibilités du donateur/
   end
 
   test "reserves a listing: it is attributed and leaves the list" do

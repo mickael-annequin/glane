@@ -45,6 +45,8 @@ class Reservation < ApplicationRecord
       errors.add(:pickup_at, "est déjà passé")
     elsif pickup_at.to_date > listing.available_until
       errors.add(:pickup_at, "doit être au plus tard le jour de la date limite")
+    elsif !listing.opening_hours.empty? && !listing.opening_hours.includes?(pickup_at)
+      errors.add(:pickup_at, "n'est pas dans les disponibilités du donateur")
     end
   end
 

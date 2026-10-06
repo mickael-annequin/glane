@@ -42,7 +42,7 @@ class ListingsIndexTest < ActionDispatch::IntegrationTest
     get root_path
     assert_select ".todo-box", /Complétez la fiche de votre structure/
 
-    organizations(:secours_chartres).update!(usual_availability: "Lun–ven 9h–17h")
+    organizations(:secours_chartres).update!(usual_schedule: every_day_9_to_17)
     get root_path
     assert_select ".todo-box", count: 0
   end

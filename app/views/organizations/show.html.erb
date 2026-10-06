@@ -29,7 +29,11 @@
     </p>
     <p class="mb-1"><%= @organization.phone.presence || "Pas de téléphone" %></p>
     <p class="mb-1 small text-body-secondary">Disponibilités habituelles :</p>
-    <p class="mb-3"><%= @organization.usual_availability.present? ? simple_format(@organization.usual_availability, {}, wrapper_tag: "span") : "Pas encore renseignées" %></p>
+    <% lines = availability_lines(@organization.usual_opening_hours, @organization.usual_availability_note) %>
+    <% (lines.presence || [ "Pas encore renseignées" ]).each do |line| %>
+      <p class="mb-0"><%= line %></p>
+    <% end %>
+    <div class="mb-3"></div>
     <% if current_user.manager? %>
       <%= link_to "Modifier la structure", edit_organization_path, class: "btn btn-outline-dark" %>
     <% end %>

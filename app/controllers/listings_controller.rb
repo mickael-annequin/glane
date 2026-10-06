@@ -80,7 +80,8 @@ class ListingsController < ApplicationController
 
   def listing_params
     # photos: the photos kept (their signed id) and the new ones (uploaded files), see the form.
-    params.require(:listing).permit(:category_id, :title, :available_until, :quantity, :unit, :storage,
-                                    :address, :city, :latitude, :longitude, :availability, :description, photos: [])
+    permitted = params.require(:listing).permit(:category_id, :title, :available_until, :quantity, :unit, :storage,
+                                                :address, :city, :latitude, :longitude, :availability_note, :description, photos: [])
+    with_schedule(permitted, :schedule, params[:listing])
   end
 end

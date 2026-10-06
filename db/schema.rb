@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_06_144013) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_06_144857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,11 +76,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_144013) do
     t.string "city"
     t.float "latitude", null: false
     t.float "longitude", null: false
-    t.text "availability", null: false
+    t.text "availability_note"
     t.text "description"
     t.string "status", default: "available", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "schedule", default: {}, null: false
     t.index ["category_id"], name: "index_listings_on_category_id"
     t.index ["organization_id"], name: "index_listings_on_organization_id"
     t.index ["status", "available_until"], name: "index_listings_on_status_and_available_until"
@@ -94,10 +95,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_144013) do
     t.float "latitude"
     t.float "longitude"
     t.string "phone"
-    t.text "usual_availability"
+    t.text "usual_availability_note"
     t.datetime "deactivated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "usual_schedule", default: {}, null: false
   end
 
   create_table "reservations", force: :cascade do |t|

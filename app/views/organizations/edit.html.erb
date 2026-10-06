@@ -19,10 +19,12 @@
     <div class="form-text">Affiché quand le membre de l'échange n'a pas donné le sien.</div>
   </div>
 
+  <%= render "shared/schedule_fields", f: f, attribute: :usual_schedule, schedule: @organization.usual_opening_hours, label: "Disponibilités habituelles",
+             help: "Quand une autre structure peut venir récupérer un don. Recopiées dans chaque nouvelle annonce, et modifiables annonce par annonce." %>
+
   <div class="mb-4">
-    <%= f.label :usual_availability, "Disponibilités habituelles", class: "form-label" %>
-    <%= f.text_area :usual_availability, rows: 3, placeholder: "ex. Du lundi au vendredi, 9h–12h et 14h–17h", class: "form-control form-control-lg" %>
-    <div class="form-text">Quand une autre structure peut venir récupérer un don. Recopié dans chaque annonce, et modifiable annonce par annonce.</div>
+    <%= f.label :usual_availability_note, "Précisions (facultatif)", class: "form-label" %>
+    <%= f.text_field :usual_availability_note, placeholder: "ex. Sonner à l'entrée du parking", class: "form-control form-control-lg" %>
   </div>
 
   <%= f.submit "Enregistrer", class: "btn btn-primary btn-lg w-100" %>

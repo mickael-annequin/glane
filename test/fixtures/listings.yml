@@ -10,7 +10,7 @@ carrots:
   city: Dreux
   latitude: 48.73577
   longitude: 1.368172
-  availability: Mardi et jeudi, 10h–16h
+  schedule: <%= (1..7).to_h { |day| [ day.to_s, [ %w[09:00 17:00] ] ] }.to_json %>
   description: Cagettes à rapporter
 
 yogurts:
@@ -26,7 +26,7 @@ yogurts:
   city: Chartres
   latitude: 48.446156
   longitude: 1.490509
-  availability: Du lundi au vendredi, 9h–17h
+  schedule: <%= (1..7).to_h { |day| [ day.to_s, [ %w[09:00 17:00] ] ] }.to_json %>
 
 old_milk:
   organization: secours_chartres
@@ -38,7 +38,7 @@ old_milk:
   city: Chartres
   latitude: 48.446156
   longitude: 1.490509
-  availability: Du lundi au vendredi, 9h–17h
+  schedule: <%= (1..7).to_h { |day| [ day.to_s, [ %w[09:00 17:00] ] ] }.to_json %>
 
 withdrawn_bread:
   organization: restos_dreux
@@ -50,7 +50,7 @@ withdrawn_bread:
   city: Dreux
   latitude: 48.73577
   longitude: 1.368172
-  availability: Mardi et jeudi, 10h–16h
+  schedule: <%= (1..7).to_h { |day| [ day.to_s, [ %w[09:00 17:00] ] ] }.to_json %>
   status: withdrawn
 
 potatoes:
@@ -65,5 +65,5 @@ potatoes:
   city: Chartres
   latitude: 48.446156
   longitude: 1.490509
-  availability: Du lundi au vendredi, 9h–17h
+  schedule: <%= (1..7).to_h { |day| [ day.to_s, [ %w[09:00 17:00] ] ] }.to_json %>
   status: reserved

@@ -30,7 +30,8 @@ ex. une structure a plusieurs membres, une annonce a plusieurs réservations (au
 | city | texte | `Chartres` (rempli par le géocodage, pour afficher « Chartres · 3 km ») |
 | latitude / longitude | décimal | `48.4469` / `1.4890` (rempli par le géocodage IGN) |
 | phone | texte, facultatif | `02 37 00 00 00` |
-| usual_availability | texte, facultatif | `Du lundi au vendredi, 9h–12h et 14h–17h` (rempli par le responsable) |
+| usual_schedule | JSON | `{"1": [["09:00", "12:00"], ["14:00", "17:00"]], …}` : le planning habituel (1 = lundi … 7 = dimanche, 2 plages par jour au plus), rempli par le responsable |
+| usual_availability_note | texte, facultatif | `Sonner à l'entrée du parking` |
 | deactivated_at | date + heure, facultatif | vide = active ; rempli = désactivée le … |
 
 ### users : les personnes (colonnes de Devise et de devise_invitable, plus les nôtres)
@@ -77,7 +78,8 @@ Par défaut, une personne suit toutes les catégories : on enregistre seulement 
 | address | texte | `Place Métézeau 28100 Dreux` (le lieu de récupération, copié de la structure, modifiable) |
 | city | texte | `Dreux` |
 | latitude / longitude | décimal | (données par la suggestion d'adresse de l'IGN choisie) |
-| availability | texte | `lun–ven 9h–17h` (copiées de la structure, modifiables) |
+| schedule | JSON | le planning de récupération (copié de la structure, modifiable) ; vide pour les annonces publiées avant le planning |
+| availability_note | texte, facultatif | `Sonner à l'entrée du parking` |
 | description | texte long, facultatif | `Cagettes à rapporter` (le texte libre) |
 | status | choix | `available` (disponible) / `reserved` (réservée) / `picked_up` (récupérée) / `withdrawn` (retirée) |
 
@@ -131,7 +133,7 @@ La plupart des infos sont une colonne. Les autres **se calculent** à l'affichag
 | Badge « Votre structure » | l'annonce appartient à ma structure |
 | « À faire : stock récupéré ? » | une réservation `active` de mes dons dont le créneau date de plus de 3 h |
 | « Récupération prévue aujourd'hui » | une réservation `active` de ma structure dont le créneau est aujourd'hui |
-| « Complétez la fiche de votre structure » | `usual_availability` est vide (responsables seulement) |
+| « Complétez la fiche de votre structure » | `usual_schedule` est vide (responsables seulement) |
 | Téléphone du contact | `users.phone` de la personne, sinon `organizations.phone` |
 | « Invitation en attente » | `invitation_accepted_at` est vide |
 | Nombre de membres d'une structure | on compte ses `users` actifs |

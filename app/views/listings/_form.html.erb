@@ -47,10 +47,12 @@
   <%= render "shared/address_field", f: f, label: "Lieu de récupération",
              help: "Par défaut, l'adresse de votre structure." %>
 
+  <%= render "shared/schedule_fields", f: f, attribute: :schedule, schedule: listing.opening_hours, label: "Disponibilités", required: true,
+             help: "Quand on peut venir récupérer ce don : la réservation ne proposera que ces horaires. Par défaut, ceux de votre structure." %>
+
   <div class="mb-3">
-    <%= f.label :availability, "Disponibilités *", class: "form-label" %>
-    <%= f.text_area :availability, rows: 2, placeholder: "ex. Du lundi au vendredi, 9h–17h", class: "form-control form-control-lg" %>
-    <div class="form-text">Quand on peut venir récupérer ce don. Par défaut, les disponibilités de votre structure.</div>
+    <%= f.label :availability_note, "Précisions (facultatif)", class: "form-label" %>
+    <%= f.text_field :availability_note, placeholder: "ex. Sonner à l'entrée du parking", class: "form-control form-control-lg" %>
   </div>
 
   <div class="mb-4">

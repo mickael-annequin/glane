@@ -12,7 +12,8 @@ fr:
         name: "Nom"
         address: "Adresse"
         phone: "Téléphone"
-        usual_availability: "Disponibilités habituelles"
+        usual_schedule: "Les disponibilités habituelles"
+        usual_availability_note: "Les précisions"
         manager_email: "Email du premier responsable"
       listing:
         category: "Catégorie"
@@ -22,7 +23,8 @@ fr:
         unit: "Unité"
         storage: "Conservation"
         address: "Lieu de récupération"
-        availability: "Disponibilités"
+        schedule: "Les disponibilités"
+        availability_note: "Les précisions"
         description: "Informations complémentaires"
         photos: "Les photos"
       reservation:

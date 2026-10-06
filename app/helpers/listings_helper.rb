@@ -78,16 +78,30 @@ module ListingsHelper
     "#{day} à #{time.strftime("%-Hh%M").delete_suffix("00")}"
   end
 
-  # The days that can be chosen for the pickup: from today to the deadline (2 weeks at most).
-  def pickup_days(listing)
+  # The pickup times that can be chosen, day by day, from today to the deadline (2 weeks at most):
+  # { "2026-10-07" => ["09:00", "09:15", …], … }. Only the opening hours of the listing, and not in the past.
+  # A listing published before the planning existed has none: every day, from 7h to 21h.
+  def pickup_times(listing)
+    hours = listing.opening_hours
     last_day = [ listing.available_until, Date.current + ReservationsController::MAX_DAYS_AHEAD ].min
-    (Date.current..last_day).map do |day|
-      label = if day == Date.current then "Aujourd'hui"
-      elsif day == Date.tomorrow then "Demain"
-      else l(day, format: "%a %-d").capitalize
-      end
-      [ label, day.iso8601 ]
+    (Date.current..last_day).each_with_object({}) do |day, result|
+      times = hours.empty? ? Schedule::TIMES.select { |clock| clock.between?("07:00", "20:45") } : hours.times_on(day)
+      times = times.select { |clock| Time.zone.parse("#{day} #{clock}") > Time.current } if day == Date.current
+      result[day.iso8601] = times if times.any?
     end
+  end
+
+  # "Aujourd'hui", "Demain", "Mer 8"…
+  def pickup_day_label(day)
+    if day == Date.current then "Aujourd'hui"
+    elsif day == Date.tomorrow then "Demain"
+    else l(day, format: "%a %-d").capitalize
+    end
+  end
+
+  # The opening hours and their note, one per line ("Du lundi au vendredi : 9h–12h et 14h–17h", "Sonner…").
+  def availability_lines(schedule, note)
+    [ (schedule.to_s unless schedule.empty?), note.presence ].compact
   end
 
   # Links to see the pickup place on a map, and to get there (opens Google Maps or Plans on the phone).

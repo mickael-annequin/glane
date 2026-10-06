@@ -5,7 +5,7 @@
   <% if organization %><span class="home-organization"><%= organization.name %></span><% end %>
 </header>
 
-<% if current_user.manager? && organization&.usual_availability.blank? %>
+<% if current_user.manager? && organization&.usual_opening_hours&.empty? %>
   <div class="todo-box">
     <strong>À FAIRE</strong>
     <p>Complétez la fiche de votre structure : indiquez quand les autres structures peuvent venir récupérer vos dons.</p>

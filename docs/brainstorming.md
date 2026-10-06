@@ -39,7 +39,7 @@ Lors d'une réunion, des responsables de structures sociales d'Eure-et-Loir ont 
 | Lancement | Présenter d'abord un **Proof of Concept** aux structures | Un essai en conditions réelles ne sera peut-être pas possible tout de suite. |
 
 ## Règles de fonctionnement (proposées, à confirmer pendant la conception)
-- **Créneau de récupération** : la structure qui réserve choisit une date et une heure avant la date limite. Le donateur indique ses disponibilités en texte libre dans l'annonce (« lun–ven 9h–17h »).
+- **Créneau de récupération** : la structure qui réserve choisit un jour et une heure avant la date limite, **seulement dans les disponibilités du donateur**. Les disponibilités sont un **planning** : pour chaque jour coché, une ou deux plages horaires choisies dans des menus déroulants (au quart d'heure), plus une note libre facultative (« sonner à l'entrée du parking »). Celles de la structure sont recopiées dans chaque nouvelle annonce, et modifiables annonce par annonce.
 - **Annulation** : le donateur comme le réserveur peuvent annuler une réservation. L'annonce redevient alors disponible.
 - **Clôture** : c'est le donateur qui clôture l'annonce une fois le stock récupéré.
 - **« Stock récupéré ? »** : environ 3 h après le créneau, si le donateur n'a pas clôturé, l'app le lui demande (notification + question sur son accueil).

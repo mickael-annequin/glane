@@ -5,16 +5,32 @@ class ListingsControllerTest < ActionDispatch::IntegrationTest
 
   def listing_params(attributes = {})
     { category_id: categories(:vegetables).id, title: "Pommes de terre", available_until: 5.days.from_now.to_date,
-      availability: "Lun–ven 9h–17h", address: "12 rue des Écuyers, 28000 Chartres" }.merge(attributes)
+      schedule: schedule_form, address: "12 rue des Écuyers, 28000 Chartres" }.merge(attributes)
   end
 
-  test "the form is filled with the place and availability of my structure" do
-    organizations(:secours_chartres).update!(usual_availability: "Le mercredi")
+  test "the form is filled with the place and opening hours of my structure" do
+    organizations(:secours_chartres).update!(usual_schedule: { "3" => [ %w[14:00 17:00] ] }, usual_availability_note: "Sonner")
     get new_listing_path
 
     assert_response :success
     assert_select "input[name='listing[address]'][value=?]", "12 rue des Écuyers, 28000 Chartres"
-    assert_select "textarea[name='listing[availability]']", "Le mercredi"
+    assert_select "input[name='listing[schedule][3][open]'][checked]"
+    assert_select "input[name='listing[schedule][1][open]']:not([checked])"
+    assert_select "select[name='listing[schedule][3][ranges][0][from]'] option[selected]", "14h00"
+    assert_select "input[name='listing[availability_note]'][value=?]", "Sonner"
+  end
+
+  test "saves the opening hours chosen in the menus" do
+    post listings_path, params: { listing: listing_params(schedule: schedule_form(2 => [ %w[10:00 16:00] ], 4 => [ %w[10:00 12:00], %w[14:00 18:30] ])) }
+
+    assert_equal "Mardi : 10h–16h · Jeudi : 10h–12h et 14h–18h30", Listing.last.opening_hours.to_s
+  end
+
+  test "refuses a listing without any day of opening hours" do
+    post listings_path, params: { listing: listing_params(schedule: { "sent" => "1" }) }
+
+    assert_response :unprocessable_content
+    assert_select ".alert", /Les disponibilités doivent comporter au moins un jour/
   end
 
   test "publishes a listing with only the required fields" do
@@ -55,12 +71,13 @@ class ListingsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to organization_path
   end
 
-  test "shows a listing to everyone, with the donor and the place" do
+  test "shows a listing to everyone, with the donor, the place and the opening hours" do
     sign_in users(:paul)
     get listing_path(listings(:yogurts))
 
     assert_response :success
     assert_select ".info-card", /Marie Dupont/
+    assert_select ".info-card", /Du lundi au dimanche : 9h–17h/
     assert_select "a[href*='google.com/maps/dir']"
     assert_select "a", text: "Modifier", count: 0
   end

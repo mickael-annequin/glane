@@ -25,7 +25,9 @@
     · <%= link_to "Itinéraire", directions_url(@listing), target: "_blank", rel: "noopener" %>
   </p>
   <p class="mb-1 small text-body-secondary">Disponibilités :</p>
-  <p class="mb-0"><%= simple_format(@listing.availability, {}, wrapper_tag: "span") %></p>
+  <% availability_lines(@listing.opening_hours, @listing.availability_note).each do |line| %>
+    <p class="mb-0"><%= line %></p>
+  <% end %>
   <% if @listing.description.present? %>
     <p class="mt-3 mb-0">« <%= simple_format(@listing.description, {}, wrapper_tag: "span") %> »</p>
   <% end %>
