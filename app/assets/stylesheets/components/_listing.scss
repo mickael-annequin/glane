@@ -167,3 +167,46 @@
   background: $straw;
   color: $night;
 }
+
+// Photos: small squares in the form, a sideways gallery on the listing page.
+.photo-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  &:empty { display: none; }
+
+  img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: $border-radius;
+    object-fit: cover;
+  }
+}
+
+.photo-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.photo-gallery {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  a {
+    flex: none;
+    width: 85%;
+    scroll-snap-align: start;
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: $border-radius-lg;
+    object-fit: cover;
+  }
+}

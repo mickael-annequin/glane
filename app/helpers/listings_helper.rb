@@ -36,6 +36,16 @@ module ListingsHelper
     listing.available_until <= Date.tomorrow
   end
 
+  # Address of a listing photo. Online the photos are on Cloudinary, which resizes them on the fly;
+  # on the developer's computer and in tests they are files on disk, shown as they are.
+  def photo_url(photo, **transformation)
+    if photo.blob.service_name == "cloudinary"
+      cl_image_path(photo.key, quality: :auto, fetch_format: :auto, **transformation)
+    else
+      url_for(photo)
+    end
+  end
+
   # Links to see the pickup place on a map, and to get there (opens Google Maps or Plans on the phone).
   def map_url(record)
     "https://www.openstreetmap.org/?mlat=#{record.latitude}&mlon=#{record.longitude}#map=17/#{record.latitude}/#{record.longitude}"

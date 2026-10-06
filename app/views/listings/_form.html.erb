@@ -58,6 +58,30 @@
     <%= f.text_area :description, rows: 3, placeholder: "ex. À garder au frais, cagettes à rapporter…", class: "form-control form-control-lg" %>
   </div>
 
+  <%# Optional and discreet: for a common product, the category icon is enough. %>
+  <fieldset class="mb-4" data-controller="photo-preview">
+    <legend class="form-label fs-6 mb-1">Photos (facultatif)</legend>
+    <div class="form-text mb-2">Seulement si c'est utile, par exemple pour montrer l'état du stock. <%= Listing::MAX_PHOTOS %> au maximum.</div>
+    <% saved_photos = listing.photos.attachments.select { |photo| photo.blob.persisted? } %>
+    <% if saved_photos.any? %>
+      <div class="photo-thumbs mb-2">
+        <% saved_photos.each do |photo| %>
+          <label class="photo-thumb">
+            <%= image_tag photo_url(photo, width: 160, height: 160, crop: :fill, gravity: :auto), alt: "" %>
+            <%# Checked = kept. Unchecking a photo removes it when saving. %>
+            <span class="form-check">
+              <%= check_box_tag "listing[photos][]", photo.signed_id, true, id: "keep_photo_#{photo.id}", class: "form-check-input" %>
+              <span class="form-check-label small">Garder</span>
+            </span>
+          </label>
+        <% end %>
+      </div>
+    <% end %>
+    <%= f.file_field :photos, multiple: true, accept: "image/*", class: "form-control",
+                     data: { action: "photo-preview#show", photo_preview_target: "input" } %>
+    <div class="photo-thumbs mt-2" data-photo-preview-target="list"></div>
+  </fieldset>
+
   <%= f.submit listing.new_record? ? "Publier" : "Enregistrer", class: "btn btn-primary btn-lg w-100" %>
   <p class="form-text text-center mt-2">* obligatoire</p>
 <% end %>

@@ -65,6 +65,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md).
 ## Phase 6 — Lancement 🚀
 - [ ] **Essai en conditions réelles**, si c'est possible, avec 2 ou 3 structures volontaires, puis des corrections à partir de leurs retours.
 - [ ] **Mentions légales, politique de confidentialité** (RGPD) et guide d'utilisation d'une page.
+- [ ] **Compte Cloudinary propre à Glane** : pour le Proof of Concept, les photos sont sur le compte de Gambade (dossier `glane/`). Avant le lancement, créer un compte dédié, y recopier les photos et remplacer `CLOUDINARY_URL` dans Render. *Test :* les photos des annonces s'affichent toujours, et le compte de Gambade ne contient plus de photos de Glane.
 - [ ] **Vérifier la clé SMTP de Brevo** avant le lancement : elle expire le 6 octobre 2027, et aussi après 90 jours sans aucun envoi. Si besoin, en générer une nouvelle et la remplacer dans Render (`SMTP_PASSWORD`). *Test :* « Mot de passe oublié » envoie bien l'email.
 - [ ] **Création de toutes les structures** et invitation de leurs responsables, puis décision sur l'hébergement (gratuit ou payant).
 

@@ -13,6 +13,8 @@ class Listing < ApplicationRecord
   belongs_to :organization # the donor structure
   belongs_to :user         # the person who published
   belongs_to :category
+  # Optional photos, only shown on the listing page (the list keeps the category icon).
+  has_many_attached :photos
 
   enum :status, { available: "available", reserved: "reserved", picked_up: "picked_up", withdrawn: "withdrawn" }, validate: true
 
@@ -25,6 +27,10 @@ class Listing < ApplicationRecord
   validates :quantity, presence: { message: "doit être indiquée avec l'unité" }, if: -> { unit.present? }
   validate :available_until_not_in_the_past, if: -> { available_until.present? && (new_record? || available_until_changed?) }
   validate :category_offered, if: -> { category.present? && (new_record? || category_id_changed?) }
+  validate :photos_are_small_images
+
+  MAX_PHOTOS = 5
+  MAX_PHOTO_SIZE = 10.megabytes # the limit of the free Cloudinary plan
 
   # Listings that other structures can still reserve: available, and not past their date.
   scope :reservable, -> { available.where(available_until: Date.current..) }
@@ -63,6 +69,12 @@ class Listing < ApplicationRecord
 
   def available_until_not_in_the_past
     errors.add(:available_until, "ne peut pas être dans le passé") if available_until < Date.current
+  end
+
+  def photos_are_small_images
+    errors.add(:photos, "#{MAX_PHOTOS} au maximum") if photos.size > MAX_PHOTOS
+    errors.add(:photos, "doivent être des images") unless photos.all? { |photo| photo.content_type.to_s.start_with?("image/") }
+    errors.add(:photos, "ne doivent pas dépasser 10 Mo chacune") if photos.any? { |photo| photo.byte_size > MAX_PHOTO_SIZE }
   end
 
   def category_offered

@@ -23,6 +23,7 @@ fr:
         address: "Lieu de récupération"
         availability: "Disponibilités"
         description: "Informations complémentaires"
+        photos: "Les photos"
       category:
         name: "Nom"
         icon: "Icône"

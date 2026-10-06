@@ -25,7 +25,7 @@ Décisions détaillées : [docs/brainstorming.md](docs/brainstorming.md). Étape
 | Droits d'accès | Pundit | Enseigné au Wagon |
 | Carte | Mapbox GL JS (offre gratuite) | Enseigné au Wagon |
 | Géocodage des adresses | API Adresse de l'IGN (`data.geopf.fr/geocodage`) | Gratuite, sans clé, adresses françaises |
-| Photos des annonces | Active Storage + Cloudinary (offre gratuite) | Enseigné au Wagon |
+| Photos des annonces | Active Storage + Cloudinary (offre gratuite) ; en local, sur le disque | Enseigné au Wagon. Pour le Proof of Concept, compte de Gambade (dossier `glane/`) ; compte dédié prévu avant le lancement |
 | Messagerie en temps réel | Turbo Streams + Solid Cable | Intégré à Rails 8 |
 | Notifications web (iPhone, navigateurs) | gem `web-push` + service worker | Gratuit, fonctionne sur iPhone depuis l'écran d'accueil |
 | Notifications Android | Firebase Cloud Messaging + `@capacitor/push-notifications` + gem `action_push_native` | Gratuit |

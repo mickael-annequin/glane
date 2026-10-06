@@ -6,6 +6,13 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
+# Online, the listing photos are on Cloudinary. For the Proof of Concept, the account is Gambade's
+# (CLOUDINARY_URL set in Render): Glane's photos are kept apart in the "glane/<environment>" folder.
+# A Cloudinary account just for Glane is planned before the launch (docs/roadmap.md).
+cloudinary:
+  service: Cloudinary
+  folder: glane/<%= Rails.env %>
+
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3

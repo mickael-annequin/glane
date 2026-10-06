@@ -114,4 +114,54 @@ class ListingsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".exchange-list:not(.exchange-list-past) .exchange-row", /Yaourts nature.*En ligne/m
     assert_select ".exchange-list-past .exchange-row", /Lait demi-écrémé.*Date limite dépassée/m
   end
+
+  def photo(name = "photo.png", type = "image/png")
+    fixture_file_upload(name, type)
+  end
+
+  test "publishes a listing with photos, shown on its page" do
+    post listings_path, params: { listing: listing_params(photos: [ "", photo, photo ]) }
+
+    listing = Listing.last
+    assert_equal 2, listing.photos.count
+    follow_redirect!
+    assert_select ".photo-gallery img", count: 2
+  end
+
+  test "photos are optional and never shown in the list" do
+    post listings_path, params: { listing: listing_params(photos: [ "" ]) }
+    assert_not Listing.last.photos.attached?
+
+    listings(:yogurts).photos.attach(photo)
+    get root_path
+    assert_select ".listing-card img", count: 0
+  end
+
+  test "refuses more than 5 photos, or a file that isn't an image" do
+    post listings_path, params: { listing: listing_params(photos: [ "" ] + Array.new(6) { photo }) }
+    assert_select ".alert", /Les photos 5 au maximum/
+
+    post listings_path, params: { listing: listing_params(photos: [ "", photo("notes.txt", "text/plain") ]) }
+    assert_select ".alert", /Les photos doivent être des images/
+  end
+
+  test "keeps the checked photos and removes the unchecked ones" do
+    listing = listings(:yogurts)
+    listing.photos.attach([ photo, photo ])
+    kept, removed = listing.photos.to_a
+
+    patch listing_path(listing), params: { listing: { photos: [ kept.signed_id, "" ] } }
+
+    assert_equal [ kept.blob_id ], listing.reload.photos.map(&:blob_id)
+    assert_not_includes listing.photos.map(&:blob_id), removed.blob_id
+  end
+
+  test "adds photos to the ones already there" do
+    listing = listings(:yogurts)
+    listing.photos.attach(photo)
+
+    patch listing_path(listing), params: { listing: { photos: [ listing.photos.first.signed_id, "", photo ] } }
+
+    assert_equal 2, listing.reload.photos.count
+  end
 end
