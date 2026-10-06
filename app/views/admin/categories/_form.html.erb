@@ -1,0 +1,31 @@
+<%= form_with model: [ :admin, category ] do |f| %>
+  <% if category.errors.any? %>
+    <div class="alert alert-warning">
+      <% category.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :name, "Nom *", class: "form-label" %>
+    <%= f.text_field :name, placeholder: "ex. Fruits et légumes", class: "form-control form-control-lg" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :icon, "Icône (facultatif)", class: "form-label" %>
+    <%= f.text_field :icon, placeholder: "ex. 🥕", class: "form-control form-control-lg" %>
+    <div class="form-text">Un émoji, affiché à la place de la photo quand une annonce n'en a pas.</div>
+  </div>
+
+  <% if category.catch_all? %>
+    <p class="form-text mb-4">Cette catégorie sert quand aucune autre ne convient : elle reste toujours en dernier et ne peut pas être masquée.</p>
+  <% else %>
+    <div class="form-check mb-4">
+      <%= f.check_box :hidden, class: "form-check-input" %>
+      <%= f.label :hidden, "Masquer (plus proposée à la publication)", class: "form-check-label" %>
+    </div>
+  <% end %>
+
+  <%= f.submit category.new_record? ? "Ajouter" : "Enregistrer", class: "btn btn-primary btn-lg w-100" %>
+<% end %>

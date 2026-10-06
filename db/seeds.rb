@@ -14,3 +14,20 @@ if email.present? && password.present?
 else
   puts "No admin account created: set ADMIN_EMAIL and ADMIN_PASSWORD."
 end
+
+# Provisional categories (docs/conception/wireframes.md, screen 12), only on an empty table:
+# afterwards the admin manages them in the admin space, and a renamed category must not come back at the next deploy.
+if Category.none?
+  [
+    [ "Fruits et légumes", "🥕" ],
+    [ "Produits laitiers, œufs", "🥛" ],
+    [ "Viande, poisson", "🍗" ],
+    [ "Épicerie sèche", "🍝" ],
+    [ "Conserves", "🥫" ],
+    [ "Pain, viennoiseries", "🥖" ],
+    [ "Surgelés", "🧊" ],
+    [ "Boissons", "🧃" ]
+  ].each { |name, icon| Category.create!(name: name, icon: icon) }
+  Category.create!(name: "Autres", icon: "📦", catch_all: true)
+  puts "Categories created: #{Category.count}"
+end

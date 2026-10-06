@@ -1,0 +1,29 @@
+<% content_for :title, "Admin · Catégories" %>
+<%= render "admin/shared/header", title: "Admin", back_path: root_path, tabs: true %>
+
+<%= link_to "+ Nouvelle catégorie", new_admin_category_path, class: "btn btn-primary btn-lg w-100 mb-3" %>
+
+<ul class="list-group mb-2">
+  <% @categories.each do |category| %>
+    <li class="list-group-item admin-row <%= "text-body-secondary" if category.hidden? %>">
+      <div class="category-name">
+        <span class="category-icon"><%= category.icon %></span>
+        <%= category.name %>
+        <% if category.hidden? %><span class="badge text-bg-light">masquée</span><% end %>
+      </div>
+      <div class="category-actions">
+        <% unless category.catch_all? %>
+          <%= button_to "↑", move_admin_category_path(category, direction: :up), method: :patch,
+                        class: "btn btn-sm btn-light", aria: { label: "Monter #{category.name}" } %>
+          <%= button_to "↓", move_admin_category_path(category, direction: :down), method: :patch,
+                        class: "btn btn-sm btn-light", aria: { label: "Descendre #{category.name}" } %>
+        <% end %>
+        <%= link_to "✎", edit_admin_category_path(category), class: "btn btn-sm btn-light", aria: { label: "Modifier #{category.name}" } %>
+      </div>
+    </li>
+  <% end %>
+</ul>
+<p class="form-text">
+  Une catégorie masquée n'est plus proposée à la publication, mais les anciennes annonces la gardent.
+  « Autres » reste toujours en dernier, pour tout ce qui ne rentre nulle part ailleurs.
+</p>

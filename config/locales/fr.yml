@@ -4,6 +4,7 @@ fr:
     models:
       organization: "Structure"
       user: "Personne"
+      category: "Catégorie"
     attributes:
       organization:
         name: "Nom"
@@ -11,6 +12,10 @@ fr:
         phone: "Téléphone"
         usual_availability: "Disponibilités habituelles"
         manager_email: "Email du premier responsable"
+      category:
+        name: "Nom"
+        icon: "Icône"
+        hidden: "Masquée"
       user:
         organization: "Structure"
         name: "Prénom et nom"

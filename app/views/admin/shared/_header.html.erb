@@ -6,5 +6,6 @@
 <% if local_assigns[:tabs] %>
   <nav class="admin-tabs" aria-label="Espace admin">
     <%= link_to "Structures", admin_organizations_path, class: ("active" if controller_name == "organizations") %>
+    <%= link_to "Catégories", admin_categories_path, class: ("active" if controller_name == "categories") %>
   </nav>
 <% end %>

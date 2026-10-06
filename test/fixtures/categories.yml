@@ -1,0 +1,20 @@
+vegetables:
+  name: Fruits et légumes
+  icon: 🥕
+  position: 1
+
+dairy:
+  name: Produits laitiers, œufs
+  icon: 🥛
+  position: 2
+
+dry_goods:
+  name: Épicerie sèche
+  icon: 🍝
+  position: 3
+
+other:
+  name: Autres
+  icon: 📦
+  position: 4
+  catch_all: true

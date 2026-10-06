@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     put "users/invitation", to: "devise/invitations#update"
   end
 
-  # Admin space (admin account only): structures, and later categories.
+  # Admin space (admin account only): structures and categories.
   namespace :admin do
     root to: "organizations#index"
     resources :organizations, only: %i[index new create edit update] do
@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       end
       # Invite another manager, or send an invitation again.
       resources :manager_invitations, only: :create
+    end
+    resources :categories, only: %i[index new create edit update] do
+      patch :move, on: :member # ?direction=up or down
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

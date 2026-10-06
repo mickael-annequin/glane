@@ -1,0 +1,4 @@
+<% content_for :title, "Nouvelle catégorie" %>
+<%= render "admin/shared/header", title: "Nouvelle catégorie", back_path: admin_categories_path %>
+
+<%= render "form", category: @category %>

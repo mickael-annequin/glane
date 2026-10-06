@@ -25,3 +25,15 @@
   justify-content: space-between;
   gap: 1rem;
 }
+
+// Categories list: icon + name on the left, small buttons (↑ ↓ ✎) on the right.
+.category-icon {
+  display: inline-block;
+  width: 1.75rem;
+}
+
+.category-actions {
+  display: flex;
+  flex: none;
+  gap: 0.25rem;
+}
