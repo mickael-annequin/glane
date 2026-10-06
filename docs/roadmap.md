@@ -4,9 +4,8 @@ On coche chaque étape (`- [x]`) quand elle est terminée et testée.
 Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour relancer le projet sur l'ordi (serveur, comptes de test, tests, mise en ligne) : [README](../README.md).
 
 ## 📍 Où on en est (mis à jour le 06/10/2026)
-- **Dernière étape faite** : la **clôture par le donateur** (« ✓ Stock récupéré », commit `83a0e1d`), testée ✓ : la réservation et l'annonce passent en `picked_up` et vont dans l'historique des deux structures.
-- **En cours** : la **question « Stock récupéré ? »** (Phase 2, scénario E « Le donateur a oublié de clôturer » de [parcours.md](conception/parcours.md)). ✅ *Fait, mon test reste à faire* : **3 h après le créneau**, si personne n'a clôturé, un encadré « À faire » en haut de l'accueil et de Mes échanges › Dons demande à tous les membres de la structure donatrice « … Le stock est-il parti ? » : **« ✓ Oui, récupéré »** clôture comme le bouton « Stock récupéré » ; **« ✗ Non, remettre en ligne »** passe la réservation en `not_picked_up` et l'annonce redevient disponible (« ✗ Non, pas récupéré » si sa date limite est passée : elle part dans l'historique). Les notifications et le rappel 24 h viendront en Phase 4.
-- **Ensuite** : droits d'accès avec Pundit, tests des statuts et test système (dernière étape de la Phase 2), puis le jalon du Proof of Concept.
+- **Dernière étape faite** : la **clôture**, testée ✓ : le bouton « ✓ Stock récupéré » (commit `83a0e1d`) et, 3 h après le créneau, la question « Le stock est-il parti ? » dans l'encadré « À faire » de l'accueil et de Mes échanges › Dons, avec Oui / Non (commit `b4f3430`). Pour la tester sans attendre 3 h : réserver, puis reculer le créneau dans le terminal avec `bin/rails runner 'Reservation.active.last.update_column(:pickup_at, 1.day.ago)'`.
+- **Prochaine étape** : les **droits d'accès avec Pundit**, des tests des changements de statut, et un test système du parcours publier → réserver → clôturer (remettre alors le job `system-test` dans la CI). C'est la dernière étape de la Phase 2 : 🎉 **MVP utilisable**. Ensuite, le jalon du Proof of Concept.
 - **Petites choses en attente**, sans urgence :
   - Les propositions de mise à jour de Dependabot sur GitHub (#1 `actions/cache`, #2 `actions/checkout`, #4 `image_processing` 2.x, à vérifier avec soin car c'est une version majeure) : à regarder ensemble avant de les accepter.
   - Une page d'erreur 500 en français, et une icône d'onglet (favicon) avec le logo.
@@ -40,7 +39,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour re
 - [x] **Réserver** en choisissant un créneau, seulement dans les disponibilités du donateur (planning par jour, menus déroulants au quart d'heure). L'annonce est attribuée et disparaît. *Test :* avec 2 comptes sur 2 téléphones, la seconde structure ne peut plus réserver.
 - [x] **« Mes dons » et « Mes réservations »** (onglets de Mes échanges), annulation d'un côté comme de l'autre. *Test :* une annonce annulée redevient disponible.
 - [x] **Clôture par le donateur** (« Stock récupéré »). *Test :* l'annonce passe dans l'historique des deux structures.
-- [ ] **Question « Stock récupéré ? »** sur l'accueil après le créneau, avec Oui / Non. *Test :* répondre Non remet l'annonce en ligne.
+- [x] **Question « Stock récupéré ? »** sur l'accueil après le créneau, avec Oui / Non. *Test :* répondre Non remet l'annonce en ligne.
 - [ ] **Droits d'accès** avec Pundit, tests des changements de statut, et un test système du parcours publier → réserver → clôturer (remettre alors le job `system-test` dans la CI, retiré au départ). *Test :* `bin/rails test` passe, et une structure ne peut pas modifier l'annonce d'une autre. 🎉 **MVP utilisable**
 
 ## Jalon — Présentation du Proof of Concept 🎤
