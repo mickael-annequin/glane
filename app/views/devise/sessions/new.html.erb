@@ -1,3 +1,11 @@
+<% if Rails.env.development? %>
+  <%# Only on the developer's computer: the local database has test accounts only (db/seeds.rb). %>
+  <div class="alert alert-warning small">
+    <strong>Version locale (ton ordi).</strong> Comptes de test seulement : <code>admin@glane.test</code>,
+    <code>chartres.responsable@glane.test</code>, <code>dreux.membre@glane.test</code>… mot de passe <code>password</code>.
+    Ton vrai compte est sur le site en ligne.
+  </div>
+<% end %>
 <div class="login">
   <%# Provisional logo (docs/conception/identite.md): a basket will replace it. %>
   <%= image_tag "logo.svg", width: 88, height: 88, alt: "" %>
