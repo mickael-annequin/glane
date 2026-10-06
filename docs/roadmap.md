@@ -14,7 +14,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md).
 - [x] **Catégories et unités** : on part d'une liste provisoire (catégories de l'[écran 12](conception/wireframes.md), unités du [schéma](conception/base-de-donnees.md)), sans validation par les structures. On en reparlera plus tard.
 
 ## Phase 1 — Socle 🧱
-- [ ] **Créer le projet** : `rails new glane` avec PostgreSQL et Bootstrap, puis Git et GitHub. *Test :* une page d'accueil s'affiche sur `localhost:3000`.
+- [x] **Créer le projet** : `rails new glane` avec PostgreSQL et Bootstrap, puis Git et GitHub. *Test :* une page d'accueil s'affiche sur `localhost:3000`.
 - [ ] **Mise en ligne** sur Render (appli) + Neon (base PostgreSQL), offres gratuites, région Europe. *Test :* le site s'ouvre en HTTPS sur mon téléphone.
 - [ ] **Comptes et connexion** : Devise sur `User` (une personne), rattaché à une `Organization`, avec le rôle responsable ou membre. Inscription désactivée, « Se souvenir de moi ». *Test :* impossible de créer un compte soi-même, et on reste connecté après avoir fermé le navigateur.
 - [ ] **Emails** via Brevo (offre gratuite) : invitations et mot de passe oublié. *Test :* un email de mot de passe oublié arrive, et son lien fonctionne.
