@@ -8,6 +8,13 @@ class User < ApplicationRecord
   enum :role, { member: "member", manager: "manager" }, validate: true
 
   validates :name, presence: true
+
+  scope :without_pending_invitation, -> { where(invitation_token: nil).or(where.not(invitation_accepted_at: nil)) }
+
+  # Invited by email, but the person hasn't chosen their password yet.
+  def invitation_pending?
+    invitation_token.present? && invitation_accepted_at.nil?
+  end
   validates :organization, presence: true, unless: :admin?
 
   def deactivated?

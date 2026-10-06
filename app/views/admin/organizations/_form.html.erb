@@ -1,0 +1,34 @@
+<%= form_with model: [ :admin, organization ] do |f| %>
+  <% if organization.errors.any? %>
+    <div class="alert alert-warning">
+      <% organization.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :name, "Nom *", class: "form-label" %>
+    <%= f.text_field :name, class: "form-control form-control-lg" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :address, "Adresse *", class: "form-label" %>
+    <%= f.text_field :address, placeholder: "ex. 12 rue des Écuyers, 28000 Chartres", class: "form-control form-control-lg" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :phone, "Téléphone (facultatif)", class: "form-label" %>
+    <%= f.telephone_field :phone, class: "form-control form-control-lg" %>
+  </div>
+
+  <% if organization.new_record? %>
+    <div class="mb-4">
+      <%= f.label :manager_email, "Email du premier responsable *", class: "form-label" %>
+      <%= f.email_field :manager_email, class: "form-control form-control-lg" %>
+      <div class="form-text">Il recevra une invitation pour créer son compte, puis complétera la fiche de sa structure.</div>
+    </div>
+  <% end %>
+
+  <%= f.submit organization.new_record? ? "Créer et envoyer l'invitation" : "Enregistrer", class: "btn btn-primary btn-lg w-100" %>
+<% end %>

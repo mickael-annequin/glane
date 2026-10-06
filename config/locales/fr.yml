@@ -10,6 +10,7 @@ fr:
         address: "Adresse"
         phone: "Téléphone"
         usual_availability: "Disponibilités habituelles"
+        manager_email: "Email du premier responsable"
       user:
         organization: "Structure"
         name: "Prénom et nom"

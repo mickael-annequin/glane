@@ -7,6 +7,19 @@ Rails.application.routes.draw do
     patch "users/invitation", to: "devise/invitations#update", as: :user_invitation
     put "users/invitation", to: "devise/invitations#update"
   end
+
+  # Admin space (admin account only): structures, and later categories.
+  namespace :admin do
+    root to: "organizations#index"
+    resources :organizations, only: %i[index new create edit update] do
+      member do
+        patch :deactivate
+        patch :reactivate
+      end
+      # Invite another manager, or send an invitation again.
+      resources :manager_invitations, only: :create
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

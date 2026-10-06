@@ -1,0 +1,30 @@
+<% content_for :title, "Admin · Structures" %>
+<%= render "admin/shared/header", title: "Admin", back_path: root_path, tabs: true %>
+
+<%= link_to "+ Nouvelle structure", new_admin_organization_path, class: "btn btn-primary btn-lg w-100 mb-3" %>
+
+<% if @organizations.empty? %>
+  <p class="text-center text-body-secondary">Aucune structure pour l'instant.</p>
+<% else %>
+  <div class="list-group">
+    <% @organizations.each do |organization| %>
+      <% members_count = organization.active_members.count %>
+      <%= link_to edit_admin_organization_path(organization), class: "list-group-item list-group-item-action admin-row" do %>
+        <div>
+          <strong><%= organization.name %></strong>
+          <div class="small text-body-secondary">
+            <%= organization.city.presence || organization.address %> · <%= members_count %> <%= members_count > 1 ? "membres" : "membre" %>
+          </div>
+        </div>
+        <span class="small">
+          <% if !organization.active? %>
+            <span class="badge text-bg-secondary">Désactivée</span>
+          <% elsif members_count.zero? %>
+            <span class="badge text-bg-light">Invitation en attente</span>
+          <% end %>
+          ›
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

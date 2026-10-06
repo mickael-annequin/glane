@@ -1,0 +1,59 @@
+<% content_for :title, @organization.name %>
+<%= render "admin/shared/header", title: @organization.name, back_path: admin_organizations_path %>
+
+<% unless @organization.active? %>
+  <div class="alert alert-secondary">
+    Désactivée le <%= l(@organization.deactivated_at.to_date, format: :long) %> : ses membres ne peuvent plus se connecter.
+  </div>
+<% end %>
+
+<%= render "form", organization: @organization %>
+
+<h2 class="h5 mt-5">Membres</h2>
+<% people = @organization.users.order(:role, :name) %>
+<% if people.empty? %>
+  <p class="text-body-secondary">Personne pour l'instant.</p>
+<% else %>
+  <ul class="list-group mb-3">
+    <% people.each do |person| %>
+      <li class="list-group-item admin-row">
+        <div>
+          <% if person.name.present? %>
+            <strong><%= person.name %></strong>
+            <div class="small text-body-secondary"><%= person.email %></div>
+          <% else %>
+            <strong><%= person.email %></strong>
+          <% end %>
+        </div>
+        <div class="text-end small">
+          <%= person.manager? ? "Responsable" : "Membre" %>
+          <% if person.deactivated_at %>
+            <div class="text-body-secondary">désactivé</div>
+          <% elsif person.invitation_pending? %>
+            <div class="text-body-secondary">invitation en attente</div>
+            <%= button_to "Renvoyer l'invitation", admin_organization_manager_invitations_path(@organization),
+                          params: { email: person.email }, class: "btn btn-link btn-sm p-0" %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with url: admin_organization_manager_invitations_path(@organization), class: "mb-5" do |f| %>
+  <%= f.label :email, "Inviter un responsable", class: "form-label" %>
+  <div class="input-group">
+    <%= f.email_field :email, placeholder: "email@exemple.fr", required: true, class: "form-control" %>
+    <%= f.submit "Inviter", class: "btn btn-outline-dark" %>
+  </div>
+  <div class="form-text">Par exemple si le responsable actuel quitte la structure.</div>
+<% end %>
+
+<% if @organization.active? %>
+  <%= button_to "Désactiver la structure", deactivate_admin_organization_path(@organization), method: :patch,
+                class: "btn btn-outline-danger w-100",
+                form: { data: { turbo_confirm: "Désactiver #{@organization.name} ? Ses membres ne pourront plus se connecter. L'historique est conservé." } } %>
+<% else %>
+  <%= button_to "Réactiver la structure", reactivate_admin_organization_path(@organization), method: :patch,
+                class: "btn btn-outline-dark w-100" %>
+<% end %>
