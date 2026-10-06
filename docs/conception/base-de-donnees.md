@@ -74,12 +74,14 @@ Par défaut, une personne suit toutes les catégories : on enregistre seulement 
 | quantity | décimal, facultatif | `25` |
 | unit | choix, facultatif | `kg` / `liter` / `piece` / `box` (carton) / `parcel` (colis) / `bag` (sac) / `pallet` (palette)… |
 | storage | choix, facultatif | `ambient` (ambiant) / `chilled` (frais) / `frozen` (surgelé) |
-| pickup_address | texte | `5 rue Saint-Martin, 28100 Dreux` (copiée de la structure, modifiable) |
-| pickup_city | texte | `Dreux` |
-| latitude / longitude | décimal | (géocodage de l'adresse de récupération) |
+| address | texte | `Place Métézeau 28100 Dreux` (le lieu de récupération, copié de la structure, modifiable) |
+| city | texte | `Dreux` |
+| latitude / longitude | décimal | (données par la suggestion d'adresse de l'IGN choisie) |
 | availability | texte | `lun–ven 9h–17h` (copiées de la structure, modifiables) |
 | description | texte long, facultatif | `Cagettes à rapporter` (le texte libre) |
 | status | choix | `available` (disponible) / `reserved` (réservée) / `picked_up` (récupérée) / `withdrawn` (retirée) |
+
+Les mêmes noms de colonnes que pour les structures (`address`, `city`, `latitude`, `longitude`) : le champ d'adresse à suggestions sert aux deux.
 | *photos* | *Active Storage* | *jusqu'à 5, stockées sur Cloudinary* |
 
 ### reservations : les réservations

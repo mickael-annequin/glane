@@ -1,4 +1,5 @@
 <% content_for :title, "Membres" %>
+<% content_for :hide_tab_bar, true %>
 <%= render "shared/page_header", title: "Membres", back_path: organization_path %>
 
 <%= form_with url: members_path, class: "info-card" do |f| %>

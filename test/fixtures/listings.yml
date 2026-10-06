@@ -1,0 +1,54 @@
+carrots:
+  organization: restos_dreux
+  user: paul
+  category: vegetables
+  title: Carottes
+  available_until: <%= 3.days.from_now.to_date %>
+  quantity: 25
+  unit: kg
+  address: Place Métézeau 28100 Dreux
+  city: Dreux
+  latitude: 48.73577
+  longitude: 1.368172
+  availability: Mardi et jeudi, 10h–16h
+  description: Cagettes à rapporter
+
+yogurts:
+  organization: secours_chartres
+  user: marie
+  category: dairy
+  title: Yaourts nature
+  available_until: <%= Date.tomorrow %>
+  quantity: 40
+  unit: piece
+  storage: chilled
+  address: 12 Rue des Ecuyers 28000 Chartres
+  city: Chartres
+  latitude: 48.446156
+  longitude: 1.490509
+  availability: Du lundi au vendredi, 9h–17h
+
+old_milk:
+  organization: secours_chartres
+  user: marie
+  category: dairy
+  title: Lait demi-écrémé
+  available_until: <%= 3.days.ago.to_date %>
+  address: 12 Rue des Ecuyers 28000 Chartres
+  city: Chartres
+  latitude: 48.446156
+  longitude: 1.490509
+  availability: Du lundi au vendredi, 9h–17h
+
+withdrawn_bread:
+  organization: restos_dreux
+  user: paul
+  category: dry_goods
+  title: Pain de mie
+  available_until: <%= 5.days.from_now.to_date %>
+  address: Place Métézeau 28100 Dreux
+  city: Dreux
+  latitude: 48.73577
+  longitude: 1.368172
+  availability: Mardi et jeudi, 10h–16h
+  status: withdrawn

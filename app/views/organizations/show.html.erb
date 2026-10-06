@@ -24,8 +24,7 @@
     <p class="mb-1">
       <%= @organization.address %>
       <% if @organization.located? %>
-        · <%= link_to "📍 Voir sur une carte", "https://www.openstreetmap.org/?mlat=#{@organization.latitude}&mlon=#{@organization.longitude}#map=17/#{@organization.latitude}/#{@organization.longitude}",
-                      target: "_blank", rel: "noopener" %>
+        · <%= link_to "📍 Voir sur une carte", map_url(@organization), target: "_blank", rel: "noopener" %>
       <% end %>
     </p>
     <p class="mb-1"><%= @organization.phone.presence || "Pas de téléphone" %></p>

@@ -8,6 +8,13 @@ Rails.application.routes.draw do
     put "users/invitation", to: "devise/invitations#update"
   end
 
+  # Listings (surpluses). Withdrawing keeps the listing in the history of the structure.
+  resources :listings, only: %i[new create show edit update] do
+    patch :withdraw, on: :member
+  end
+  # "Mes échanges": the listings of my structure (and later its reservations).
+  get "exchanges", to: "exchanges#index"
+
   # "Ma structure" page of the signed-in person, "Mon compte" and the password change.
   resource :organization, only: %i[show edit update]
   resource :account, only: %i[edit update]

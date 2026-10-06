@@ -28,11 +28,17 @@
     <%= javascript_importmap_tags %>
   </head>
 
+  <%# The tab bar is hidden on forms and detail pages (they have a ← back button instead). %>
+  <% show_tab_bar = user_signed_in? && !content_for?(:hide_tab_bar) %>
   <body>
-    <main class="container py-3">
+    <main class="container pt-3 <%= show_tab_bar ? "with-tab-bar" : "pb-3" %>">
       <% if notice %><div class="alert alert-success flash"><%= notice %></div><% end %>
       <% if alert %><div class="alert alert-warning flash"><%= alert %></div><% end %>
       <%= yield %>
     </main>
+
+    <% if show_tab_bar %>
+      <%= render "shared/tab_bar" %>
+    <% end %>
   </body>
 </html>

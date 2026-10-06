@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_06_122200) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_06_130313) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,6 +33,30 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_122200) do
     t.index ["category_id"], name: "index_category_opt_outs_on_category_id"
     t.index ["user_id", "category_id"], name: "index_category_opt_outs_on_user_id_and_category_id", unique: true
     t.index ["user_id"], name: "index_category_opt_outs_on_user_id"
+  end
+
+  create_table "listings", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "category_id", null: false
+    t.string "title", null: false
+    t.date "available_until", null: false
+    t.decimal "quantity", precision: 10, scale: 2
+    t.string "unit"
+    t.string "storage"
+    t.string "address", null: false
+    t.string "city"
+    t.float "latitude", null: false
+    t.float "longitude", null: false
+    t.text "availability", null: false
+    t.text "description"
+    t.string "status", default: "available", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_listings_on_category_id"
+    t.index ["organization_id"], name: "index_listings_on_organization_id"
+    t.index ["status", "available_until"], name: "index_listings_on_status_and_available_until"
+    t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -80,5 +104,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_122200) do
 
   add_foreign_key "category_opt_outs", "categories"
   add_foreign_key "category_opt_outs", "users"
+  add_foreign_key "listings", "categories"
+  add_foreign_key "listings", "organizations"
+  add_foreign_key "listings", "users"
   add_foreign_key "users", "organizations"
 end

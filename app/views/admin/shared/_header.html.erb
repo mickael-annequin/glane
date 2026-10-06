@@ -1,4 +1,5 @@
-<%# Header of the admin pages: back arrow, title, and the tabs of the admin space. %>
+<%# Header of the admin pages: back arrow, title, and the tabs of the admin space. No tab bar in the admin space. %>
+<% content_for :hide_tab_bar, true %>
 <%= render "shared/page_header", title: title, back_path: back_path %>
 <% if local_assigns[:tabs] %>
   <nav class="admin-tabs" aria-label="Espace admin">

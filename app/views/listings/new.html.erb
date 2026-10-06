@@ -1,0 +1,5 @@
+<% content_for :title, "Publier un surplus" %>
+<% content_for :hide_tab_bar, true %>
+<%= render "shared/page_header", title: "Publier un surplus", back_path: root_path %>
+
+<%= render "form", listing: @listing %>

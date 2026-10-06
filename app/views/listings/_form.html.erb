@@ -1,0 +1,63 @@
+<%# Listing form (docs/conception/wireframes.md, screen 7): the 3 required fields first, then the optional ones. %>
+<%= form_with model: listing do |f| %>
+  <%= render "shared/form_errors", record: listing %>
+
+  <div class="mb-3">
+    <%= f.label :category_id, "Catégorie *", class: "form-label" %>
+    <% categories = Category.visible.or(Category.where(id: listing.category_id)).ordered %>
+    <%= f.select :category_id, categories.map { |category| [ "#{category.icon} #{category.name}", category.id ] },
+                 { include_blank: "Choisir une catégorie" }, class: "form-select form-select-lg" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :title, "Produit *", class: "form-label" %>
+    <%= f.text_field :title, maxlength: 80, placeholder: "ex. Carottes", class: "form-control form-control-lg" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :available_until, "À récupérer avant le *", class: "form-label" %>
+    <%= f.date_field :available_until, min: Date.current, class: "form-control form-control-lg" %>
+    <div class="form-text">Ce jour compris. Pour l'alimentaire, avant la date de péremption.</div>
+  </div>
+
+  <div class="row g-2 mb-3">
+    <div class="col-5">
+      <%= f.label :quantity, "Quantité", class: "form-label" %>
+      <%= f.text_field :quantity, inputmode: "decimal", placeholder: "ex. 25", class: "form-control form-control-lg",
+                       value: listing.quantity&.to_s&.sub(/\.0+\z/, "")&.tr(".", ",") %>
+    </div>
+    <div class="col-7">
+      <%= f.label :unit, "Unité", class: "form-label" %>
+      <%= f.select :unit, Listing::UNITS.map { |key, (_singular, plural)| [ plural, key ] },
+                   { include_blank: "—" }, class: "form-select form-select-lg" %>
+    </div>
+  </div>
+
+  <fieldset class="mb-4">
+    <legend class="form-label fs-6 mb-2">Conservation</legend>
+    <div class="choice-chips">
+      <% [ [ "", "Non précisé" ], *Listing::STORAGES.to_a ].each do |value, label| %>
+        <%= f.radio_button :storage, value, class: "btn-check", id: "listing_storage_#{value.presence || "none"}",
+                           checked: listing.storage.to_s == value %>
+        <%= f.label :storage, label, for: "listing_storage_#{value.presence || "none"}", class: "btn btn-outline-dark btn-sm" %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <%= render "shared/address_field", f: f, label: "Lieu de récupération",
+             help: "Par défaut, l'adresse de votre structure." %>
+
+  <div class="mb-3">
+    <%= f.label :availability, "Disponibilités *", class: "form-label" %>
+    <%= f.text_area :availability, rows: 2, placeholder: "ex. Du lundi au vendredi, 9h–17h", class: "form-control form-control-lg" %>
+    <div class="form-text">Quand on peut venir récupérer ce don. Par défaut, les disponibilités de votre structure.</div>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :description, "Informations complémentaires", class: "form-label" %>
+    <%= f.text_area :description, rows: 3, placeholder: "ex. À garder au frais, cagettes à rapporter…", class: "form-control form-control-lg" %>
+  </div>
+
+  <%= f.submit listing.new_record? ? "Publier" : "Enregistrer", class: "btn btn-primary btn-lg w-100" %>
+  <p class="form-text text-center mt-2">* obligatoire</p>
+<% end %>

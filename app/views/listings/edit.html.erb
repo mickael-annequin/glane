@@ -1,0 +1,5 @@
+<% content_for :title, "Modifier l'annonce" %>
+<% content_for :hide_tab_bar, true %>
+<%= render "shared/page_header", title: "Modifier l'annonce", back_path: listing_path(@listing) %>
+
+<%= render "form", listing: @listing %>

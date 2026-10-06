@@ -1,0 +1,14 @@
+<%# Tab bar at the bottom of the screen (docs/conception/parcours.md, "Navigation"). "Publier" is in the middle and stands out. %>
+<nav class="tab-bar" aria-label="Navigation principale">
+  <% [ [ "🌾", "Annonces", root_path, %w[pages listings] ],
+       [ "+", "Publier", new_listing_path, [] ],
+       [ "📦", "Mes échanges", exchanges_path, %w[exchanges] ],
+       [ "🏠", "Ma structure", organization_path, %w[organizations accounts account_passwords members] ] ].each do |icon, label, path, controllers| %>
+    <% active = controllers.include?(controller_name) && !(controller_name == "listings" && action_name == "new") %>
+    <%= link_to path, class: [ "tab-bar-link", ("tab-bar-publish" if label == "Publier"), ("active" if active) ],
+                      aria: { current: ("page" if active) } do %>
+      <span class="tab-bar-icon"><%= icon %></span>
+      <span class="tab-bar-label"><%= label %></span>
+    <% end %>
+  <% end %>
+</nav>

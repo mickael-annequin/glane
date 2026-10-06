@@ -1,0 +1,46 @@
+<%# Listing details (docs/conception/wireframes.md, screen 5). Photos come in a next step. %>
+<% content_for :title, @listing.title %>
+<% content_for :hide_tab_bar, true %>
+<% mine = @listing.organization_id == current_user.organization_id %>
+<%= render "shared/page_header", title: @listing.title, back_path: mine ? exchanges_path : root_path %>
+
+<div class="listing-picture" aria-hidden="true"><%= @listing.category.icon.presence || "📦" %></div>
+
+<section class="mb-3">
+  <div class="text-body-secondary"><%= @listing.category.icon %> <%= @listing.category.name %></div>
+  <div class="fw-semibold <%= "text-danger" if @listing.available_until <= Date.tomorrow %>">
+    À récupérer <%= listing_deadline(@listing) %>
+  </div>
+  <% details = [ @listing.quantity_label, @listing.storage_label ].compact %>
+  <% if details.any? %><div><%= details.join(" · ") %></div><% end %>
+</section>
+
+<section class="info-card">
+  <p class="mb-1">Publié par <strong><%= @listing.user.name %></strong></p>
+  <p class="mb-3"><%= @listing.organization.name %></p>
+  <p class="mb-1"><%= @listing.address %></p>
+  <p class="mb-3">
+    <%= link_to "📍 Voir sur une carte", map_url(@listing), target: "_blank", rel: "noopener" %>
+    · <%= link_to "Itinéraire", directions_url(@listing), target: "_blank", rel: "noopener" %>
+  </p>
+  <p class="mb-1 small text-body-secondary">Disponibilités :</p>
+  <p class="mb-0"><%= simple_format(@listing.availability, {}, wrapper_tag: "span") %></p>
+  <% if @listing.description.present? %>
+    <p class="mt-3 mb-0">« <%= simple_format(@listing.description, {}, wrapper_tag: "span") %> »</p>
+  <% end %>
+</section>
+
+<% if mine %>
+  <div class="info-card">
+    <p class="fw-semibold mb-3">Votre annonce · <%= listing_status(@listing) %></p>
+    <% if @listing.available? %>
+      <div class="d-flex gap-2">
+        <%= link_to "Modifier", edit_listing_path(@listing), class: "btn btn-outline-dark flex-fill" %>
+        <%= button_to "Retirer", withdraw_listing_path(@listing), method: :patch, class: "btn btn-outline-danger w-100",
+                      form: { class: "flex-fill", data: { turbo_confirm: "Retirer « #{@listing.title} » ? Elle ne sera plus proposée aux autres structures." } } %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-center text-body-secondary">La réservation arrive bientôt dans Glane.</p>
+<% end %>

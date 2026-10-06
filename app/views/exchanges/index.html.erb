@@ -1,0 +1,26 @@
+<%# "Mes échanges" (docs/conception/wireframes.md, screen 8): for now the "Dons" tab only. %>
+<% content_for :title, "Mes échanges" %>
+<h1 class="h3 text-primary">Mes échanges</h1>
+
+<nav class="admin-tabs" aria-label="Mes échanges">
+  <span class="active">Dons (<%= @listings.count(&:available?) %>)</span>
+  <span class="text-body-secondary" title="Bientôt">Réservations</span>
+</nav>
+
+<% if @listings.empty? %>
+  <p class="text-center text-body-secondary mt-4">Aucun don pour l'instant.</p>
+  <%= link_to "+ Publier un surplus", new_listing_path, class: "btn btn-warning btn-lg w-100" %>
+<% else %>
+  <div class="list-group">
+    <% @listings.each do |listing| %>
+      <%= link_to listing_path(listing), class: "list-group-item list-group-item-action exchange-row #{"text-body-secondary" unless listing.available? && !listing.expired?}" do %>
+        <span class="exchange-icon"><%= listing.category.icon %></span>
+        <span class="flex-fill">
+          <strong><%= listing.title %></strong><%= " · #{listing.quantity_label}" if listing.quantity_label %>
+          <span class="d-block small"><%= listing_status(listing) %> · publiée par <%= listing.user.name %></span>
+        </span>
+        <span>›</span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
