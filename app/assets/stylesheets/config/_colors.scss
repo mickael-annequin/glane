@@ -1,0 +1,10 @@
+// "Moisson" palette (docs/conception/identite.md)
+$clay: #7A4A24;    // main: headers, titles, main buttons ("Réserver")
+$wheat: #E3A92B;   // accent: "+ Publier" button, logo
+$poppy: #C0392B;   // urgent only: "À faire" box, close deadlines
+$cream: #FBF5E9;   // app background
+$straw: #EADBC0;   // soft: category chips, missing photos, badges
+$night: #2D241C;   // text (softer than pure black)
+$sprout: #5F7F3A;  // success messages, use sparingly
+
+// Readability rule: white text on clay, poppy and sprout; night text on wheat and straw.

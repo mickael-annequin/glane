@@ -1,0 +1,18 @@
+// Bootstrap settings, changed before Bootstrap is loaded.
+$primary: $clay;
+$warning: $wheat;  // used for the "+ Publier" button
+$danger: $poppy;
+$success: $sprout;
+$light: $straw;
+$dark: $night;
+$color-contrast-dark: $night;  // dark text on light buttons (wheat) is night brown, not pure black
+$body-bg: $cream;
+$body-color: $night;
+$link-color: $clay;
+$font-family-sans-serif: $font-source-sans;
+$headings-font-family: $font-fraunces;
+$headings-font-weight: 800;
+$btn-font-family: $font-fraunces;
+$btn-font-weight: 800;
+$border-radius: 0.75rem;
+$border-radius-lg: 1rem;
