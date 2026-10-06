@@ -1,0 +1,24 @@
+<% content_for :title, "Changer de mot de passe" %>
+<%= render "shared/page_header", title: "Mot de passe", back_path: organization_path %>
+
+<%= form_with model: current_user, url: account_password_path, method: :patch do |f| %>
+  <%= render "shared/form_errors", record: current_user %>
+
+  <div class="mb-3">
+    <%= f.label :current_password, "Mot de passe actuel", class: "form-label" %>
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control form-control-lg" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password, "Nouveau mot de passe", class: "form-label" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-lg" %>
+    <div class="form-text"><%= User.password_length.min %> caractères minimum.</div>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :password_confirmation, "Confirmer le nouveau mot de passe", class: "form-label" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg" %>
+  </div>
+
+  <%= f.submit "Changer le mot de passe", class: "btn btn-primary btn-lg w-100" %>
+<% end %>

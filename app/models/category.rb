@@ -1,4 +1,6 @@
 class Category < ApplicationRecord
+  has_many :category_opt_outs, dependent: :delete_all
+
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :icon, length: { maximum: 8 }
   validate :catch_all_stays_visible

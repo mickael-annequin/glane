@@ -1,11 +1,5 @@
 <%= form_with model: [ :admin, category ] do |f| %>
-  <% if category.errors.any? %>
-    <div class="alert alert-warning">
-      <% category.errors.full_messages.each do |message| %>
-        <div><%= message %></div>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render "shared/form_errors", record: category %>
 
   <div class="mb-3">
     <%= f.label :name, "Nom *", class: "form-label" %>

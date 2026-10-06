@@ -1,0 +1,27 @@
+// A white block of information ("Mon compte", "Ma structure"…).
+.info-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: $border-radius-lg;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba($night, 0.08);
+
+  h2 {
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $clay;
+  }
+}
+
+// A full-width link to another page, with a chevron (Membres ›, Espace admin ›).
+.list-link {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: $border-radius-lg;
+  background: #fff;
+  color: $night;
+  font-weight: 600;
+  text-decoration: none;
+}

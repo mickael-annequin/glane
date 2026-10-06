@@ -22,6 +22,7 @@ fr:
         email: "Email"
         password: "Mot de passe"
         password_confirmation: "La confirmation"
+        current_password: "Le mot de passe actuel"
         reset_password_token: "Le lien"
         phone: "Téléphone"
         role: "Rôle"

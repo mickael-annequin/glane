@@ -1,0 +1,44 @@
+<% content_for :title, "Ma structure" %>
+<%= render "shared/page_header", title: "Ma structure", back_path: root_path %>
+
+<section class="info-card">
+  <h2>Mon compte</h2>
+  <p class="mb-1"><strong><%= current_user.name %></strong></p>
+  <p class="mb-1"><%= current_user.email %></p>
+  <p class="mb-1"><%= current_user.phone.presence || "Pas de téléphone" %></p>
+  <% followed = current_user.followed_categories.count %>
+  <% total = Category.visible.count %>
+  <p class="mb-3 small text-body-secondary">
+    Catégories suivies : <%= followed == total ? "toutes" : "#{followed} sur #{total}" %>
+  </p>
+  <div class="d-flex flex-wrap gap-2">
+    <%= link_to "Modifier mon compte", edit_account_path, class: "btn btn-outline-dark" %>
+    <%= link_to "Changer de mot de passe", edit_account_password_path, class: "btn btn-outline-dark" %>
+  </div>
+</section>
+
+<% if @organization %>
+  <section class="info-card">
+    <h2>Ma structure</h2>
+    <p class="mb-1"><strong><%= @organization.name %></strong></p>
+    <p class="mb-1">
+      <%= @organization.address %>
+      <% if @organization.located? %>
+        · <%= link_to "📍 Voir sur une carte", "https://www.openstreetmap.org/?mlat=#{@organization.latitude}&mlon=#{@organization.longitude}#map=17/#{@organization.latitude}/#{@organization.longitude}",
+                      target: "_blank", rel: "noopener" %>
+      <% end %>
+    </p>
+    <p class="mb-1"><%= @organization.phone.presence || "Pas de téléphone" %></p>
+    <p class="mb-1 small text-body-secondary">Disponibilités habituelles :</p>
+    <p class="mb-3"><%= @organization.usual_availability.present? ? simple_format(@organization.usual_availability, {}, wrapper_tag: "span") : "Pas encore renseignées" %></p>
+    <% if current_user.manager? %>
+      <%= link_to "Modifier la structure", edit_organization_path, class: "btn btn-outline-dark" %>
+    <% end %>
+  </section>
+<% end %>
+
+<% if current_user.admin? %>
+  <%= link_to "⚙️ Espace admin ›", admin_root_path, class: "list-link" %>
+<% end %>
+
+<%= button_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "btn btn-link text-body-secondary mt-3 px-0" %>

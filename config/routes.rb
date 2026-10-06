@@ -8,6 +8,11 @@ Rails.application.routes.draw do
     put "users/invitation", to: "devise/invitations#update"
   end
 
+  # "Ma structure" page of the signed-in person, "Mon compte" and the password change.
+  resource :organization, only: %i[show edit update]
+  resource :account, only: %i[edit update]
+  resource :account_password, only: %i[edit update]
+
   # Admin space (admin account only): structures and categories.
   namespace :admin do
     root to: "organizations#index"

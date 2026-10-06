@@ -1,0 +1,8 @@
+<%# The validation errors of a form, in French, above its fields. %>
+<% if record.errors.any? %>
+  <div class="alert alert-warning">
+    <% record.errors.full_messages.each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+<% end %>

@@ -5,7 +5,7 @@ Une fois le projet créé, la référence à jour sera `db/schema.rb`. Ce docume
 
 ## Vue d'ensemble
 ```
-                    ┌──< users (membres) ──< category_subscriptions >── categories
+                    ┌──< users (membres) ──< category_opt_outs >── categories
                     │                                                     │
 organizations ──────┼──< listings (dons) >────────────────────────────────┘
 (structures)        │       │
@@ -55,13 +55,13 @@ ex. une structure a plusieurs membres, une annonce a plusieurs réservations (au
 | hidden | vrai/faux | `true` = masquée, plus proposée à la publication |
 | catch_all | vrai/faux | `true` pour « Autres » seulement : toujours en dernier, impossible à masquer |
 
-### category_subscriptions : les catégories que suit chaque personne
+### category_opt_outs : les catégories qu'une personne ne suit **pas**
 | Colonne | Type | Exemple |
 |---|---|---|
 | user_id | lien → users | |
 | category_id | lien → categories | |
 
-Elles servent aux alertes de la Phase 4. On crée la table dès le MVP, car « Mon compte » les affiche.
+Par défaut, une personne suit toutes les catégories : on enregistre seulement celles qu'elle a décochées dans « Mon compte ». Ainsi, une catégorie ajoutée plus tard par l'admin est suivie automatiquement par tout le monde. Elles servent aux alertes de la Phase 4.
 
 ### listings : les annonces
 | Colonne | Type | Exemple |

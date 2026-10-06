@@ -85,7 +85,7 @@ Lors d'une réunion, des responsables de structures sociales d'Eure-et-Loir ont 
 - Totaux du département visibles par les structures.
 
 ## Pistes techniques
-- **Modèle de données** (détaillé dans [conception/base-de-donnees.md](conception/base-de-donnees.md)) : `organizations` (structures), `users` (comptes Devise, rattachés à une structure, rôle responsable ou membre, `admin` pour moi), `categories`, `category_subscriptions`, `listings` (annonces ; quantité, unité et conservation facultatives), `reservations`, `conversations` + `messages`, `notifications`, appareils pour les notifications push.
+- **Modèle de données** (détaillé dans [conception/base-de-donnees.md](conception/base-de-donnees.md)) : `organizations` (structures), `users` (comptes Devise, rattachés à une structure, rôle responsable ou membre, `admin` pour moi), `categories`, `category_opt_outs` (catégories non suivies), `listings` (annonces ; quantité, unité et conservation facultatives), `reservations`, `conversations` + `messages`, `notifications`, appareils pour les notifications push.
 - **Invitations** : gem `devise_invitable` (à valider). Elle demande d'envoyer des emails dès la Phase 1 (Brevo).
 - **Statuts d'une annonce** : disponible → réservée → récupérée, ou expirée, ou retirée.
 - **Géocodage** : API Adresse de l'IGN (`data.geopf.fr/geocodage`), gratuite et sans clé. L'ancienne `api-adresse.data.gouv.fr` est fermée depuis janvier 2026.

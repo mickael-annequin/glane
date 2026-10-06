@@ -1,8 +1,5 @@
 <%# Header of the admin pages: back arrow, title, and the tabs of the admin space. %>
-<div class="page-header">
-  <%= link_to "←", back_path, class: "back-button", aria: { label: "Retour" } %>
-  <h1><%= title %></h1>
-</div>
+<%= render "shared/page_header", title: title, back_path: back_path %>
 <% if local_assigns[:tabs] %>
   <nav class="admin-tabs" aria-label="Espace admin">
     <%= link_to "Structures", admin_organizations_path, class: ("active" if controller_name == "organizations") %>
