@@ -52,11 +52,12 @@ Rails.application.configure do
 
   # Emails are sent by Brevo (free plan). The SMTP login and key are environment variables set in Render.
   # Errors are raised so that a broken email setup shows up in the logs instead of failing silently.
+  # Port 2525: Render's free plan blocks the usual SMTP ports (25, 465, 587) since September 2025.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: "smtp-relay.brevo.com",
-    port: 587,
+    port: ENV.fetch("SMTP_PORT", 2525).to_i,
     user_name: ENV["SMTP_USERNAME"],
     password: ENV["SMTP_PASSWORD"],
     authentication: :login,
