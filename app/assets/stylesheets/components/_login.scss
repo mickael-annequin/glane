@@ -13,6 +13,11 @@
   form { text-align: left; }
 }
 
+// Smaller title for the secondary pages (forgotten password…).
+.login .login-title-small {
+  font-size: 1.75rem;
+}
+
 .login-tagline {
   margin-bottom: 2rem;
   opacity: 0.85;

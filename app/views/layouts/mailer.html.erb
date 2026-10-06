@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <%# Many email apps ignore <style> blocks in the body: keep it simple, colors from the "Moisson" palette. %>
     <style>
-      /* Email styles need to be inline */
+      body { margin: 0; padding: 24px 16px; background: #FBF5E9; color: #2D241C; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; }
+      .card { max-width: 520px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; padding: 24px; }
+      .brand { margin: 0 0 16px; color: #7A4A24; font-family: Georgia, serif; font-size: 24px; font-weight: bold; }
+      .button-row { margin: 24px 0; }
+      .button { display: inline-block; padding: 12px 20px; border-radius: 12px; background: #7A4A24; color: #FFFFFF !important; font-weight: bold; text-decoration: none; }
+      .muted { color: #6B5E52; font-size: 14px; }
+      .footer { max-width: 520px; margin: 16px auto 0; color: #6B5E52; font-size: 12px; text-align: center; }
     </style>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="card">
+      <p class="brand">🌾 Glane</p>
+      <%= yield %>
+    </div>
+    <p class="footer">Glane · le partage des surplus entre structures d'Eure-et-Loir</p>
   </body>
 </html>

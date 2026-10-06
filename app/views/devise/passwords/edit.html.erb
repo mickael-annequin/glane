@@ -1,0 +1,22 @@
+<div class="login">
+  <%= image_tag "logo.svg", width: 64, height: 64, alt: "" %>
+  <h1 class="login-title-small">Nouveau mot de passe</h1>
+
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <%= f.hidden_field :reset_password_token %>
+
+    <div class="mb-3">
+      <%= f.label :password, "Nouveau mot de passe", class: "form-label" %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control form-control-lg" %>
+      <div class="form-text"><%= @minimum_password_length %> caractères minimum.</div>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg" %>
+    </div>
+
+    <%= f.submit "Enregistrer", class: "btn btn-primary btn-lg w-100" %>
+  <% end %>
+</div>

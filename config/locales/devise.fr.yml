@@ -1,4 +1,4 @@
-# French messages for the Devise features used so far (sign in and sign out).
+# French messages for the Devise features used so far (sign in, sign out, forgotten password).
 fr:
   devise:
     failure:
@@ -13,3 +13,16 @@ fr:
       signed_in: "Connexion réussie."
       signed_out: "Déconnexion réussie."
       already_signed_out: "Déconnexion réussie."
+    passwords:
+      send_instructions: "Vous allez recevoir un email avec un lien pour choisir un nouveau mot de passe."
+      send_paranoid_instructions: "Si cet email correspond à un compte Glane, vous allez recevoir un lien pour choisir un nouveau mot de passe. Pensez à regarder dans les spams."
+      updated: "Votre mot de passe a été changé. Vous êtes connecté."
+      updated_not_active: "Votre mot de passe a été changé."
+      no_token: "Ce lien n'est pas valable. Utilisez le lien complet reçu par email."
+    mailer:
+      reset_password_instructions:
+        subject: "Glane : choisir un nouveau mot de passe"
+  errors:
+    messages:
+      expired: "a expiré, demandez un nouveau lien"
+      not_found: "n'a pas été trouvé(e)"

@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   # No public sign up: accounts come from invitations (admin → managers → members).
-  # Password reset (:recoverable) comes with the emails step.
-  devise :database_authenticatable, :rememberable, :validatable
+  devise :database_authenticatable, :recoverable, :rememberable, :validatable
 
   belongs_to :organization, optional: true
 
