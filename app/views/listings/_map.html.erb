@@ -1,0 +1,24 @@
+<%# Map of the listings (docs/conception/wireframes.md, screen 4): one marker per pickup place. %>
+<% content_for :head do %>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.32.0/mapbox-gl.css" rel="stylesheet">
+  <%# The map can't be restored from Turbo's page cache: always load it fresh. %>
+  <meta name="turbo-cache-control" content="no-cache">
+<% end %>
+
+<% territory = Rails.configuration.x.territory %>
+<% if ENV["MAPBOX_API_KEY"].blank? %>
+  <p class="text-center text-body-secondary my-5">La carte n'est pas disponible pour l'instant (clé Mapbox manquante).</p>
+<% else %>
+  <div class="listings-map" data-controller="listings-map"
+       data-listings-map-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
+       data-listings-map-center-value="<%= [ territory[:longitude], territory[:latitude] ].to_json %>"
+       data-listings-map-places-value="<%= map_places(listings, organization).to_json %>"
+       <% if organization&.located? %>data-listings-map-home-value="<%= [ organization.longitude, organization.latitude ].to_json %>"<% end %>
+       <% if params[:focus].present? %>data-listings-map-focus-value="<%= params[:focus].to_i %>"<% end %>>
+    <div class="listings-map-canvas" data-listings-map-target="canvas"></div>
+    <div class="listings-map-sheet" hidden data-listings-map-target="sheet"></div>
+  </div>
+  <% if listings.empty? %>
+    <p class="text-center text-body-secondary mt-3">Aucune annonce à afficher sur la carte pour l'instant.</p>
+  <% end %>
+<% end %>

@@ -4,7 +4,9 @@ class ListingsController < ApplicationController
   before_action :require_available, only: %i[edit update withdraw]
 
   # Home page: the listings that can still be reserved, the most urgent first, filtered by category if asked.
+  # As a list, or on a map (?view=map, and ?focus=<id> to center it on one listing).
   def index
+    @view = params[:view] == "map" ? "map" : "list"
     @categories = Category.visible.ordered
     @category = @categories.find_by(id: params[:category])
     @listings = Listing.reservable.includes(:category, :organization).order(:available_until, created_at: :desc)

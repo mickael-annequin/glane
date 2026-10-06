@@ -21,7 +21,7 @@
   <p class="mb-3"><%= @listing.organization.name %></p>
   <p class="mb-1"><%= @listing.address %></p>
   <p class="mb-3">
-    <%= link_to "📍 Voir sur une carte", map_url(@listing), target: "_blank", rel: "noopener" %>
+    <%= listing_map_link(@listing) %>
     · <%= link_to "Itinéraire", directions_url(@listing), target: "_blank", rel: "noopener" %>
   </p>
   <p class="mb-1 small text-body-secondary">Disponibilités :</p>

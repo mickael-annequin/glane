@@ -46,6 +46,29 @@ module ListingsHelper
     end
   end
 
+  # The listings grouped by pickup place, for the map: one marker per place, even with several listings there.
+  def map_places(listings, organization)
+    listings.group_by { |listing| [ listing.latitude.round(5), listing.longitude.round(5) ] }.map do |(latitude, longitude), here|
+      {
+        latitude: latitude, longitude: longitude, icon: here.first.category.icon.presence || "📦", count: here.size,
+        listings: here.map do |listing|
+          { id: listing.id, title: listing.title, icon: listing.category.icon.presence || "📦", url: listing_path(listing),
+            details: [ listing.quantity_label, listing.city, distance_label(organization, listing) ].compact.join(" · "),
+            deadline: listing_deadline(listing), urgent: urgent?(listing), mine: listing.organization_id == organization&.id }
+        end
+      }
+    end
+  end
+
+  # "📍 Voir sur la carte": our map centered on the listing when it's on it, an OpenStreetMap page otherwise.
+  def listing_map_link(listing)
+    if listing.available? && !listing.expired?
+      link_to "📍 Voir sur la carte", root_path(view: "map", focus: listing.id)
+    else
+      link_to "📍 Voir sur une carte", map_url(listing), target: "_blank", rel: "noopener"
+    end
+  end
+
   # Links to see the pickup place on a map, and to get there (opens Google Maps or Plans on the phone).
   def map_url(record)
     "https://www.openstreetmap.org/?mlat=#{record.latitude}&mlon=#{record.longitude}#map=17/#{record.latitude}/#{record.longitude}"

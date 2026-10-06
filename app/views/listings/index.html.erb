@@ -13,15 +13,23 @@
   </div>
 <% end %>
 
+<% view = @view == "map" ? "map" : nil %>
 <nav class="category-chips" aria-label="Filtrer par catégorie">
-  <%= link_to "Tout", root_path, class: [ "category-chip", ("active" if @category.nil?) ] %>
+  <%= link_to "Tout", root_path(view: view), class: [ "category-chip", ("active" if @category.nil?) ] %>
   <% @categories.each do |category| %>
-    <%= link_to "#{category.icon} #{category.name}", root_path(category: category.id),
+    <%= link_to "#{category.icon} #{category.name}", root_path(category: category.id, view: view),
                 class: [ "category-chip", ("active" if category == @category) ] %>
   <% end %>
 </nav>
 
-<% if @listings.empty? %>
+<nav class="view-toggle" aria-label="Affichage">
+  <%= link_to "Liste", root_path(category: @category&.id), class: ("active" if @view == "list"), aria: { current: ("page" if @view == "list") } %>
+  <%= link_to "Carte", root_path(category: @category&.id, view: "map"), class: ("active" if @view == "map"), aria: { current: ("page" if @view == "map") } %>
+</nav>
+
+<% if @view == "map" %>
+  <%= render "map", listings: @listings, organization: organization %>
+<% elsif @listings.empty? %>
   <div class="text-center text-body-secondary my-5">
     <p class="fs-1 mb-2">🌾</p>
     <p><%= @category ? "Aucune annonce dans cette catégorie pour l'instant." : "Aucune annonce pour l'instant." %></p>
