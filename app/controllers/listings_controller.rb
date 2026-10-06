@@ -1,7 +1,6 @@
+# Access rights: app/policies/listing_policy.rb.
 class ListingsController < ApplicationController
-  before_action :require_organization, except: %i[index show]
-  before_action :set_own_listing, only: %i[edit update withdraw]
-  before_action :require_available, only: %i[edit update withdraw]
+  before_action :set_listing, only: %i[show edit update withdraw]
 
   # Home page: the listings that can still be reserved, the most urgent first, filtered by category if asked.
   # As a list, or on a map (?view=map, and ?focus=<id> to center it on one listing).
@@ -9,26 +8,23 @@ class ListingsController < ApplicationController
     @view = params[:view] == "map" ? "map" : "list"
     @categories = Category.visible.ordered
     @category = @categories.find_by(id: params[:category])
-    @listings = Listing.reservable.includes(:category, :organization).order(:available_until, created_at: :desc)
+    @listings = policy_scope(Listing).reservable.includes(:category, :organization).order(:available_until, created_at: :desc)
     @listings = @listings.where(category: @category) if @category
     @pickups_to_confirm = current_user.organization&.pickups_to_confirm || []
   end
 
-  # Anyone can see a listing that can still be reserved; the donor structure can always see its own,
-  # and the structure that reserved it can see it too.
   def show
-    @listing = Listing.find(params[:id])
     @reservation = @listing.active_reservation
-    return if mine?(@listing) || @listing.reservable? || reserved_by_me?(@reservation)
-
-    redirect_to root_path, alert: "Cette annonce n'est plus disponible."
   end
 
+  # authorize first: Listing.new_from needs the person's structure.
   def new
+    authorize Listing
     @listing = Listing.new_from(current_user)
   end
 
   def create
+    authorize Listing
     @listing = Listing.new_from(current_user)
     @listing.assign_attributes(listing_params)
 
@@ -57,26 +53,8 @@ class ListingsController < ApplicationController
 
   private
 
-  def require_organization
-    redirect_to organization_path, alert: "Seules les structures peuvent publier des annonces." if current_user.organization.nil?
-  end
-
-  # Only the listings of my structure: any other one is "not found".
-  def set_own_listing
-    @listing = current_user.organization.listings.find(params[:id])
-  end
-
-  # A reserved, picked up or withdrawn listing can't change any more.
-  def require_available
-    redirect_to @listing, alert: "Cette annonce n'est plus modifiable." unless @listing.available?
-  end
-
-  def mine?(listing)
-    listing.organization_id == current_user.organization_id
-  end
-
-  def reserved_by_me?(reservation)
-    reservation.present? && reservation.organization_id == current_user.organization_id
+  def set_listing
+    @listing = authorize Listing.find(params[:id])
   end
 
   def listing_params

@@ -5,7 +5,12 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour re
 
 ## 📍 Où on en est (mis à jour le 06/10/2026)
 - **Dernière étape faite** : la **clôture**, testée ✓ : le bouton « ✓ Stock récupéré » (commit `83a0e1d`) et, 3 h après le créneau, la question « Le stock est-il parti ? » dans l'encadré « À faire » de l'accueil et de Mes échanges › Dons, avec Oui / Non (commit `b4f3430`). Pour la tester sans attendre 3 h : réserver, puis reculer le créneau dans le terminal avec `bin/rails runner 'Reservation.active.last.update_column(:pickup_at, 1.day.ago)'`.
-- **Prochaine étape** : les **droits d'accès avec Pundit**, des tests des changements de statut, et un test système du parcours publier → réserver → clôturer (remettre alors le job `system-test` dans la CI). C'est la dernière étape de la Phase 2 : 🎉 **MVP utilisable**. Ensuite, le jalon du Proof of Concept.
+- **En cours** : les **droits d'accès avec Pundit** (dernière étape de la Phase 2 : 🎉 **MVP utilisable**), en 4 morceaux :
+  1. ✅ *Fait, mon test reste à faire* : Pundit installé, `ListingPolicy` (voir, publier, modifier, retirer une annonce). Une action refusée renvoie vers l'accueil avec un message en français ([pundit.fr.yml](../config/locales/pundit.fr.yml)).
+  2. `ReservationPolicy` : réserver, annuler, clôturer.
+  3. Ma structure, Membres et l'espace admin, plus `verify_authorized` (Rails refuse une page dont les droits n'ont pas été vérifiés).
+  4. Tests des changements de statut et test système publier → réserver → clôturer (remettre le job `system-test` dans la CI).
+  Ensuite, le jalon du Proof of Concept.
 - **Petites choses en attente**, sans urgence :
   - Les propositions de mise à jour de Dependabot sur GitHub (#1 `actions/cache`, #2 `actions/checkout`, #4 `image_processing` 2.x, à vérifier avec soin car c'est une version majeure) : à regarder ensemble avant de les accepter.
   - Une page d'erreur 500 en français, et une icône d'onglet (favicon) avec le logo.

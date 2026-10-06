@@ -1,0 +1,11 @@
+# Messages shown when Pundit refuses something (see app/policies and ApplicationController#not_authorized).
+fr:
+  pundit:
+    default: "Vous n'avez pas accès à cette page."
+    listing_policy:
+      show?: "Cette annonce n'est plus disponible."
+      new?: "Seules les structures peuvent publier des annonces."
+      create?: "Seules les structures peuvent publier des annonces."
+      edit?: "Cette annonce ne peut plus être modifiée."
+      update?: "Cette annonce ne peut plus être modifiée."
+      withdraw?: "Cette annonce ne peut plus être retirée."

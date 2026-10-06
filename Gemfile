@@ -71,3 +71,5 @@ gem "devise_invitable", "~> 2.0"
 gem "cloudinary", "~> 2.4"
 
 gem "dotenv-rails", "~> 3.2", groups: [ :development, :test ]
+
+gem "pundit", "~> 2.5"

@@ -68,7 +68,8 @@ class ListingsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:admin)
     get new_listing_path
 
-    assert_redirected_to organization_path
+    assert_redirected_to root_path
+    assert_equal "Seules les structures peuvent publier des annonces.", flash[:alert]
   end
 
   test "shows a listing to everyone, with the donor, the place and the opening hours" do
@@ -102,14 +103,15 @@ class ListingsControllerTest < ActionDispatch::IntegrationTest
   test "can't edit the listing of another structure" do
     patch listing_path(listings(:carrots)), params: { listing: { title: "Piraté" } }
 
-    assert_response :not_found
+    assert_redirected_to root_path
+    assert_equal "Cette annonce ne peut plus être modifiée.", flash[:alert]
     assert_equal "Carottes", listings(:carrots).reload.title
   end
 
   test "can't withdraw the listing of another structure" do
     patch withdraw_listing_path(listings(:carrots))
 
-    assert_response :not_found
+    assert_redirected_to root_path
     assert listings(:carrots).reload.available?
   end
 
@@ -120,7 +122,7 @@ class ListingsControllerTest < ActionDispatch::IntegrationTest
     assert listings(:yogurts).reload.withdrawn?
 
     get edit_listing_path(listings(:yogurts))
-    assert_redirected_to listing_path(listings(:yogurts))
+    assert_redirected_to root_path
   end
 
   test "Mes échanges lists the listings of my structure" do
