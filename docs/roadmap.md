@@ -16,7 +16,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md).
 ## Phase 1 — Socle 🧱
 - [x] **Créer le projet** : `rails new glane` avec PostgreSQL et Bootstrap, puis Git et GitHub. *Test :* une page d'accueil s'affiche sur `localhost:3000`.
 - [x] **Mise en ligne** sur Render (appli) + Neon (base PostgreSQL), offres gratuites, région Europe (Frankfurt) : https://glane-3vyb.onrender.com. *Test :* le site s'ouvre en HTTPS sur mon téléphone.
-- [ ] **Comptes et connexion** : Devise sur `User` (une personne), rattaché à une `Organization`, avec le rôle responsable ou membre. Inscription désactivée, « Se souvenir de moi ». *Test :* impossible de créer un compte soi-même, et on reste connecté après avoir fermé le navigateur.
+- [x] **Comptes et connexion** : Devise sur `User` (une personne), rattaché à une `Organization`, avec le rôle responsable ou membre. Inscription désactivée, « Se souvenir de moi ». *Test :* impossible de créer un compte soi-même, et on reste connecté après avoir fermé le navigateur.
 - [ ] **Emails** via Brevo (offre gratuite) : invitations et mot de passe oublié. *Test :* un email de mot de passe oublié arrive, et son lien fonctionne.
 - [ ] **Espace admin** (`admin/`) : créer, modifier et désactiver une structure, inviter son premier responsable, gérer les catégories. *Test :* créer une structure, le responsable reçoit l'invitation, choisit son mot de passe et se connecte.
 - [ ] **Membres** (responsables seulement) : inviter par email, nommer ou retirer un responsable, désactiver un compte, renvoyer une invitation. *Test :* inviter un membre qui se connecte, puis le désactiver : il ne peut plus se connecter, et la structure garde au moins un responsable.
