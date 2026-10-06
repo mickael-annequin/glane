@@ -62,10 +62,31 @@ module ListingsHelper
 
   # "📍 Voir sur la carte": our map centered on the listing when it's on it, an OpenStreetMap page otherwise.
   def listing_map_link(listing)
-    if listing.available? && !listing.expired?
+    if listing.reservable?
       link_to "📍 Voir sur la carte", root_path(view: "map", focus: listing.id)
     else
       link_to "📍 Voir sur une carte", map_url(listing), target: "_blank", rel: "noopener"
+    end
+  end
+
+  # "mardi 7 octobre à 14h", "aujourd'hui à 9h30"
+  def pickup_label(time)
+    day = if time.to_date == Date.current then "aujourd'hui"
+    elsif time.to_date == Date.tomorrow then "demain"
+    else l(time.to_date, format: :listing)
+    end
+    "#{day} à #{time.strftime("%-Hh%M").delete_suffix("00")}"
+  end
+
+  # The days that can be chosen for the pickup: from today to the deadline (2 weeks at most).
+  def pickup_days(listing)
+    last_day = [ listing.available_until, Date.current + ReservationsController::MAX_DAYS_AHEAD ].min
+    (Date.current..last_day).map do |day|
+      label = if day == Date.current then "Aujourd'hui"
+      elsif day == Date.tomorrow then "Demain"
+      else l(day, format: "%a %-d").capitalize
+      end
+      [ label, day.iso8601 ]
     end
   end
 

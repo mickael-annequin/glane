@@ -42,7 +42,14 @@
   </section>
 <% end %>
 
-<% if mine %>
+<% if mine && @reservation %>
+  <%# My structure's listing, reserved: who comes, when, and how to call them. %>
+  <div class="info-card reservation-card">
+    <p class="fw-semibold mb-1">Réservée par <%= @reservation.organization.name %> (<%= @reservation.user.name %>)</p>
+    <p class="mb-3">Passage prévu <strong><%= pickup_label(@reservation.pickup_at) %></strong></p>
+    <%= render "listings/contact", person: @reservation.user %>
+  </div>
+<% elsif mine %>
   <div class="info-card">
     <p class="fw-semibold mb-3">Votre annonce · <%= listing_status(@listing) %></p>
     <% if @listing.available? %>
@@ -53,6 +60,16 @@
       </div>
     <% end %>
   </div>
+<% elsif @reservation && @reservation.organization_id == current_user.organization_id %>
+  <%# Reserved by my structure: when we go, who to call, how to get there. %>
+  <div class="info-card reservation-card">
+    <p class="fw-semibold mb-1">✓ Réservée par votre structure (<%= @reservation.user.name %>)</p>
+    <p class="mb-3">Passage prévu <strong><%= pickup_label(@reservation.pickup_at) %></strong></p>
+    <%= render "listings/contact", person: @listing.user %>
+    <%= link_to "Itinéraire", directions_url(@listing), target: "_blank", rel: "noopener", class: "btn btn-outline-dark w-100 mt-2" %>
+  </div>
+<% elsif current_user.organization %>
+  <%= link_to "Réserver", new_listing_reservation_path(@listing), class: "btn btn-primary btn-lg w-100" %>
 <% else %>
-  <p class="text-center text-body-secondary">La réservation arrive bientôt dans Glane.</p>
+  <p class="text-center text-body-secondary">Seules les structures peuvent réserver.</p>
 <% end %>

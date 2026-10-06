@@ -6,6 +6,7 @@ fr:
       user: "Personne"
       category: "Catégorie"
       listing: "Annonce"
+      reservation: "Réservation"
     attributes:
       organization:
         name: "Nom"
@@ -24,6 +25,8 @@ fr:
         availability: "Disponibilités"
         description: "Informations complémentaires"
         photos: "Les photos"
+      reservation:
+        pickup_at: "Le créneau"
       category:
         name: "Nom"
         icon: "Icône"

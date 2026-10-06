@@ -13,10 +13,12 @@ class ListingsController < ApplicationController
     @listings = @listings.where(category: @category) if @category
   end
 
-  # Anyone can see a listing that can still be reserved; the donor structure can always see its own.
+  # Anyone can see a listing that can still be reserved; the donor structure can always see its own,
+  # and the structure that reserved it can see it too.
   def show
     @listing = Listing.find(params[:id])
-    return if mine?(@listing) || (@listing.available? && !@listing.expired?)
+    @reservation = @listing.active_reservation
+    return if mine?(@listing) || @listing.reservable? || reserved_by_me?(@reservation)
 
     redirect_to root_path, alert: "Cette annonce n'est plus disponible."
   end
@@ -70,6 +72,10 @@ class ListingsController < ApplicationController
 
   def mine?(listing)
     listing.organization_id == current_user.organization_id
+  end
+
+  def reserved_by_me?(reservation)
+    reservation.present? && reservation.organization_id == current_user.organization_id
   end
 
   def listing_params

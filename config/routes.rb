@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # Listings (surpluses). Withdrawing keeps the listing in the history of the structure.
   resources :listings, only: %i[index new create show edit update] do
     patch :withdraw, on: :member
+    # Reserving: choose the pickup slot, then confirm.
+    resources :reservations, only: %i[new create]
   end
   # "Mes échanges": the listings of my structure (and later its reservations).
   get "exchanges", to: "exchanges#index"

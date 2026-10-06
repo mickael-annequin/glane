@@ -22,8 +22,13 @@
           <span class="flex-fill">
             <strong><%= listing.title %></strong><%= " · #{listing.quantity_label}" if listing.quantity_label %>
             <span class="d-block small">
-              <span class="badge text-bg-success">En ligne</span>
-              <span class="<%= "text-danger fw-semibold" if urgent?(listing) %>"><%= listing_deadline(listing) %></span>
+              <% if listing.reserved? && listing.active_reservation %>
+                <span class="badge text-bg-warning">Réservée</span>
+                par <%= listing.active_reservation.organization.name %> · passage <%= pickup_label(listing.active_reservation.pickup_at) %>
+              <% else %>
+                <span class="badge text-bg-success">En ligne</span>
+                <span class="<%= "text-danger fw-semibold" if urgent?(listing) %>"><%= listing_deadline(listing) %></span>
+              <% end %>
             </span>
             <span class="d-block small text-body-secondary">publiée par <%= listing.user.name %></span>
           </span>

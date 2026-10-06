@@ -15,6 +15,8 @@ class Listing < ApplicationRecord
   belongs_to :category
   # Optional photos, only shown on the listing page (the list keeps the category icon).
   has_many_attached :photos
+  has_many :reservations, dependent: :restrict_with_error
+  has_one :active_reservation, -> { active }, class_name: "Reservation"
 
   enum :status, { available: "available", reserved: "reserved", picked_up: "picked_up", withdrawn: "withdrawn" }, validate: true
 
@@ -50,6 +52,11 @@ class Listing < ApplicationRecord
 
   def expired?
     available? && available_until < Date.current
+  end
+
+  # Other structures can still reserve it.
+  def reservable?
+    available? && !expired?
   end
 
   # "25 kg", "1 carton", "2,5 litres", or nil when no quantity is given.

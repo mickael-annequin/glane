@@ -52,3 +52,18 @@ withdrawn_bread:
   longitude: 1.368172
   availability: Mardi et jeudi, 10h–16h
   status: withdrawn
+
+potatoes:
+  organization: secours_chartres
+  user: marie
+  category: vegetables
+  title: Pommes de terre
+  available_until: <%= 4.days.from_now.to_date %>
+  quantity: 50
+  unit: kg
+  address: 12 Rue des Ecuyers 28000 Chartres
+  city: Chartres
+  latitude: 48.446156
+  longitude: 1.490509
+  availability: Du lundi au vendredi, 9h–17h
+  status: reserved

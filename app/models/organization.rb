@@ -3,6 +3,7 @@ class Organization < ApplicationRecord
 
   has_many :users, dependent: :restrict_with_error
   has_many :listings, dependent: :restrict_with_error
+  has_many :reservations, dependent: :restrict_with_error # the listings this structure reserved
 
   # Email of the first manager, asked in the admin form "Nouvelle structure" (not stored on the structure).
   attr_accessor :manager_email

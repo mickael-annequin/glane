@@ -9,6 +9,7 @@ marie:
   email: marie@glane.test
   encrypted_password: <%= Devise::Encryptor.digest(User, "password") %>
   name: Marie Dupont
+  phone: 06 12 34 56 78
   role: manager
 
 paul:

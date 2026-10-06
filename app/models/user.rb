@@ -6,6 +6,7 @@ class User < ApplicationRecord
   # The categories the person does NOT follow (by default, every category is followed).
   has_many :category_opt_outs, dependent: :delete_all
   has_many :listings, dependent: :restrict_with_error
+  has_many :reservations, dependent: :restrict_with_error
 
   # "manager" = responsable (manages the structure and its members), "member" = membre.
   enum :role, { member: "member", manager: "manager" }, validate: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_06_133203) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_06_144013) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -100,6 +100,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_133203) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "listing_id", null: false
+    t.bigint "organization_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "pickup_at", null: false
+    t.string "status", default: "active", null: false
+    t.bigint "cancelled_by_id"
+    t.datetime "closed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cancelled_by_id"], name: "index_reservations_on_cancelled_by_id"
+    t.index ["listing_id"], name: "index_reservations_on_listing_id"
+    t.index ["listing_id"], name: "index_reservations_one_active_per_listing", unique: true, where: "((status)::text = 'active'::text)"
+    t.index ["organization_id"], name: "index_reservations_on_organization_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -137,5 +154,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_133203) do
   add_foreign_key "listings", "categories"
   add_foreign_key "listings", "organizations"
   add_foreign_key "listings", "users"
+  add_foreign_key "reservations", "listings"
+  add_foreign_key "reservations", "organizations"
+  add_foreign_key "reservations", "users"
+  add_foreign_key "reservations", "users", column: "cancelled_by_id"
   add_foreign_key "users", "organizations"
 end

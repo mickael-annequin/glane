@@ -1,0 +1,6 @@
+potatoes_by_dreux:
+  listing: potatoes
+  organization: restos_dreux
+  user: paul
+  pickup_at: <%= Date.tomorrow.in_time_zone.change(hour: 14) %>
+  status: active

@@ -1,0 +1,43 @@
+<%# Choosing the pickup slot (docs/conception/wireframes.md, screen 6). %>
+<% content_for :title, "Réserver" %>
+<% content_for :hide_tab_bar, true %>
+<%= render "shared/page_header", title: "Quand passez-vous ?", back_path: listing_path(@listing) %>
+
+<section class="listing-summary">
+  <div class="listing-picture" aria-hidden="true"><%= @listing.category.icon.presence || "📦" %></div>
+  <div>
+    <strong><%= @listing.title %></strong><%= " · #{@listing.quantity_label}" if @listing.quantity_label %>
+    <div class="text-body-secondary"><%= @listing.organization.name %> · <%= @listing.city %></div>
+    <div class="<%= "text-danger fw-semibold" if urgent?(@listing) %>">À récupérer <%= listing_deadline(@listing) %></div>
+  </div>
+</section>
+
+<div class="info-card">
+  <p class="mb-1 small text-body-secondary">Disponibilités du donateur :</p>
+  <p class="mb-0"><%= simple_format(@listing.availability, {}, wrapper_tag: "span") %></p>
+</div>
+
+<%= form_with model: [ @listing, @reservation ] do |f| %>
+  <%= render "shared/form_errors", record: @reservation %>
+  <% chosen_day = params.dig(:reservation, :pickup_day) || Date.current.iso8601 %>
+  <% chosen_hour = params.dig(:reservation, :pickup_hour) %>
+
+  <fieldset class="mb-3">
+    <legend class="form-label fs-6 mb-2">Jour</legend>
+    <div class="choice-chips">
+      <% pickup_days(@listing).each do |label, day| %>
+        <%= radio_button_tag "reservation[pickup_day]", day, day == chosen_day, class: "btn-check", id: "pickup_day_#{day}" %>
+        <%= label_tag "pickup_day_#{day}", label, class: "btn btn-outline-dark btn-sm" %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div class="mb-4">
+    <%= label_tag "reservation_pickup_hour", "Heure", class: "form-label" %>
+    <%= select_tag "reservation[pickup_hour]", options_for_select(ReservationsController::PICKUP_HOURS.map { |hour| [ hour.sub(":", "h"), hour ] }, chosen_hour),
+                   include_blank: "Choisir une heure", id: "reservation_pickup_hour", class: "form-select form-select-lg" %>
+  </div>
+
+  <%= f.submit "Confirmer la réservation", class: "btn btn-primary btn-lg w-100" %>
+  <p class="form-text text-center mt-2">L'annonce est alors réservée pour votre structure et n'est plus proposée aux autres.</p>
+<% end %>

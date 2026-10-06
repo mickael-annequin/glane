@@ -1,0 +1,8 @@
+<%# The person on the other side of a reservation, and their phone (or their structure's): only shown to the two structures of the reservation. %>
+<% phone = Reservation.contact_phone(person) %>
+<p class="mb-2">Contact : <strong><%= person.name %></strong><% if phone %> · <%= phone %><% end %></p>
+<% if phone %>
+  <%= link_to "📞 Appeler #{person.name.split.first}", "tel:#{phone.gsub(/[^\d+]/, "")}", class: "btn btn-primary w-100" %>
+<% else %>
+  <p class="small text-body-secondary mb-0">Pas de téléphone renseigné.</p>
+<% end %>
