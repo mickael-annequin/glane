@@ -32,7 +32,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md).
 - [ ] **« Mes dons » et « Mes réservations »**, annulation d'un côté comme de l'autre. *Test :* une annonce annulée redevient disponible.
 - [ ] **Clôture par le donateur** (« Stock récupéré »). *Test :* l'annonce passe dans l'historique des deux structures.
 - [ ] **Question « Stock récupéré ? »** sur l'accueil après le créneau, avec Oui / Non. *Test :* répondre Non remet l'annonce en ligne.
-- [ ] **Droits d'accès** avec Pundit, et tests des changements de statut. *Test :* `bin/rails test` passe, et une structure ne peut pas modifier l'annonce d'une autre. 🎉 **MVP utilisable**
+- [ ] **Droits d'accès** avec Pundit, tests des changements de statut, et un test système du parcours publier → réserver → clôturer (remettre alors le job `system-test` dans la CI, retiré au départ). *Test :* `bin/rails test` passe, et une structure ne peut pas modifier l'annonce d'une autre. 🎉 **MVP utilisable**
 
 ## Jalon — Présentation du Proof of Concept 🎤
 > On ne pourra peut-être pas faire un essai en conditions réelles tout de suite. On commence donc par **montrer** l'app aux responsables de structures, pour la valider et récolter leurs idées avant d'aller plus loin.
