@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glane — Identité visuelle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px 48px;
+      font-family: system-ui, sans-serif;
+      background: #F3F1EC;
+      color: #222;
+    }
+    main { max-width: 1120px; margin: 0 auto; }
+    h1 { margin: 0 0 4px; }
+    .intro { margin: 0 0 24px; max-width: 70ch; line-height: 1.5; }
+    .pistes { max-width: 420px; }
+
+    /* Chaque piste définit ses couleurs et ses polices */
+    .piste {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-text);
+      border-radius: 20px;
+      padding: 20px 16px 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    .piste-moisson {
+      --primary: #7A4A24; --accent: #E3A92B; --bg: #FBF5E9; --text: #2D241C;
+      --soft: #EADBC0; --urgent: #C0392B; --on-primary: #FFFFFF;
+      --font-title: "Fraunces", serif; --font-text: "Source Sans 3", sans-serif;
+    }
+
+    .piste h2 { font-family: var(--font-title); font-weight: 800; color: var(--primary); margin: 0; font-size: 26px; }
+    .piste .mood { margin: 4px 0 16px; opacity: 0.85; line-height: 1.4; }
+    .piste h3 { font-family: var(--font-title); font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em; margin: 20px 0 8px; color: var(--primary); }
+
+    /* Palette */
+    .swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .swatch { border-radius: 10px; overflow: hidden; background: #FFF; font-size: 12px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
+    .swatch span { display: block; height: 40px; }
+    .swatch p { margin: 0; padding: 4px 6px; line-height: 1.3; }
+
+    /* Logo */
+    .logo-row { display: flex; align-items: center; gap: 16px; }
+    .logo-name { display: flex; align-items: center; gap: 10px; font-family: var(--font-title); font-weight: 800; font-size: 30px; color: var(--primary); }
+    .logo-bg { fill: var(--primary); }
+    .logo-grain { fill: var(--accent); }
+    .logo-stem { stroke: var(--accent); }
+
+    /* Typo */
+    .type { background: #FFF; border-radius: 12px; padding: 12px; }
+    .type .t-title { font-family: var(--font-title); font-weight: 800; font-size: 22px; margin: 0 0 4px; }
+    .type p { margin: 0; line-height: 1.45; }
+
+    /* Maquette de téléphone */
+    .phone {
+      margin-top: 8px;
+      background: var(--bg);
+      border: 7px solid var(--text);
+      border-radius: 30px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      max-width: 340px;
+    }
+    .ph-body { padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; }
+    .ph-header { display: flex; justify-content: space-between; align-items: center; }
+    .ph-brand { display: flex; align-items: center; gap: 6px; font-family: var(--font-title); font-weight: 800; font-size: 20px; color: var(--primary); }
+    .ph-org { font-size: 12px; opacity: 0.8; }
+    .todo { border: 2px solid var(--urgent); border-radius: 14px; padding: 10px; background: #FFF; font-size: 13px; }
+    .todo b { color: var(--urgent); font-size: 12px; letter-spacing: 0.05em; }
+    .todo p { margin: 4px 0 8px; line-height: 1.35; }
+    .todo-btns { display: flex; flex-direction: column; gap: 6px; }
+    .btn {
+      border: none; border-radius: 12px; padding: 10px 12px; width: 100%;
+      font-family: var(--font-title); font-weight: 800; font-size: 14px; cursor: pointer;
+    }
+    .btn-primary { background: var(--primary); color: var(--on-primary); }
+    .btn-accent { background: var(--accent); color: var(--text); }
+    .btn-outline { background: transparent; color: var(--text); border: 2px solid var(--text); }
+    .chips { display: flex; gap: 6px; overflow: hidden; }
+    .chip { padding: 5px 10px; border-radius: 999px; background: var(--soft); font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .chip.on { background: var(--primary); color: var(--on-primary); }
+    .toggle { align-self: center; display: flex; border: 2px solid var(--primary); border-radius: 999px; overflow: hidden; font-size: 12px; font-weight: 700; }
+    .toggle span { padding: 4px 14px; color: var(--primary); }
+    .toggle .on { background: var(--primary); color: var(--on-primary); }
+    .card { display: flex; gap: 10px; background: #FFF; border-radius: 14px; padding: 8px; font-size: 13px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+    .card-photo { width: 64px; height: 64px; flex: none; border-radius: 10px; background: var(--soft); display: grid; place-items: center; font-size: 30px; }
+    .card b { font-size: 15px; }
+    .card div { line-height: 1.35; }
+    .muted { opacity: 0.75; }
+    .urgent { color: var(--urgent); font-weight: 700; }
+    .mine { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: var(--soft); }
+    .tabs { display: flex; justify-content: space-around; align-items: center; padding: 6px 4px 10px; background: #FFF; border-top: 1px solid rgba(0, 0, 0, 0.08); font-size: 10px; text-align: center; }
+    .tabs span { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .tabs .active { color: var(--primary); font-weight: 700; }
+    .tabs .publish {
+      width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--text);
+      font-size: 28px; font-weight: 800; line-height: 48px; margin-top: -18px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      display: block;
+    }
+    .buttons { display: flex; flex-direction: column; gap: 8px; max-width: 340px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Glane : identité visuelle</h1>
+  <p class="intro">
+    Piste retenue : <b>Moisson</b>. Le détail des règles est dans <a href="identite.md">identite.md</a>.
+    Toutes les combinaisons texte/fond respectent le contraste minimum recommandé (lisible en plein jour).
+  </p>
+
+  <div class="pistes">
+
+    <section class="piste piste-moisson">
+      <h2>Moisson</h2>
+      <p class="mood">Les tons chauds de la récolte : terre, paille et blé mûr. Authentique, « terroir », un peu artisanal.</p>
+      <h3>Palette</h3>
+      <div class="swatches">
+        <div class="swatch"><span style="background:#7A4A24"></span><p><b>Brun glaise</b><br>#7A4A24<br>Boutons, titres</p></div>
+        <div class="swatch"><span style="background:#E3A92B"></span><p><b>Blé mûr</b><br>#E3A92B<br>« Publier », logo</p></div>
+        <div class="swatch"><span style="background:#C0392B"></span><p><b>Coquelicot</b><br>#C0392B<br>À faire, urgent</p></div>
+        <div class="swatch"><span style="background:#FBF5E9"></span><p><b>Crème</b><br>#FBF5E9<br>Fond</p></div>
+        <div class="swatch"><span style="background:#EADBC0"></span><p><b>Paille</b><br>#EADBC0<br>Pastilles</p></div>
+        <div class="swatch"><span style="background:#2D241C"></span><p><b>Brun nuit</b><br>#2D241C<br>Texte</p></div>
+        <div class="swatch"><span style="background:#5F7F3A"></span><p><b>Vert pousse</b><br>#5F7F3A<br>Succès</p></div>
+      </div>
+      <h3>Logo</h3>
+      <div class="logo-row">
+        <svg width="72" height="72" viewBox="0 0 100 100" aria-hidden="true"><use href="#epi"/></svg>
+        <div class="logo-name"><svg width="36" height="36" viewBox="0 0 100 100" aria-hidden="true"><use href="#epi"/></svg>Glane</div>
+      </div>
+      <h3>Police : Fraunces + Source Sans 3</h3>
+      <div class="type">
+        <p class="t-title">Partageons nos surplus</p>
+        <p>Titres à empattements (style éditorial, chaleureux) et texte très sobre et lisible.</p>
+      </div>
+      <h3>Accueil</h3>
+      <div class="phone">
+        <div class="ph-body">
+          <div class="ph-header">
+            <span class="ph-brand"><svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true"><use href="#epi"/></svg>Glane</span>
+            <span class="ph-org">Secours Pop. 28</span>
+          </div>
+          <div class="todo">
+            <b>À FAIRE</b>
+            <p>Restos Dreux devait passer hier à 14h. Les pommes de terre sont-elles parties ?</p>
+            <div class="todo-btns">
+              <button class="btn btn-primary">✓ Oui, récupérées</button>
+              <button class="btn btn-outline">✗ Non, remettre en ligne</button>
+            </div>
+          </div>
+          <div class="chips"><span class="chip on">Tout</span><span class="chip">Légumes</span><span class="chip">Laitier</span><span class="chip">Épicerie</span></div>
+          <div class="toggle"><span class="on">Liste</span><span>Carte</span></div>
+          <div class="card"><div class="card-photo">🥛</div><div><b>Yaourts nature</b><div>40 pièces · ❄️ Frais</div><div class="muted">Chartres · 3 km</div><div class="urgent">avant demain</div></div></div>
+          <div class="card"><div class="card-photo">🥕</div><div><b>Carottes</b><div>25 kg</div><div class="muted">Dreux · 12 km</div><div>avant jeudi</div></div></div>
+        </div>
+        <nav class="tabs"><span class="active">🌾<small>Annonces</small></span><span class="publish">+</span><span>📦<small>Échanges</small></span><span>🏠<small>Structure</small></span></nav>
+      </div>
+      <h3>Boutons</h3>
+      <div class="buttons">
+        <button class="btn btn-primary">Réserver</button>
+        <button class="btn btn-accent">+ Publier un surplus</button>
+        <button class="btn btn-outline">Annuler la réservation</button>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- Logo : un épi de blé penché (ramassé, comme au glanage) et un grain tombé à ses pieds -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="epi">
+      <rect width="100" height="100" rx="24" class="logo-bg"/>
+      <g transform="translate(3 0) rotate(-18 50 52)">
+        <path d="M50 86 L50 22" class="logo-stem" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <ellipse cx="50" cy="16" rx="3.6" ry="7.5" class="logo-grain"/>
+        <ellipse cx="43.5" cy="28" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(-35 43.5 28)"/>
+        <ellipse cx="56.5" cy="28" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(35 56.5 28)"/>
+        <ellipse cx="43.5" cy="39" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(-35 43.5 39)"/>
+        <ellipse cx="56.5" cy="39" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(35 56.5 39)"/>
+        <ellipse cx="43.5" cy="50" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(-35 43.5 50)"/>
+        <ellipse cx="56.5" cy="50" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(35 56.5 50)"/>
+        <ellipse cx="43.5" cy="61" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(-35 43.5 61)"/>
+        <ellipse cx="56.5" cy="61" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(35 56.5 61)"/>
+      </g>
+      <ellipse cx="80" cy="80" rx="3" ry="5.5" class="logo-grain" transform="rotate(60 80 80)"/>
+    </g>
+  </defs>
+</svg>
+</body>
+</html>
