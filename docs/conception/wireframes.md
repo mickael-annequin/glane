@@ -73,6 +73,8 @@ On arrive ici en touchant le lien de l'email d'invitation.
 ```
 
 ## Écran 3 : Accueil = liste des annonces
+> **Mise à jour du 06/10/2026** : pas de photo dans la liste. Chaque carte garde une **petite icône de catégorie** à la place du cadre « photo ».
+
 ```
 ┌───────────────────────────────┐
 │ Glane         Secours Pop. 28 │  ← nom de ma structure
@@ -136,6 +138,8 @@ Même en-tête et mêmes filtres que la liste : on bascule de l'une à l'autre s
 ```
 
 ## Écran 5 : Détail d'une annonce
+> **Mise à jour du 06/10/2026** : en haut, une petite icône de catégorie au lieu de la grande photo. Les photos, facultatives, s'affichent plus bas, seulement s'il y en a.
+
 Vue d'une autre structure, quand l'annonce est disponible :
 ```
 ┌───────────────────────────────┐
@@ -236,6 +240,8 @@ Le bas de l'écran change selon la situation.
 ```
 
 ## Écran 7 : Formulaire d'annonce
+> **Mise à jour du 06/10/2026** : plus de gros bouton « 📷 Ajouter des photos » : un champ discret « Photos (facultatif) », tout en bas, après les informations complémentaires.
+
 Le même écran sert à publier et à modifier. Au plus court : catégorie, produit, date, « Publier ».
 ```
 ┌───────────────────────────────┐

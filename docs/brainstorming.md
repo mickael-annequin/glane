@@ -31,7 +31,7 @@ Lors d'une réunion, des responsables de structures sociales d'Eure-et-Loir ont 
 | Réservation | **Lot entier** | Le plus simple. Pour partager un gros stock, le donateur publie plusieurs annonces (ex. 3 lots de 50 kg). |
 | Champs d'une annonce | **Obligatoires** : catégorie, produit, date limite (« À récupérer avant le… »), lieu et disponibilités (déjà remplis avec ceux de la structure, modifiables). **Facultatifs** : photos, quantité + unité, conservation, texte libre. | Publier doit être rapide : avec les champs pré-remplis, il suffit de choisir une catégorie, d'écrire le produit et de donner une date. La date limite évite les annonces oubliées. |
 | Quantités | **Quantité + unité** (kg, litres, pièces, cartons, colis, sacs, palettes), facultative | Le stock peut aussi être non alimentaire (lessive, couches, textile…). |
-| Photos | Jusqu'à **5 photos** par annonce, appareil photo ou galerie | Facultatives, mais mises en avant : elles rassurent sur l'état du stock. |
+| Photos | Jusqu'à **5 photos** par annonce, appareil photo ou galerie, **facultatives et discrètes** | On ne pousse pas à en mettre : pour un pack de lait, l'icône de la catégorie suffit. Les annonces gardent leur icône dans la liste ; les photos ne s'affichent que sur la page de détail, quand il y en a. Dans le formulaire, un champ discret en bas, pas un gros bouton. |
 | Chiffres clés | Chaque structure voit **ses propres chiffres**. Les totaux du département sont **réservés à l'admin**. On compte toujours le nombre de dons, et les quantités quand elles sont indiquées. | Les chiffres globaux servent à mon information, pour suivre l'impact et faire évoluer l'app. |
 | Comptes | **Un compte par personne**, rattaché à sa structure, avec un ou plusieurs **responsables** par structure | Un membre qui part est simplement désactivé, chacun reçoit les notifications sur son téléphone, et on sait qui a fait quoi. |
 | Arrivée des membres | **Invitation par email** envoyée par le responsable | Personne ne peut s'inscrire sans être invité par le responsable de sa structure. |
@@ -57,7 +57,7 @@ Lors d'une réunion, des responsables de structures sociales d'Eure-et-Loir ont 
 ### 🥇 MVP — à montrer en Proof of Concept
 - Comptes sur invitation (admin → responsables → membres), espace admin pour créer les structures et gérer les catégories, page « Membres » pour les responsables.
 - Profil de la structure : adresse (lieu de récupération par défaut), catégories suivies.
-- Publier une annonce avec photos.
+- Publier une annonce, avec des photos si on le souhaite (facultatives).
 - Deux vues des annonces : une **liste** (style Le Bon Coin) et une **carte** du département.
 - Réserver avec un créneau, annuler, clôturer, question « Stock récupéré ? ».
 

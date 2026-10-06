@@ -25,8 +25,8 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md).
 
 ## Phase 2 — MVP : annonces et réservations 🥇
 - [x] **Publier, modifier et retirer une annonce.** Seuls la catégorie, le produit et la date limite sont à remplir : le lieu et les disponibilités sont déjà remplis, et le reste est facultatif (quantité + unité, conservation, texte libre). *Test :* publier une annonce avec seulement la catégorie, le produit et la date limite, puis une autre avec tous les champs.
-- [ ] **Photos d'annonce** : jusqu'à 5, depuis l'appareil photo ou la galerie, avec aperçu avant l'envoi et suppression possible. Elles sont stockées sur Cloudinary et affichées en miniature dans la liste et en galerie sur la page détail. *Test :* prendre 2 photos avec le téléphone, en supprimer une, et retrouver la bonne dans la liste.
-- [x] **Liste des annonces disponibles** (cartes façon Le Bon Coin, date limite la plus proche en premier, filtre par catégorie, distance à vol d'oiseau) et page détail. La première photo remplacera l'icône de la catégorie avec l'étape des photos. *Test :* une annonce expirée ou réservée n'apparaît plus.
+- [ ] **Photos d'annonce** : jusqu'à 5, depuis l'appareil photo ou la galerie, avec aperçu avant l'envoi et suppression possible. Facultatives et discrètes : un champ en bas du formulaire, et une galerie seulement sur la page détail (la liste garde l'icône de la catégorie). Elles sont stockées sur Cloudinary. *Test :* prendre 2 photos avec le téléphone, en supprimer une, et retrouver la bonne sur la page détail.
+- [x] **Liste des annonces disponibles** (cartes façon Le Bon Coin, date limite la plus proche en premier, filtre par catégorie, distance à vol d'oiseau) et page détail. *Test :* une annonce expirée ou réservée n'apparaît plus.
 - [ ] **Carte Mapbox du département** avec les annonces, et bascule Liste ⇄ Carte. *Test :* toucher un repère ouvre l'annonce.
 - [ ] **Réserver** en choisissant un créneau. L'annonce est attribuée et disparaît. *Test :* avec 2 comptes sur 2 téléphones, la seconde structure ne peut plus réserver.
 - [ ] **« Mes dons » et « Mes réservations »**, annulation d'un côté comme de l'autre. *Test :* une annonce annulée redevient disponible.
@@ -38,9 +38,9 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md).
 > On ne pourra peut-être pas faire un essai en conditions réelles tout de suite. On commence donc par **montrer** l'app aux responsables de structures, pour la valider et récolter leurs idées avant d'aller plus loin.
 
 - [ ] **Revoir les catégories et les unités** avant de préparer la démo. Les catégories se changent depuis l'espace admin, sans toucher au code ; les unités sont dans le code (une petite modification suffit). *Test :* la liste me convient pour la démo.
-- [ ] **Données de démonstration réalistes** : structures fictives du département, annonces variées avec photos (légumes, produits laitiers, épicerie…), quelques réservations et clôtures.
+- [ ] **Données de démonstration réalistes** : structures fictives du département, annonces variées (légumes, produits laitiers, épicerie…), quelques-unes avec photos, quelques réservations et clôtures.
 - [ ] **Logo définitif** (idée : un panier, à partir d'un SVG d'inspiration que je fournirai), si possible avant la présentation. *Test :* il reste lisible à la taille d'une icône d'app.
-- [ ] **Scénario de démo en 5 minutes** sur 2 téléphones : une structure publie avec photo, l'autre la voit sur la carte, réserve et choisit un créneau, puis le donateur clôture. *Test :* le scénario se déroule de bout en bout sans accroc, sur l'URL en ligne.
+- [ ] **Scénario de démo en 5 minutes** sur 2 téléphones : une structure publie une annonce, l'autre la voit sur la carte, réserve et choisit un créneau, puis le donateur clôture. *Test :* le scénario se déroule de bout en bout sans accroc, sur l'URL en ligne.
 - [ ] **Présentation aux structures**, et prise de notes de leurs retours dans `retours-poc.md`. On réajuste ensuite l'ordre des phases 3 à 7 selon ce qui compte le plus pour elles.
 
 ## Phase 3 — Messagerie 💬

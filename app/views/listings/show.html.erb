@@ -1,18 +1,19 @@
-<%# Listing details (docs/conception/wireframes.md, screen 5). Photos come in a next step. %>
+<%# Listing details (docs/conception/wireframes.md, screen 5). Optional photos come in a next step, further down. %>
 <% content_for :title, @listing.title %>
 <% content_for :hide_tab_bar, true %>
 <% mine = @listing.organization_id == current_user.organization_id %>
 <%= render "shared/page_header", title: @listing.title, back_path: mine ? exchanges_path : root_path %>
 
-<div class="listing-picture" aria-hidden="true"><%= @listing.category.icon.presence || "📦" %></div>
-
-<section class="mb-3">
-  <div class="text-body-secondary"><%= @listing.category.icon %> <%= @listing.category.name %></div>
-  <div class="fw-semibold <%= "text-danger" if urgent?(@listing) %>">
-    À récupérer <%= listing_deadline(@listing) %>
+<section class="listing-summary">
+  <div class="listing-picture" aria-hidden="true"><%= @listing.category.icon.presence || "📦" %></div>
+  <div>
+    <div class="text-body-secondary"><%= @listing.category.name %></div>
+    <div class="fw-semibold <%= "text-danger" if urgent?(@listing) %>">
+      À récupérer <%= listing_deadline(@listing) %>
+    </div>
+    <% details = [ @listing.quantity_label, @listing.storage_label ].compact %>
+    <% if details.any? %><div><%= details.join(" · ") %></div><% end %>
   </div>
-  <% details = [ @listing.quantity_label, @listing.storage_label ].compact %>
-  <% if details.any? %><div><%= details.join(" · ") %></div><% end %>
 </section>
 
 <section class="info-card">

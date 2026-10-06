@@ -1,13 +1,22 @@
 // Listing pages: the picture area (category icon until photos come), the storage chips, the exchange rows.
-.listing-picture {
+// The category icon of a listing (photos, when there are some, only show further down the detail page).
+.listing-summary {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 10rem;
+  gap: 0.75rem;
   margin-bottom: 1rem;
+}
+
+.listing-picture {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
   border-radius: $border-radius-lg;
   background: $straw;
-  font-size: 4.5rem;
+  font-size: 2.5rem;
 }
 
 .choice-chips {
@@ -133,11 +142,11 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: $border-radius;
   background: $straw;
-  font-size: 2.5rem;
+  font-size: 1.6rem;
 }
 
 .listing-card-body {

@@ -71,12 +71,12 @@ Catégories : ajouter, renommer, changer l'ordre, masquer. La catégorie « Autr
 3. **Accueil = liste des annonces disponibles**
    - En haut, un encadré **« À faire »**, seulement s'il y a quelque chose à faire : « Stock récupéré ? », récupération prévue aujourd'hui, et pour les responsables « Complétez la fiche de votre structure » (tant que les disponibilités habituelles ne sont pas remplies).
    - Des filtres par catégorie (pastilles qui défilent) et une bascule **Liste | Carte**.
-   - Des cartes façon Le Bon Coin : première photo (ou l'icône de la catégorie), produit, quantité + unité si elle est indiquée, ville et distance (« Dreux · 12 km »), date limite (« avant jeudi »), pastille ❄️ frais / surgelé.
+   - Des cartes façon Le Bon Coin : l'icône de la catégorie (jamais de photo dans la liste), produit, quantité + unité si elle est indiquée, ville et distance (« Dreux · 12 km »), date limite (« avant jeudi »), pastille ❄️ frais / surgelé.
    - Tri par défaut : la date limite la plus proche en premier (le plus urgent d'abord).
    - Les annonces de ma structure apparaissent aussi, avec un badge « Votre structure » (on ne peut pas les réserver).
 4. **Carte des annonces** : carte Mapbox de l'Eure-et-Loir avec un repère par annonce. Toucher un repère affiche un résumé en bas de l'écran, et toucher le résumé ouvre le détail.
 5. **Détail d'une annonce** :
-   - Galerie de photos (on fait glisser), produit, catégorie, date limite, puis la quantité et la conservation si elles sont indiquées. Ensuite : « Publié par Marie — Secours Populaire Chartres », adresse avec deux boutons, « Voir sur la carte » (la carte des annonces, centrée sur celle-ci) et « Itinéraire » (ouvre Google Maps ou Plans), puis les disponibilités et le texte libre.
+   - Icône de la catégorie, produit, catégorie, date limite, puis la quantité et la conservation si elles sont indiquées. Ensuite : « Publié par Marie — Secours Populaire Chartres », adresse avec deux boutons, « Voir sur la carte » (la carte des annonces, centrée sur celle-ci) et « Itinéraire » (ouvre Google Maps ou Plans), puis les disponibilités, le texte libre, et les photos s'il y en a (on fait glisser).
    - Le bouton en bas dépend de la situation :
      - **« Réserver »** pour les autres structures ;
      - **« Modifier » / « Retirer »** si c'est une annonce de ma structure et qu'elle est disponible ;
@@ -86,10 +86,9 @@ Catégories : ajouter, renommer, changer l'ordre, masquer. La catégorie « Autr
 6. **Réserver : choix du créneau** (fenêtre qui s'ouvre sur le détail) : rappel des disponibilités du donateur, choix du jour (jusqu'à la date limite) et de l'heure, puis « Confirmer la réservation ».
 7. **Formulaire d'annonce** : un seul écran pour publier et pour modifier.
    - En haut, les trois champs **à remplir** : catégorie, produit et date limite.
-   - Ensuite le gros bouton « 📷 Ajouter des photos » (facultatif, mais mis en avant).
    - Puis les champs **facultatifs** : quantité + unité, conservation (ambiant / frais / surgelé).
    - Le lieu (adresse de la structure, ou « Autre adresse ») et les disponibilités sont déjà remplis et modifiables.
-   - Enfin, une zone de **texte libre**.
+   - Enfin, une zone de **texte libre**, puis un champ discret « Photos (facultatif) ».
 8. **Mes échanges** : deux onglets, **Dons** et **Réservations**, pour toute la structure.
    - Chaque onglet a une partie « En cours » (disponible, ou réservée avec le créneau) et une partie « Historique » (récupérée, non récupérée, expirée, retirée, annulée).
    - Chaque ligne indique qui a publié ou réservé. Toucher une ligne ouvre le détail de l'annonce.
