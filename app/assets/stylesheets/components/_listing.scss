@@ -184,6 +184,25 @@
   }
 }
 
+// A photo chosen but not sent yet, with its ✕ button in the corner.
+.photo-thumb-new {
+  position: relative;
+
+  button {
+    position: absolute;
+    top: -0.4rem;
+    right: -0.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 0;
+    border-radius: 50%;
+    background: $night;
+    color: #fff;
+    font-size: 0.8rem;
+    line-height: 1.6rem;
+  }
+}
+
 .photo-thumb {
   display: flex;
   flex-direction: column;

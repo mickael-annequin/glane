@@ -77,8 +77,19 @@
         <% end %>
       </div>
     <% end %>
-    <%= f.file_field :photos, multiple: true, accept: "image/*", class: "form-control",
-                     data: { action: "photo-preview#show", photo_preview_target: "input" } %>
+    <%# Two ways to add photos: the camera (capture) or the gallery. They are gathered by photo_preview_controller.js
+        in the hidden field below, the one actually sent. %>
+    <div class="d-flex gap-2">
+      <label class="btn btn-outline-dark flex-fill">
+        📷 Prendre une photo
+        <input type="file" accept="image/*" capture="environment" hidden data-action="change->photo-preview#add">
+      </label>
+      <label class="btn btn-outline-dark flex-fill">
+        🖼️ Galerie
+        <input type="file" accept="image/*" multiple hidden data-action="change->photo-preview#add">
+      </label>
+    </div>
+    <%= f.file_field :photos, multiple: true, accept: "image/*", hidden: true, data: { photo_preview_target: "input" } %>
     <div class="photo-thumbs mt-2" data-photo-preview-target="list"></div>
   </fieldset>
 
