@@ -117,6 +117,9 @@ GEM
       railties (>= 7.0)
       responders
       warden (~> 1.2.3)
+    devise_invitable (2.0.14)
+      actionmailer (>= 5.0)
+      devise (>= 4.6)
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
@@ -415,6 +418,7 @@ DEPENDENCIES
   dartsass-rails
   debug
   devise (~> 5.0)
+  devise_invitable (~> 2.0)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

@@ -1,0 +1,16 @@
+<p>Bonjour,</p>
+
+<p>
+  <%= @resource.invited_by&.name || "L'équipe Glane" %> vous invite à rejoindre
+  <% if @resource.organization %><strong><%= @resource.organization.name %></strong> sur<% end %>
+  Glane, l'application de partage des surplus entre structures d'Eure-et-Loir.
+</p>
+
+<p class="button-row">
+  <%= link_to "Accepter l'invitation", accept_user_invitation_url(invitation_token: @token), class: "button" %>
+</p>
+
+<p class="muted">
+  Vous choisirez votre mot de passe en ouvrant ce lien, valable jusqu'au <%= l(@resource.invitation_due_at.to_date, format: :long) %>.
+  Si vous ne connaissez pas Glane, ignorez cet email&nbsp;: aucun compte ne sera créé.
+</p>

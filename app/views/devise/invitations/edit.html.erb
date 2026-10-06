@@ -1,0 +1,43 @@
+<div class="login">
+  <%= image_tag "logo.svg", width: 64, height: 64, alt: "" %>
+  <h1 class="login-title-small">Bienvenue !</h1>
+  <p class="login-tagline">
+    <% if resource.organization %>
+      Vous rejoignez <strong><%= resource.organization.name %></strong> sur Glane
+    <% else %>
+      Vous rejoignez Glane
+    <% end %>
+    <% if resource.invited_by %>
+      <br>(invitation de <%= resource.invited_by.name %>)
+    <% end %>
+  </p>
+
+  <%= form_for(resource, as: resource_name, url: user_invitation_path, html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <%= f.hidden_field :invitation_token, readonly: true %>
+
+    <div class="mb-3">
+      <%= f.label :name, "Prénom et nom", class: "form-label" %>
+      <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control form-control-lg" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :phone, "Téléphone (facultatif)", class: "form-label" %>
+      <%= f.telephone_field :phone, autocomplete: "tel", class: "form-control form-control-lg" %>
+      <div class="form-text">Visible seulement par la structure avec qui vous avez un échange en cours.</div>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :password, "Mot de passe", class: "form-label" %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-lg" %>
+      <div class="form-text"><%= User.password_length.min %> caractères minimum.</div>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg" %>
+    </div>
+
+    <%= f.submit "Rejoindre Glane", class: "btn btn-primary btn-lg w-100" %>
+  <% end %>
+</div>

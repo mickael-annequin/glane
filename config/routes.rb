@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # No "invite anyone" page from Devise: invitations are sent from the admin space (and later the members page).
+  # Only the pages to accept an invitation are kept.
+  devise_for :users, skip: :invitations
+  devise_scope :user do
+    get "users/invitation/accept", to: "devise/invitations#edit", as: :accept_user_invitation
+    patch "users/invitation", to: "devise/invitations#update", as: :user_invitation
+    put "users/invitation", to: "devise/invitations#update"
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

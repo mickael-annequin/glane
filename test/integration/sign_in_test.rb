@@ -40,8 +40,10 @@ class SignInTest < ActionDispatch::IntegrationTest
   test "signs out" do
     sign_in users(:marie)
     delete destroy_user_session_path
-    get root_path
+    follow_redirect!
 
+    assert_select ".alert", "Déconnexion réussie."
+    get root_path
     assert_redirected_to new_user_session_path
   end
 end
