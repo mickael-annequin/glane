@@ -110,7 +110,8 @@ class ListingsControllerTest < ActionDispatch::IntegrationTest
     get exchanges_path
 
     assert_response :success
-    assert_select ".exchange-row", count: 2
-    assert_select ".exchange-row", /Date limite dépassée/
+    assert_select ".exchange-list:not(.exchange-list-past) .exchange-row", count: 1
+    assert_select ".exchange-list:not(.exchange-list-past) .exchange-row", /Yaourts nature.*En ligne/m
+    assert_select ".exchange-list-past .exchange-row", /Lait demi-écrémé.*Date limite dépassée/m
   end
 end
