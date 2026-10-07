@@ -72,6 +72,15 @@ class ReservationTest < ActiveSupport::TestCase
     assert_empty organizations(:restos_dreux).pickups_to_confirm
   end
 
+  test "cancelling keeps who cancelled, and the listing is offered again" do
+    reservations(:potatoes_by_dreux).cancel!(by: users(:marie))
+
+    assert reservations(:potatoes_by_dreux).reload.cancelled?
+    assert reservations(:potatoes_by_dreux).cancelled_by_donor?
+    assert_not_nil reservations(:potatoes_by_dreux).closed_at
+    assert listings(:potatoes).reload.reservable?
+  end
+
   test "nobody came: the listing is offered again" do
     reservations(:potatoes_by_dreux).not_picked_up!
 

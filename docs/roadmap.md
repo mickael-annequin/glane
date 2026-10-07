@@ -9,7 +9,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour re
   1. ✅ *Fait et testé* : Pundit installé, `ListingPolicy` (voir, publier, modifier, retirer une annonce). Une action refusée renvoie vers l'accueil avec un message en français ([pundit.fr.yml](../config/locales/pundit.fr.yml)).
   2. ✅ *Fait et testé* : `ReservationPolicy` (réserver l'annonce d'une autre structure tant qu'elle est disponible ; annuler pour les deux structures ; clôturer pour le donateur seulement). Une action déjà réglée par quelqu'un d'autre renvoie vers l'accueil avec « C'est déjà réglé… ».
   3. ✅ *Fait et testé* : `OrganizationPolicy` (Ma structure), `UserPolicy` (Membres), `AdminPolicy` (espace admin), plus `verify_authorized` (Rails refuse une page dont les droits n'ont pas été vérifiés ; seules les pages de mes propres choses en sont dispensées).
-  4. Tests des changements de statut et test système publier → réserver → clôturer (remettre le job `system-test` dans la CI).
+  4. ✅ *Fait, mon test reste à faire* : Chrome installé dans Ubuntu (WSL), test système [listing_flow_test.rb](../test/system/listing_flow_test.rb) (Chartres publie, Dreux réserve dans 2 jours à 14h, Chartres clôture), test de l'annulation dans le modèle, et job `system-test` remis dans la CI. *Test :* `bin/rails test:system` → `1 runs, 8 assertions, 0 failures` ; `bin/rails test` → `0 failures`.
   Ensuite, le jalon du Proof of Concept.
 - **Petites choses en attente**, sans urgence :
   - Les propositions de mise à jour de Dependabot sur GitHub (#1 `actions/cache`, #2 `actions/checkout`, #4 `image_processing` 2.x, à vérifier avec soin car c'est une version majeure) : à regarder ensemble avant de les accepter.
