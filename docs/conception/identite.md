@@ -25,9 +25,12 @@ Règles de lisibilité (vérifiées : contraste ≥ 4,5, la norme d'accessibilit
 - **Source Sans 3** (Google Fonts), graisses 400, 600 et 700 : tout le reste (annonces, formulaires, textes). Très sobre et lisible, même en petit.
 
 ## Logo
-⚠️ **Logo provisoire, à refaire** (pas urgent). L'idée retenue est un **panier**, qui évoque mieux « on vient récupérer quelque chose » que l'épi. Je fournirai un SVG dont s'inspirer.
+[logo.svg](logo.svg) (choisi le 07/10/2026) : un **panier** au trait épais et arrondi, brun glaise, avec un **épi de blé mûr** qui en sort, sur un carré crème aux coins arrondis. Le panier évoque « on vient récupérer quelque chose », et l'épi le glanage. La tige de l'épi forme le montant du milieu du panier ; un contour crème détache l'épi du bord du panier, et un petit espace sépare ses grains.
 
-En attendant, [logo.svg](logo.svg) montre un épi de blé mûr penché, comme s'il venait d'être ramassé, avec un grain tombé à ses pieds, dans un carré brun glaise aux coins arrondis. Le logo définitif gardera ce format (carré arrondi, couleurs de la palette), car il sert aussi d'icône d'app (PWA, puis Android) et doit rester lisible en petit.
+Fichiers :
+- `app/assets/images/logo.svg` : le logo dans l'app (accueil, connexion, invitation, mot de passe) ;
+- `public/icon.svg` : l'icône d'onglet ;
+- `public/icon.png` (512 px) : l'icône d'app, en **carré sans coins arrondis**, car le téléphone arrondit lui-même les coins. Elle se refait en ouvrant `icon.svg` sans le `rx="24"` dans Chrome sans fenêtre (`google-chrome --headless --window-size=512,512 --screenshot=…`).
 
 ## Principes
 - Gros boutons arrondis (coins de 12 px environ), faciles à toucher d'une main.

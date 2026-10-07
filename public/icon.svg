@@ -1,3 +1,32 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 100 100">
+  <title>Glane</title>
+  <!-- Un panier, et un épi de blé qui en sort : on vient récupérer ce qui reste, comme au glanage -->
+  <rect width="100" height="100" rx="24" fill="#FBF5E9"/>
+  <g fill="none" stroke="#7A4A24" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 46 A28 28 0 0 1 78 46"/>
+    <rect x="18" y="46" width="64" height="8" rx="3.5"/>
+    <path d="M21 54 L24.5 76 Q25.2 80 29.5 80 L70.5 80 Q74.8 80 75.5 76 L79 54"/>
+    <path d="M22.4 63 H77.6 M23.8 71.5 H76.2 M36 54 V80 M64 54 V80"/>
+  </g>
+  <!-- L'épi est détaché du bord du panier par un contour de la couleur du fond… -->
+  <g fill="#FBF5E9" stroke="#FBF5E9" stroke-width="4" stroke-linejoin="round">
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(49.2 51.5) rotate(-34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(50.8 51.5) rotate(34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(49.2 45.5) rotate(-34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(50.8 45.5) rotate(34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(49.2 39.5) rotate(-34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(50.8 39.5) rotate(34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(50 34.5) rotate(0)"/>
+  </g>
+  <!-- …et ses grains par un petit espace. La tige, par-dessus, garde la même épaisseur jusqu'en haut. -->
+  <g fill="#E3A92B" stroke="#FBF5E9" stroke-width="1.3" stroke-linejoin="round">
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(49.2 51.5) rotate(-34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(50.8 51.5) rotate(34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(49.2 45.5) rotate(-34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(50.8 45.5) rotate(34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(49.2 39.5) rotate(-34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(50.8 39.5) rotate(34)"/>
+    <path d="M0 0 Q4.8 -5.8 0 -11.6 Q-4.8 -5.8 0 0Z" transform="translate(50 34.5) rotate(0)"/>
+  </g>
+  <path d="M50 34 V80" stroke="#E3A92B" stroke-width="4.5" stroke-linecap="round"/>
 </svg>

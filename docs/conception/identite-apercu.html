@@ -49,9 +49,6 @@
     /* Logo */
     .logo-row { display: flex; align-items: center; gap: 16px; }
     .logo-name { display: flex; align-items: center; gap: 10px; font-family: var(--font-title); font-weight: 800; font-size: 30px; color: var(--primary); }
-    .logo-bg { fill: var(--primary); }
-    .logo-grain { fill: var(--accent); }
-    .logo-stem { stroke: var(--accent); }
 
     /* Typo */
     .type { background: #FFF; border-radius: 12px; padding: 12px; }
@@ -133,8 +130,8 @@
       </div>
       <h3>Logo</h3>
       <div class="logo-row">
-        <svg width="72" height="72" viewBox="0 0 100 100" aria-hidden="true"><use href="#epi"/></svg>
-        <div class="logo-name"><svg width="36" height="36" viewBox="0 0 100 100" aria-hidden="true"><use href="#epi"/></svg>Glane</div>
+        <img src="logo.svg" width="72" height="72" alt="">
+        <div class="logo-name"><img src="logo.svg" width="36" height="36" alt="">Glane</div>
       </div>
       <h3>Police : Fraunces + Source Sans 3</h3>
       <div class="type">
@@ -145,7 +142,7 @@
       <div class="phone">
         <div class="ph-body">
           <div class="ph-header">
-            <span class="ph-brand"><svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true"><use href="#epi"/></svg>Glane</span>
+            <span class="ph-brand"><img src="logo.svg" width="22" height="22" alt="">Glane</span>
             <span class="ph-org">Secours Pop. 28</span>
           </div>
           <div class="todo">
@@ -174,26 +171,5 @@
   </div>
 </main>
 
-<!-- Logo : un épi de blé penché (ramassé, comme au glanage) et un grain tombé à ses pieds -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <g id="epi">
-      <rect width="100" height="100" rx="24" class="logo-bg"/>
-      <g transform="translate(3 0) rotate(-18 50 52)">
-        <path d="M50 86 L50 22" class="logo-stem" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <ellipse cx="50" cy="16" rx="3.6" ry="7.5" class="logo-grain"/>
-        <ellipse cx="43.5" cy="28" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(-35 43.5 28)"/>
-        <ellipse cx="56.5" cy="28" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(35 56.5 28)"/>
-        <ellipse cx="43.5" cy="39" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(-35 43.5 39)"/>
-        <ellipse cx="56.5" cy="39" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(35 56.5 39)"/>
-        <ellipse cx="43.5" cy="50" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(-35 43.5 50)"/>
-        <ellipse cx="56.5" cy="50" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(35 56.5 50)"/>
-        <ellipse cx="43.5" cy="61" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(-35 43.5 61)"/>
-        <ellipse cx="56.5" cy="61" rx="3.8" ry="7.5" class="logo-grain" transform="rotate(35 56.5 61)"/>
-      </g>
-      <ellipse cx="80" cy="80" rx="3" ry="5.5" class="logo-grain" transform="rotate(60 80 80)"/>
-    </g>
-  </defs>
-</svg>
 </body>
 </html>

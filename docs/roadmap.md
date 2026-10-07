@@ -5,11 +5,10 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour re
 
 ## 📍 Où on en est (mis à jour le 07/10/2026)
 - **Dernière étape faite** : les **droits d'accès avec Pundit**, testés ✓ : une policy par type de données dans `app/policies/` (annonces, réservations, Ma structure, Membres, espace admin), `verify_authorized` sur toutes les pages, et une action refusée renvoie vers l'accueil avec un message en français ([pundit.fr.yml](../config/locales/pundit.fr.yml)). Plus un test système du parcours publier → réserver → clôturer ([listing_flow_test.rb](../test/system/listing_flow_test.rb), avec Chrome installé dans Ubuntu) et le job `system-test` remis dans la CI. 🎉 **Phase 2 terminée : MVP utilisable.**
-- **En cours** : le **jalon du Proof of Concept**. ✅ Catégories et unités revues. ✅ Données de démonstration ([db/seeds/demo.rb](../db/seeds/demo.rb), 6 structures fictives et 19 annonces, recréées à chaque mise en ligne grâce à `DEMO_PASSWORD` dans Render ; comptes dans le [README](../README.md#données-de-démonstration-pour-présenter-glane)), testées en local et en ligne. Prochain morceau : le logo définitif (j'envoie mon SVG d'inspiration).
+- **En cours** : le **jalon du Proof of Concept**. ✅ Catégories et unités revues. ✅ Données de démonstration ([db/seeds/demo.rb](../db/seeds/demo.rb), recréées à chaque mise en ligne grâce à `DEMO_PASSWORD` dans Render ; comptes dans le [README](../README.md#données-de-démonstration-pour-présenter-glane)). ✅ *Logo définitif fait, mon test reste à faire* : le panier brun glaise avec un épi de blé mûr, sur fond crème ([identite.md](conception/identite.md#logo)), dans l'app, l'icône d'onglet et l'icône d'app. *Test :* redémarrer `bin/dev`, puis voir le logo sur la page de connexion, à côté de « Glane » sur l'accueil, et dans l'onglet du navigateur (Ctrl + F5 si l'ancien reste affiché).
 - **Petites choses en attente**, sans urgence :
   - Les propositions de mise à jour de Dependabot sur GitHub (#1 `actions/cache`, #2 `actions/checkout`, #4 `image_processing` 2.x, à vérifier avec soin car c'est une version majeure) : à regarder ensemble avant de les accepter.
-  - Une page d'erreur 500 en français, et une icône d'onglet (favicon) avec le logo.
-  - Logo : provisoire, à revoir au jalon du Proof of Concept.
+  - Une page d'erreur 500 en français.
 
 ## Phase 0 — Conception ✏️
 > Cette phase se fait **sans code** : on travaille sur papier et dans `docs/`.
