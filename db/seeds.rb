@@ -26,7 +26,9 @@ if Category.none?
     [ "Conserves", "🥫" ],
     [ "Pain, viennoiseries", "🥖" ],
     [ "Surgelés", "🧊" ],
-    [ "Boissons", "🧃" ]
+    [ "Boissons", "🧃" ],
+    [ "Hygiène, entretien", "🧴" ],
+    [ "Bébé", "🍼" ]
   ].each { |name, icon| Category.create!(name: name, icon: icon) }
   Category.create!(name: "Autres", icon: "📦", catch_all: true)
   puts "Categories created: #{Category.count}"
@@ -68,11 +70,11 @@ if Rails.env.development?
   if Listing.none?
     [
       [ "chartres", "Produits laitiers, œufs", "Yaourts nature", 1, "40", "piece", "chilled", "Date de péremption : après-demain" ],
-      [ "dreux", "Fruits et légumes", "Carottes", 3, "25", "kg", nil, "Cagettes à rapporter" ],
+      [ "dreux", "Fruits et légumes", "Carottes", 3, "6", "crate", nil, "Cagettes à rapporter" ],
       [ "dreux", "Pain, viennoiseries", "Baguettes de la veille", 0, "30", "piece", nil, nil ],
       [ "chateaudun", "Épicerie sèche", "Pâtes et riz", 10, "12", "box", "ambient", nil ],
       [ "nogent", "Surgelés", "Légumes surgelés", 5, nil, nil, "frozen", "Prévoir une glacière" ],
-      [ "chartres", "Autres", "Lessive", 30, "8", "piece", nil, "Bidons de 3 litres" ]
+      [ "chartres", "Hygiène, entretien", "Lessive", 30, "8", "piece", nil, "Bidons de 3 litres" ]
     ].each do |city, category, title, days, quantity, unit, storage, description|
       user = User.find_by!(email: "#{city}.responsable@glane.test")
       listing = Listing.new_from(user)

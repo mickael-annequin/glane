@@ -421,7 +421,7 @@ Les formulaires « Modifier mon compte » et « Modifier la structure » reprenn
 ```
 
 ## Écran 12 : Admin › Catégories
-La liste ci-dessous est provisoire : on la revoit avant la démo du Proof of Concept, et l'admin peut la modifier à tout moment. La catégorie **« Autres »** sert de fourre-tout : elle est toujours en dernier, et on ne peut pas la masquer.
+Liste revue le 07/10/2026 pour la démo du Proof of Concept (avec « Hygiène, entretien » et « Bébé », pour montrer que Glane ira au-delà de l'alimentaire). L'admin peut la modifier à tout moment. La catégorie **« Autres »** sert de fourre-tout : elle est toujours en dernier, et on ne peut pas la masquer.
 ```
 ┌───────────────────────────────┐
 │ ←  Admin                      │
@@ -437,7 +437,8 @@ La liste ci-dessous est provisoire : on la revoit avant la démo du Proof of Con
 │ ↕ Pain, viennoiseries       ✎ │
 │ ↕ Surgelés                  ✎ │
 │ ↕ Boissons                  ✎ │
-│ ↕ Hygiène (masquée)         ✎ │  ← plus proposée à la publication
+│ ↕ Hygiène, entretien        ✎ │
+│ ↕ Bébé (masquée)            ✎ │  ← plus proposée à la publication
 │   Autres                    ✎ │  ← fourre-tout, toujours en dernier
 └───────────────────────────────┘
 ```

@@ -5,7 +5,7 @@ class Listing < ApplicationRecord
   # French labels, singular and plural ("1 carton", "12 cartons").
   UNITS = {
     "kg" => [ "kg", "kg" ], "liter" => [ "litre", "litres" ], "piece" => [ "pièce", "pièces" ],
-    "box" => [ "carton", "cartons" ], "parcel" => [ "colis", "colis" ], "bag" => [ "sac", "sacs" ],
+    "crate" => [ "cagette", "cagettes" ], "box" => [ "carton", "cartons" ], "parcel" => [ "colis", "colis" ], "bag" => [ "sac", "sacs" ],
     "pallet" => [ "palette", "palettes" ]
   }.freeze
   STORAGES = { "ambient" => "Ambiant", "chilled" => "Frais", "frozen" => "Surgelé" }.freeze

@@ -73,7 +73,7 @@ Par défaut, une personne suit toutes les catégories : on enregistre seulement 
 | title | texte | `Carottes` (le « produit ») |
 | available_until | date | `2026-10-09` (« À récupérer avant le… », jour compris) |
 | quantity | décimal, facultatif | `25` |
-| unit | choix, facultatif | `kg` / `liter` / `piece` / `box` (carton) / `parcel` (colis) / `bag` (sac) / `pallet` (palette)… |
+| unit | choix, facultatif | `kg` / `liter` / `piece` / `crate` (cagette) / `box` (carton) / `parcel` (colis) / `bag` (sac) / `pallet` (palette)… |
 | storage | choix, facultatif | `ambient` (ambiant) / `chilled` (frais) / `frozen` (surgelé) |
 | address | texte | `Place Métézeau 28100 Dreux` (le lieu de récupération, copié de la structure, modifiable) |
 | city | texte | `Dreux` |

@@ -5,7 +5,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour re
 
 ## 📍 Où on en est (mis à jour le 07/10/2026)
 - **Dernière étape faite** : les **droits d'accès avec Pundit**, testés ✓ : une policy par type de données dans `app/policies/` (annonces, réservations, Ma structure, Membres, espace admin), `verify_authorized` sur toutes les pages, et une action refusée renvoie vers l'accueil avec un message en français ([pundit.fr.yml](../config/locales/pundit.fr.yml)). Plus un test système du parcours publier → réserver → clôturer ([listing_flow_test.rb](../test/system/listing_flow_test.rb), avec Chrome installé dans Ubuntu) et le job `system-test` remis dans la CI. 🎉 **Phase 2 terminée : MVP utilisable.**
-- **Prochaine étape** : le **jalon du Proof of Concept**, en commençant par revoir les catégories et les unités.
+- **En cours** : le **jalon du Proof of Concept**. Catégories et unités revues : ✅ *fait, mon test reste à faire* : 2 catégories en plus, 🧴 « Hygiène, entretien » et 🍼 « Bébé » (dans les seeds et ma base locale, la Lessive de test passe dans Hygiène), et l'unité « cagette ». *Test :* en local, publier une annonce avec la catégorie « Bébé » et « 3 cagettes » ; en ligne, ajouter moi-même les 2 catégories dans l'espace admin (`/admin` › Catégories), car les seeds ne créent les catégories que sur une base vide.
 - **Petites choses en attente**, sans urgence :
   - Les propositions de mise à jour de Dependabot sur GitHub (#1 `actions/cache`, #2 `actions/checkout`, #4 `image_processing` 2.x, à vérifier avec soin car c'est une version majeure) : à regarder ensemble avant de les accepter.
   - Une page d'erreur 500 en français, et une icône d'onglet (favicon) avec le logo.
