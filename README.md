@@ -37,11 +37,24 @@ Ces comptes sont rappelés sur la page de connexion locale (bandeau « Version l
 
 Pour repartir d'une base propre : `bin/rails db:reset` (efface toutes les données locales et recrée celles de test).
 
+## Données de démonstration (pour présenter Glane)
+Le fichier `db/seeds/demo.rb` crée 6 structures fictives dans de vraies villes du département, avec 19 annonces : 12 disponibles, 3 réservées et 4 récupérées (l'historique). Il ne se lance que si la variable `DEMO_PASSWORD` existe. À chaque fois, il efface la démo précédente (avec ce qui a été créé pendant une présentation) et la recrée, avec des dates comptées à partir du jour même.
+
+- **En ligne** : avec `DEMO_PASSWORD` dans Render, chaque mise en ligne recrée la démo. La veille d'une présentation : « Manual Deploy » › « Deploy latest commit » pour avoir des dates fraîches. Avant un vrai essai : retirer la variable et effacer la démo.
+- **Sur l'ordi** : `DEMO_PASSWORD=demo1234 bin/rails db:seed`.
+
+| Compte (mot de passe : `DEMO_PASSWORD`) | Structure |
+|---|---|
+| `chartres@demo.test` (responsable), `chartres.membre@demo.test` | Épicerie solidaire Le Grenier, Chartres : 1er téléphone de la démo (donateur). Sa question « Le stock est-il parti ? » attend dans l'encadré « À faire » |
+| `dreux@demo.test` | Foyer d'hébergement Les Tilleuls, Dreux : 2e téléphone (réserve) |
+| `chateaudun@demo.test`, `nogent@demo.test`, `luce@demo.test`, `bonneval@demo.test` | Les autres structures |
+
 ## Tests et vérifications
 Les mêmes vérifications que la CI de GitHub, à lancer avant d'envoyer :
 
 ```bash
 bin/rails db:test:prepare test
+bin/rails test:system   # le parcours complet dans Chrome (sans fenêtre)
 bin/rubocop
 bin/brakeman --no-pager
 bin/bundler-audit
@@ -64,6 +77,7 @@ Variables d'environnement à remplir dans Render (onglet « Environment »), jam
 | `CLOUDINARY_URL` | les photos des annonces (compte de Gambade pour le Proof of Concept, dossier `glane/`) |
 | `MAPBOX_API_KEY` | la carte |
 | `APP_HOST` | facultatif : l'adresse du site dans les liens des emails |
+| `DEMO_PASSWORD` | facultatif : crée les données de démonstration (voir plus haut), avec ce mot de passe (6 caractères au moins) |
 
 ## Technique
 Rails 8.1 · Ruby 3.4 · PostgreSQL · Devise + devise_invitable · Stimulus/Turbo · Bootstrap 5 (SCSS) · Mapbox GL JS · Active Storage + Cloudinary · API Adresse de l'IGN pour les adresses. Le détail est dans [CLAUDE.md](CLAUDE.md).

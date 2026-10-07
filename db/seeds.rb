@@ -86,3 +86,6 @@ if Rails.env.development?
 
   puts "Test data ready: #{Organization.count} structures, #{User.count} accounts (password: password), #{Listing.count} listings"
 end
+
+# Demo data for the Proof of Concept presentation, only when DEMO_PASSWORD is set (see db/seeds/demo.rb).
+load Rails.root.join("db/seeds/demo.rb") if ENV["DEMO_PASSWORD"].present?
