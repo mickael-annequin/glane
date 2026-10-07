@@ -65,7 +65,13 @@ On n'en parle pas pendant la démo pour rester sous 5 minutes, mais il faut avoi
 - **« Et si la structure ne vient pas ? »** Le donateur peut annuler la réservation, et Glane lui demande 3 h après le créneau si le stock est parti : répondre « Non » remet l'annonce en ligne.
 - **« Il faut installer une application ? »** Non, pour l'instant c'est un site, à ajouter sur l'écran d'accueil du téléphone. Une app Android viendra ensuite.
 - **« Et nos numéros de téléphone ? »** Le téléphone est facultatif. Il n'est montré qu'aux deux structures d'une réservation (celle qui donne et celle qui vient chercher), pour s'appeler le jour du passage : jamais dans la liste des annonces. Si une personne ne met pas le sien, c'est celui de la structure qui s'affiche.
-- **« Et le RGPD ? »** Glane ne garde que le strict nécessaire : nom, email, téléphone facultatif, et les annonces. Tout est privé (il faut un compte pour voir la moindre page), les mots de passe sont chiffrés, et le site et sa base de données sont hébergés en Europe (Francfort). Rien n'est revendu ni partagé. Avant un vrai essai, il y aura une politique de confidentialité, des mentions légales, et la possibilité de faire supprimer ses données. Pour cette démo, toutes les données sont fictives.
+- **« Et le RGPD ? »** Glane ne garde que le strict nécessaire : nom, email, téléphone facultatif, et les annonces. Tout est privé (il faut un compte pour voir la moindre page), les mots de passe sont chiffrés, et le site et sa base de données sont hébergés en Europe (Francfort). Rien n'est revendu ni partagé, et il n'y a aucune publicité. Pour cette démo, toutes les données sont fictives.
+  - **Si on creuse : ce qui est prévu avant un vrai essai.** C'est une étape à part entière de la feuille de route, à faire avant d'y mettre de vraies personnes :
+    - une **politique de confidentialité** et des **mentions légales** : quelles données, pourquoi, qui les voit, où elles sont, combien de temps on les garde ;
+    - **supprimer ses données** sur simple demande (aujourd'hui, un compte qui part est désactivé : il ne peut plus se connecter) ;
+    - une **durée de conservation**, au-delà de laquelle les vieux comptes et les vieilles annonces sont anonymisés ;
+    - les **photos**, facultatives, sont stockées chez un prestataire américain (Cloudinary) : on demandera de ne jamais photographier de personnes ; et les polices d'écriture seront hébergées directement dans l'app.
+  - **Si on me demande qui est responsable des données** : c'est moi, en tant qu'administrateur de Glane, et chaque structure garde la main sur ses membres (invitation, désactivation).
 - **« Et le non-alimentaire ? »** C'est prévu : les catégories Hygiène, entretien et Bébé existent déjà.
 
 ## Si quelque chose ne va pas
