@@ -1,5 +1,6 @@
 # Changes the password of the signed-in person, who must type the current one first.
 class AccountPasswordsController < ApplicationController
+  skip_after_action :verify_authorized # only the signed-in person's own password
   def edit
   end
 

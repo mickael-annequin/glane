@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
   # Glane is private: every page needs a signed-in person (except Devise's sign-in page).
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # Every page must check the access rights: if one forgets, Rails raises an error instead of showing it.
+  # (The pages that only show the signed-in person's own things skip this check.)
+  after_action :verify_authorized, unless: :devise_controller?
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern

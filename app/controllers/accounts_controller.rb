@@ -1,5 +1,6 @@
 # "Mon compte": the name, phone and followed categories of the signed-in person.
 class AccountsController < ApplicationController
+  skip_after_action :verify_authorized # only the signed-in person's own account
   def edit
   end
 

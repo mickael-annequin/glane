@@ -18,7 +18,8 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:sophie)
     get members_path
 
-    assert_redirected_to organization_path
+    assert_redirected_to root_path
+    assert_equal "Seuls les responsables peuvent gérer les membres.", flash[:alert]
   end
 
   test "invites a new member in my structure" do
@@ -76,7 +77,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
   test "can't touch the people of another structure" do
     patch deactivate_member_path(users(:paul))
 
-    assert_response :not_found
+    assert_redirected_to root_path
     assert_nil users(:paul).reload.deactivated_at
   end
 

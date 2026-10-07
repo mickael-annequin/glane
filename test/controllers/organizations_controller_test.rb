@@ -36,7 +36,8 @@ class OrganizationsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:paul)
 
     get edit_organization_path
-    assert_redirected_to organization_path
+    assert_redirected_to root_path
+    assert_equal "Seuls les responsables peuvent modifier la fiche de la structure.", flash[:alert]
 
     patch organization_path, params: { organization: { name: "Piraté" } }
     assert_equal "Restos du Cœur Dreux", organizations(:restos_dreux).reload.name

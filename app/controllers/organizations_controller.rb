@@ -1,7 +1,7 @@
-# "Ma structure": the structure of the signed-in person. Only its managers can edit it.
+# "Ma structure": the structure of the signed-in person. Only its managers can edit it (app/policies/organization_policy.rb).
 class OrganizationsController < ApplicationController
   before_action :set_organization, only: %i[edit update]
-  before_action :require_manager, only: %i[edit update]
+  skip_after_action :verify_authorized, only: :show # everyone sees their own structure
 
   def show
     @organization = current_user.organization
@@ -20,13 +20,14 @@ class OrganizationsController < ApplicationController
 
   private
 
+  # The admin account has no structure: back to its "Ma structure" page.
   def set_organization
     @organization = current_user.organization
-    redirect_to organization_path if @organization.nil?
-  end
-
-  def require_manager
-    redirect_to organization_path, alert: "Seuls les responsables peuvent modifier la fiche de la structure." unless current_user.manager?
+    if @organization
+      authorize @organization
+    else
+      redirect_to organization_path
+    end
   end
 
   def organization_params

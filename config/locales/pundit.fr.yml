@@ -15,3 +15,16 @@ fr:
       cancel?: "C'est déjà réglé : cette réservation a été annulée ou clôturée."
       pick_up?: "C'est déjà réglé : un autre membre a répondu, ou la réservation a été annulée."
       not_picked_up?: "C'est déjà réglé : un autre membre a répondu, ou la réservation a été annulée."
+    organization_policy:
+      edit?: "Seuls les responsables peuvent modifier la fiche de la structure."
+      update?: "Seuls les responsables peuvent modifier la fiche de la structure."
+    user_policy:
+      index?: "Seuls les responsables peuvent gérer les membres."
+      create?: "Seuls les responsables peuvent gérer les membres."
+      resend_invitation?: "Vous ne pouvez pas modifier ce compte."
+      promote?: "Vous ne pouvez pas modifier ce compte."
+      demote?: "Vous ne pouvez pas modifier ce compte."
+      deactivate?: "Vous ne pouvez pas modifier ce compte."
+      reactivate?: "Vous ne pouvez pas modifier ce compte."
+    admin_policy:
+      access?: "Cette page est réservée à l'administrateur."

@@ -1,10 +1,8 @@
 # "Membres": the managers of a structure invite people, name other managers and deactivate the ones who leave.
-# A manager acts on the other people only, never on themself: so a structure always keeps at least one
-# active manager (the one using this page).
+# Access rights: app/policies/user_policy.rb.
 class MembersController < ApplicationController
-  before_action :require_manager
+  before_action :set_organization, only: %i[index create]
   before_action :set_member, except: %i[index create]
-  before_action :forbid_acting_on_myself, except: %i[index create resend_invitation]
 
   def index
     # Active people first (managers, then members), deactivated ones at the end.
@@ -51,20 +49,13 @@ class MembersController < ApplicationController
 
   private
 
-  def require_manager
+  def set_organization
+    authorize User
     @organization = current_user.organization
-    return if @organization && current_user.manager?
-
-    redirect_to organization_path, alert: "Seuls les responsables peuvent gérer les membres."
   end
 
-  # Only the people of my own structure: anyone else is "not found".
   def set_member
-    @member = @organization.users.find(params[:id])
-  end
-
-  def forbid_acting_on_myself
-    redirect_to members_path, alert: "Vous ne pouvez pas modifier votre propre compte ici." if @member == current_user
+    @member = authorize User.find(params[:id])
   end
 
   def display_name

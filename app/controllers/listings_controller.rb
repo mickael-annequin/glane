@@ -1,6 +1,9 @@
 # Access rights: app/policies/listing_policy.rb.
 class ListingsController < ApplicationController
   before_action :set_listing, only: %i[show edit update withdraw]
+  # The home page checks the rights with policy_scope (which listings I can see), not authorize.
+  skip_after_action :verify_authorized, only: :index
+  after_action :verify_policy_scoped, only: :index
 
   # Home page: the listings that can still be reserved, the most urgent first, filtered by category if asked.
   # As a list, or on a map (?view=map, and ?focus=<id> to center it on one listing).

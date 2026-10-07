@@ -1,5 +1,6 @@
 # "Mes échanges": the listings of my structure ("Dons") and the listings it reserved ("Réservations").
 class ExchangesController < ApplicationController
+  skip_after_action :verify_authorized # only my structure's things
   def index
     @tab = params[:tab] == "reservations" ? "reservations" : "donations"
     organization = current_user.organization
