@@ -28,7 +28,7 @@ class ReservationPickupTest < ActionDispatch::IntegrationTest
 
     patch pick_up_reservation_path(reservations(:potatoes_by_dreux))
 
-    assert_response :not_found
+    assert_redirected_to root_path
     assert reservations(:potatoes_by_dreux).reload.active?
   end
 end

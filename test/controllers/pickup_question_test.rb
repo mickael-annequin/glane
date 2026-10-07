@@ -69,8 +69,8 @@ class PickupQuestionTest < ActionDispatch::IntegrationTest
     patch pick_up_reservation_path(reservations(:potatoes_by_dreux))
     patch not_picked_up_reservation_path(reservations(:potatoes_by_dreux))
 
-    assert_redirected_to exchanges_path
-    assert_equal "C'est déjà réglé : un autre membre a répondu, ou la réservation a été annulée.", flash[:notice]
+    assert_redirected_to root_path
+    assert_equal "C'est déjà réglé : un autre membre a répondu, ou la réservation a été annulée.", flash[:alert]
     assert reservations(:potatoes_by_dreux).reload.picked_up?
   end
 
@@ -78,7 +78,7 @@ class PickupQuestionTest < ActionDispatch::IntegrationTest
     sign_in users(:paul)
     patch not_picked_up_reservation_path(reservations(:potatoes_by_dreux))
 
-    assert_response :not_found
+    assert_redirected_to root_path
     assert reservations(:potatoes_by_dreux).reload.active?
   end
 end

@@ -9,3 +9,9 @@ fr:
       edit?: "Cette annonce ne peut plus être modifiée."
       update?: "Cette annonce ne peut plus être modifiée."
       withdraw?: "Cette annonce ne peut plus être retirée."
+    reservation_policy:
+      new?: "Cette annonce ne peut pas être réservée."
+      create?: "Cette annonce ne peut pas être réservée."
+      cancel?: "C'est déjà réglé : cette réservation a été annulée ou clôturée."
+      pick_up?: "C'est déjà réglé : un autre membre a répondu, ou la réservation a été annulée."
+      not_picked_up?: "C'est déjà réglé : un autre membre a répondu, ou la réservation a été annulée."

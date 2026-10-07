@@ -32,7 +32,7 @@ class ReservationCancellationTest < ActionDispatch::IntegrationTest
     sign_in User.create!(email: "luce@glane.test", password: "password", name: "Léa", organization: other)
     patch cancel_reservation_path(reservations(:potatoes_by_dreux))
 
-    assert_response :not_found
+    assert_redirected_to root_path
     assert reservations(:potatoes_by_dreux).reload.active?
   end
 

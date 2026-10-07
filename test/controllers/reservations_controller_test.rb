@@ -86,12 +86,13 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     get new_listing_reservation_path(listings(:potatoes))
 
     assert_redirected_to root_path
+    assert_equal "Cette annonce ne peut pas être réservée.", flash[:alert]
   end
 
   test "can't reserve a listing of my structure" do
     get new_listing_reservation_path(listings(:carrots))
 
-    assert_redirected_to listing_path(listings(:carrots))
+    assert_redirected_to root_path
   end
 
   test "asks for a day and an hour, in the future" do
