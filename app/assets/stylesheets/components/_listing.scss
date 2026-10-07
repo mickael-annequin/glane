@@ -161,6 +161,11 @@
   font-size: 1.05rem;
 }
 
+// The donor structure: the structures know each other, its name tells where to go.
+.listing-card-organization {
+  font-weight: 600;
+}
+
 .listing-card-badge {
   align-self: flex-start;
   margin-top: 0.25rem;

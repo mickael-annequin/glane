@@ -25,6 +25,7 @@ class ListingFlowTest < ApplicationSystemTestCase
     sign_out :user
     sign_in users(:paul)
     visit root_path
+    assert_text "Secours Populaire Chartres" # the donor structure, on its card
     click_on "Courgettes"
     click_on "Réserver"
     find("label[for='pickup_day_#{pickup_day.iso8601}']").click
@@ -40,7 +41,11 @@ class ListingFlowTest < ApplicationSystemTestCase
     sign_in users(:marie)
     visit listing_path(Listing.find_by!(title: "Courgettes"))
     assert_text "Réservée par Restos du Cœur Dreux (Paul Martin)"
-    accept_confirm { click_on "✓ Stock récupéré" }
+    click_on "✓ Stock récupéré"
+    within("dialog.confirm-dialog") do # our own confirmation window, not the browser's
+      assert_text "Restos du Cœur Dreux a bien récupéré « Courgettes » ?"
+      click_on "Oui"
+    end
 
     assert_text "C'est noté : « Courgettes » est récupérée. Merci pour ce don !"
     within(".exchange-list-past") { assert_text "Courgettes" }

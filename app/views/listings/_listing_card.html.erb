@@ -1,4 +1,6 @@
-<%# One listing in the list, "Le Bon Coin" style: picture, product, quantity, place and deadline. %>
+<%# One listing in the list, "Le Bon Coin" style: picture, product, quantity, donor structure, place and deadline.
+    The structures know each other: their name tells at once where to go and who to call. %>
+<% mine = organization && listing.organization_id == organization.id %>
 <%= link_to listing_path(listing), class: "listing-card" do %>
   <span class="listing-card-picture" aria-hidden="true"><%= listing.category.icon.presence || "📦" %></span>
   <span class="listing-card-body">
@@ -7,11 +9,14 @@
     <% if details.any? %>
       <span><%= details.join(" · ") %><%= " ❄️" if listing.storage.in?(%w[chilled frozen]) %></span>
     <% end %>
+    <% unless mine %>
+      <span class="listing-card-organization"><%= listing.organization.name %></span>
+    <% end %>
     <span class="text-body-secondary">
       <%= [ listing.city, distance_label(organization, listing) ].compact.join(" · ") %>
     </span>
     <span class="<%= urgent?(listing) ? "text-danger fw-semibold" : "" %>"><%= listing_deadline(listing) %></span>
-    <% if organization && listing.organization_id == organization.id %>
+    <% if mine %>
       <span class="badge listing-card-badge">Votre structure</span>
     <% end %>
   </span>

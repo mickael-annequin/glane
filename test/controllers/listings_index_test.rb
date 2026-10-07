@@ -14,11 +14,13 @@ class ListingsIndexTest < ActionDispatch::IntegrationTest
     assert_select ".listing-card-title", text: "Pain de mie", count: 0               # withdrawn
   end
 
-  test "shows the city, the distance from my structure, and my own listings with a badge" do
+  test "shows the donor structure, the city, the distance from my structure, and my own listings with a badge" do
     get root_path
 
+    assert_select ".listing-card:nth-child(1) .listing-card-organization", "Secours Populaire Chartres"
     assert_select ".listing-card:nth-child(1)", /Chartres · 3\d km/
     assert_select ".listing-card:nth-child(2) .listing-card-badge", "Votre structure"
+    assert_select ".listing-card:nth-child(2) .listing-card-organization", count: 0
     assert_select ".listing-card:nth-child(1) .listing-card-badge", count: 0
   end
 

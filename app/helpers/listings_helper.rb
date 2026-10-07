@@ -67,7 +67,7 @@ module ListingsHelper
         latitude: latitude, longitude: longitude, icon: here.first.category.icon.presence || "📦", count: here.size,
         listings: here.map do |listing|
           { id: listing.id, title: listing.title, icon: listing.category.icon.presence || "📦", url: listing_path(listing),
-            details: [ listing.quantity_label, listing.city, distance_label(organization, listing) ].compact.join(" · "),
+            details: [ listing.quantity_label, listing.organization.name, listing.city, distance_label(organization, listing) ].compact.join(" · "),
             deadline: listing_deadline(listing), urgent: urgent?(listing), mine: listing.organization_id == organization&.id }
         end
       }
