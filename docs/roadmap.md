@@ -4,13 +4,8 @@ On coche chaque étape (`- [x]`) quand elle est terminée et testée.
 Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour relancer le projet sur l'ordi (serveur, comptes de test, tests, mise en ligne) : [README](../README.md).
 
 ## 📍 Où on en est (mis à jour le 07/10/2026)
-- **Dernière étape faite** : la **clôture**, testée ✓ : le bouton « ✓ Stock récupéré » (commit `83a0e1d`) et, 3 h après le créneau, la question « Le stock est-il parti ? » dans l'encadré « À faire » de l'accueil et de Mes échanges › Dons, avec Oui / Non (commit `b4f3430`). Pour la tester sans attendre 3 h : réserver, puis reculer le créneau dans le terminal avec `bin/rails runner 'Reservation.active.last.update_column(:pickup_at, 1.day.ago)'`.
-- **En cours** : les **droits d'accès avec Pundit** (dernière étape de la Phase 2 : 🎉 **MVP utilisable**), en 4 morceaux :
-  1. ✅ *Fait et testé* : Pundit installé, `ListingPolicy` (voir, publier, modifier, retirer une annonce). Une action refusée renvoie vers l'accueil avec un message en français ([pundit.fr.yml](../config/locales/pundit.fr.yml)).
-  2. ✅ *Fait et testé* : `ReservationPolicy` (réserver l'annonce d'une autre structure tant qu'elle est disponible ; annuler pour les deux structures ; clôturer pour le donateur seulement). Une action déjà réglée par quelqu'un d'autre renvoie vers l'accueil avec « C'est déjà réglé… ».
-  3. ✅ *Fait et testé* : `OrganizationPolicy` (Ma structure), `UserPolicy` (Membres), `AdminPolicy` (espace admin), plus `verify_authorized` (Rails refuse une page dont les droits n'ont pas été vérifiés ; seules les pages de mes propres choses en sont dispensées).
-  4. ✅ *Fait, mon test reste à faire* : Chrome installé dans Ubuntu (WSL), test système [listing_flow_test.rb](../test/system/listing_flow_test.rb) (Chartres publie, Dreux réserve dans 2 jours à 14h, Chartres clôture), test de l'annulation dans le modèle, et job `system-test` remis dans la CI. *Test :* `bin/rails test:system` → `1 runs, 8 assertions, 0 failures` ; `bin/rails test` → `0 failures`.
-  Ensuite, le jalon du Proof of Concept.
+- **Dernière étape faite** : les **droits d'accès avec Pundit**, testés ✓ : une policy par type de données dans `app/policies/` (annonces, réservations, Ma structure, Membres, espace admin), `verify_authorized` sur toutes les pages, et une action refusée renvoie vers l'accueil avec un message en français ([pundit.fr.yml](../config/locales/pundit.fr.yml)). Plus un test système du parcours publier → réserver → clôturer ([listing_flow_test.rb](../test/system/listing_flow_test.rb), avec Chrome installé dans Ubuntu) et le job `system-test` remis dans la CI. 🎉 **Phase 2 terminée : MVP utilisable.**
+- **Prochaine étape** : le **jalon du Proof of Concept**, en commençant par revoir les catégories et les unités.
 - **Petites choses en attente**, sans urgence :
   - Les propositions de mise à jour de Dependabot sur GitHub (#1 `actions/cache`, #2 `actions/checkout`, #4 `image_processing` 2.x, à vérifier avec soin car c'est une version majeure) : à regarder ensemble avant de les accepter.
   - Une page d'erreur 500 en français, et une icône d'onglet (favicon) avec le logo.
@@ -45,7 +40,7 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour re
 - [x] **« Mes dons » et « Mes réservations »** (onglets de Mes échanges), annulation d'un côté comme de l'autre. *Test :* une annonce annulée redevient disponible.
 - [x] **Clôture par le donateur** (« Stock récupéré »). *Test :* l'annonce passe dans l'historique des deux structures.
 - [x] **Question « Stock récupéré ? »** sur l'accueil après le créneau, avec Oui / Non. *Test :* répondre Non remet l'annonce en ligne.
-- [ ] **Droits d'accès** avec Pundit, tests des changements de statut, et un test système du parcours publier → réserver → clôturer (remettre alors le job `system-test` dans la CI, retiré au départ). *Test :* `bin/rails test` passe, et une structure ne peut pas modifier l'annonce d'une autre. 🎉 **MVP utilisable**
+- [x] **Droits d'accès** avec Pundit, tests des changements de statut, et un test système du parcours publier → réserver → clôturer (remettre alors le job `system-test` dans la CI, retiré au départ). *Test :* `bin/rails test` passe, et une structure ne peut pas modifier l'annonce d'une autre. 🎉 **MVP utilisable**
 
 ## Jalon — Présentation du Proof of Concept 🎤
 > On ne pourra peut-être pas faire un essai en conditions réelles tout de suite. On commence donc par **montrer** l'app aux responsables de structures, pour la valider et récolter leurs idées avant d'aller plus loin.
