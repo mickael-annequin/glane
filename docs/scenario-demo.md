@@ -64,6 +64,8 @@ On n'en parle pas pendant la démo pour rester sous 5 minutes, mais il faut avoi
 - **« Combien ça coûte ? »** Rien : Glane est gratuit, et il n'y a jamais d'argent entre structures.
 - **« Et si la structure ne vient pas ? »** Le donateur peut annuler la réservation, et Glane lui demande 3 h après le créneau si le stock est parti : répondre « Non » remet l'annonce en ligne.
 - **« Il faut installer une application ? »** Non, pour l'instant c'est un site, à ajouter sur l'écran d'accueil du téléphone. Une app Android viendra ensuite.
+- **« Et nos numéros de téléphone ? »** Le téléphone est facultatif. Il n'est montré qu'aux deux structures d'une réservation (celle qui donne et celle qui vient chercher), pour s'appeler le jour du passage : jamais dans la liste des annonces. Si une personne ne met pas le sien, c'est celui de la structure qui s'affiche.
+- **« Et le RGPD ? »** Glane ne garde que le strict nécessaire : nom, email, téléphone facultatif, et les annonces. Tout est privé (il faut un compte pour voir la moindre page), les mots de passe sont chiffrés, et le site et sa base de données sont hébergés en Europe (Francfort). Rien n'est revendu ni partagé. Avant un vrai essai, il y aura une politique de confidentialité, des mentions légales, et la possibilité de faire supprimer ses données. Pour cette démo, toutes les données sont fictives.
 - **« Et le non-alimentaire ? »** C'est prévu : les catégories Hygiène, entretien et Bébé existent déjà.
 
 ## Si quelque chose ne va pas
