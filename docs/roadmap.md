@@ -70,8 +70,15 @@ Le détail des décisions est dans [brainstorming.md](brainstorming.md). Pour re
 - [ ] **Distribution** : APK envoyé directement pour les premiers essais. Pour tout le monde, Play Store (25 $ une fois ; un compte personnel doit d'abord faire 14 jours de test fermé avec 12 testeurs volontaires : structures, proches). Revérifier les règles Android à ce moment-là.
 
 ## Phase 6 — Lancement 🚀
+- [ ] **RGPD, avant tout essai avec de vraies personnes** (aujourd'hui, seule la démo avec des données fictives est en ligne) :
+  - **mentions légales** et **politique de confidentialité** (quelles données, pourquoi, qui les voit, où elles sont hébergées, combien de temps on les garde, comment exercer ses droits) ;
+  - **supprimer ses données** sur demande : aujourd'hui, un compte n'est que désactivé (il ne peut plus se connecter, mais ses données restent) ;
+  - une **durée de conservation** (par exemple : les comptes désactivés et les vieilles annonces anonymisés au bout d'un certain temps) ;
+  - **polices hébergées dans l'app** au lieu de Google Fonts, qui transmet l'adresse IP des visiteurs à Google ;
+  - **photos** : Cloudinary est américain ; rappeler dans le formulaire de ne jamais photographier de personnes.
+  *Test :* les pages légales sont accessibles depuis la connexion, et un compte supprimé ne laisse plus ni nom, ni email, ni téléphone dans la base.
+- [ ] **Guide d'utilisation** d'une page.
 - [ ] **Essai en conditions réelles**, si c'est possible, avec 2 ou 3 structures volontaires, puis des corrections à partir de leurs retours.
-- [ ] **Mentions légales, politique de confidentialité** (RGPD) et guide d'utilisation d'une page.
 - [ ] **Compte Cloudinary propre à Glane** : pour le Proof of Concept, les photos sont sur le compte de Gambade (dossier `glane/`). Avant le lancement, créer un compte dédié, y recopier les photos et remplacer `CLOUDINARY_URL` dans Render. *Test :* les photos des annonces s'affichent toujours, et le compte de Gambade ne contient plus de photos de Glane.
 - [ ] **Vérifier la clé SMTP de Brevo** avant le lancement : elle expire le 6 octobre 2027, et aussi après 90 jours sans aucun envoi. Si besoin, en générer une nouvelle et la remplacer dans Render (`SMTP_PASSWORD`). *Test :* « Mot de passe oublié » envoie bien l'email.
 - [ ] **Création de toutes les structures** et invitation de leurs responsables, puis décision sur l'hébergement (gratuit ou payant).
